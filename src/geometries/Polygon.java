@@ -1,18 +1,17 @@
 package geometries;
 
 import java.util.List;
-
 import static primitives.Util.isZero;
 
 import primitives.Point;
 import primitives.Vector;
 
 /**
- * geometries.Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
+ * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
  * @author Dan
  */
-public class Polygon extends Geometry {
+public class Polygon implements Geometry {
     /** List of polygon's vertices */
     protected final List<Point> vertices;
     /** Associated plane in which the polygon lays */
@@ -21,7 +20,7 @@ public class Polygon extends Geometry {
     private final int           size;
 
     /**
-     * geometries.Polygon constructor based on vertices list. The list must be ordered by edge
+     * Polygon constructor based on vertices list. The list must be ordered by edge
      * path. The polygon must be convex.
      * @param  vertices                 list of vertices according to their order by
      *                                  edge path
@@ -45,7 +44,7 @@ public class Polygon extends Geometry {
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         this.vertices = List.of(vertices);
-        size          = vertices.length;
+        size = vertices.length;
 
         // Generate the plane according to the first three vertices and associate the
         // polygon with this plane.
@@ -67,7 +66,7 @@ public class Polygon extends Geometry {
         // with the normal. If all the rest consequent edges will generate the same sign
         // - the polygon is convex ("kamur" in Hebrew).
         boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
-        for (var i = 1; i < vertices.length; ++i) {
+        for (int i = 1; i < vertices.length; ++i) {
             // Test that the point is in the same plane as calculated originally
             if (!isZero(vertices[i].subtract(vertices[0]).dotProduct(n)))
                 throw new IllegalArgumentException("All vertices of a polygon must lay in the same plane");

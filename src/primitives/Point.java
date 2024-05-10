@@ -19,9 +19,8 @@ public class Point {
         return new Point(xyz.add(v1.xyz));
     }
     public double distanceSquared(Point p) {
-        Vector diff = subtract(p);
-
-        return(diff.xyz.d1 * diff.xyz.d1 +
+         Vector diff = subtract(p);
+        return(diff.xyz.d1  * diff.xyz.d1 +
                 diff.xyz.d2 * diff.xyz.d2 +
                 diff.xyz.d3 * diff.xyz.d3);
     }

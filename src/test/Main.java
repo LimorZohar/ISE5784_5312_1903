@@ -1,6 +1,11 @@
 package test;
 
+import primitives.Double3;
+import primitives.Point;
+import primitives.Vector;
+
 import static java.lang.System.out;
+import static primitives.Util.isZero;
 
 /**
  * Test program for the 1st stage
@@ -109,7 +114,7 @@ public final class Main {
 
         // test vector normalization vs vector length and cross-product
         Vector v = new Vector(1, 2, 3);
-        Vector u = v.normalize();
+        Vector u = (Vector) v.normalize();
         if (!isZero(u.length() - 1))
             out.println("ERROR: the normalized vector is not a unit vector");
         try { // test that the vectors are co-lined
