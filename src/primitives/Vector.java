@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Util.isZero;
+
 /**
  * Represents a vector in three-dimensional space, extending the Point class.
  */
@@ -11,11 +13,12 @@ public class Vector extends Point {
      * @param z The z-coordinate of the vector.
      * @throws IllegalArgumentException If all coordinates are zero (resulting in a zero vector).
      */
+
     public Vector(double x, double y, double z) {
         super(x, y, z);
-
-        if (x == 0 && y == 0 && z == 0) {
-            throw new IllegalArgumentException("The value can't be ZERO");
+        // Check if all components are zero and throw an exception if so
+        if (isZero(x) && isZero(y) && isZero(z)) {
+            throw new IllegalArgumentException("Vector components cannot all be zero");
         }
     }
 
@@ -26,9 +29,13 @@ public class Vector extends Point {
      */
     public Vector(Double3 double3) {
         super(double3);
-        if (double3.equals(Double3.ZERO))
-            throw new IllegalArgumentException("The value can't be ZERO");
+        // Validate the Double3 object to prevent creating a zero vector unintentionally
+        if (double3.equals(Double3.ZERO)) {
+            throw new IllegalArgumentException("Vector cannot be zero");
+        }
     }
+
+
 
     /**
      * Returns the squared length of this vector.
