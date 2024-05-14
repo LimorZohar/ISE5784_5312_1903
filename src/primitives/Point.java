@@ -38,7 +38,9 @@ public class Point {
      * @return The vector from this point to the other point.
      */
     public Vector subtract(Point p) {
-        return new Vector(xyz.subtract(p.xyz));
+            if ((this.xyz.subtract(p.xyz)).equals(Double3.ZERO))
+                throw new IllegalArgumentException("Result cannot be zero");
+            return new Vector(xyz.subtract(p.xyz));
     }
 
     /**
@@ -52,14 +54,13 @@ public class Point {
 
     /**
      * Computes the squared distance between this point and another point.
-     * @param p The other point to calculate the distance to.
+     * @param point The other point to calculate the distance to.
      * @return The squared distance between this point and the other point.
      */
-    public double distanceSquared(Point p) {
-        Vector diff = subtract(p);
-        return (diff.xyz.d1 * diff.xyz.d1 +
-                diff.xyz.d2 * diff.xyz.d2 +
-                diff.xyz.d3 * diff.xyz.d3);
+    public double distanceSquared(Point point) {
+        return ((this.xyz.d1 - point.xyz.d1) * (this.xyz.d1 - point.xyz.d1) +
+                (this.xyz.d2 - point.xyz.d2) * (this.xyz.d2 - point.xyz.d2) +
+                (this.xyz.d3 - point.xyz.d3) * (this.xyz.d3 - point.xyz.d3));
     }
 
     /**
@@ -74,7 +75,11 @@ public class Point {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        //return super.equals(obj);
+        if(this == obj)return true;
+        if(obj == null || getClass()!= obj.getClass())return false;
+        Point p = (Point) obj;
+        return xyz.equals(p.xyz);
     }
 
 
