@@ -1,11 +1,12 @@
+//Limor Zohar 214125312 limorz14123@gmail.com
+//Miriam Litov 325461903 
 package test;
 
-import primitives.Double3;
-import primitives.Point;
-import primitives.Vector;
-
 import static java.lang.System.out;
+
 import static primitives.Util.isZero;
+
+import primitives.*;
 
 /**
  * Test program for the 1st stage
@@ -14,13 +15,13 @@ import static primitives.Util.isZero;
 public final class Main {
 
     /**
-     * test.Main program to tests initial functionality of the 1st stage
+     * Main program to tests initial functionality of the 1st stage
      * @param args irrelevant here
      */
     public static void main(String[] args) {
-        Point p1         = new Point(1, 2, 3);
-        Point p2         = new Point(2, 4, 6);
-        Point p3         = new Point(2, 4, 5);
+        Point  p1         = new Point(1, 2, 3);
+        Point  p2         = new Point(2, 4, 6);
+        Point  p3         = new Point(2, 4, 5);
 
         Vector v1         = new Vector(1, 2, 3);
         Vector v1Opposite = new Vector(-1, -2, -3);
@@ -114,7 +115,7 @@ public final class Main {
 
         // test vector normalization vs vector length and cross-product
         Vector v = new Vector(1, 2, 3);
-        Vector u = (Vector) v.normalize();
+        Vector u = v.normalize();
         if (!isZero(u.length() - 1))
             out.println("ERROR: the normalized vector is not a unit vector");
         try { // test that the vectors are co-lined

@@ -65,6 +65,7 @@ public class Vector extends Point {
 
     @Override
     public Vector add(Vector v1) {
+        if(ZERO.equals(v1)) {throw new IllegalArgumentException("Vector cannot be zero");}
         return new Vector(this.xyz.add(v1.xyz));
     }
 
@@ -80,7 +81,8 @@ public class Vector extends Point {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(!super.equals(obj)) return false;
+        return obj instanceof Vector;
     }
 
 
@@ -106,14 +108,14 @@ public class Vector extends Point {
      * @return A point representing the normalized vector.
      * @throws IllegalArgumentException If the vector is a zero vector (cannot be normalized).
      */
-    public Point normalize() {
+    public Vector normalize() {
         double length = length();
         try {
             if (length != 0) {
                 double x = this.xyz.d1 / length;
                 double y = this.xyz.d2 / length;
                 double z = this.xyz.d3 / length;
-                return new Point(x, y, z);
+                return new Vector(x, y, z);
             } else {
                 throw new IllegalArgumentException("Cannot normalize a zero vector.");
             }
