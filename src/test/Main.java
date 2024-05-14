@@ -1,5 +1,5 @@
 //Limor Zohar 214125312 limorz14123@gmail.com
-//Miriam Litov 325461903 
+//Miriam Litov 325461903
 package test;
 
 import static java.lang.System.out;
