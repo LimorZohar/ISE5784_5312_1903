@@ -119,7 +119,7 @@ public class Vector extends Point {
             } else {
                 throw new IllegalArgumentException("Cannot normalize a zero vector.");
             }
-        } catch (ArithmeticException e) {
+        } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
             return null; // Or handle the exception as needed
         }
