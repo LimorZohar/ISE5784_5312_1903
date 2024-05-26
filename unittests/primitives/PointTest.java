@@ -7,7 +7,8 @@ import static primitives.Util.isZero;
 /**
  * A class to test the functionality of the Point class.
  */
-public class PointTest {
+public class
+PointTest {
 
     /**
      * Test the constructors of the Point class.

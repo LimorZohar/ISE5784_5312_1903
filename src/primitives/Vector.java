@@ -123,5 +123,8 @@ public class Vector extends Point {
             System.err.println(e.getMessage());
             return null; // Or handle the exception as needed
         }
+
+
     }
-}
+    }
+
