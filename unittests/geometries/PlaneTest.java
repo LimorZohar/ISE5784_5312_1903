@@ -23,7 +23,7 @@ class PlaneTest {
         // Verify that the calculated normal is correct
         assertEquals(new Vector(0, 0, 1), plane.getNormal(),
                 "ERROR: Incorrect normal vector calculation");
-
+        // =============== Boundary Values Tests ==================
         // Define three non-coplanar points
         Point p4 = new Point(0, 0, 1);
         // Verify that constructing a plane with non-coplanar points throws an exception
@@ -31,8 +31,8 @@ class PlaneTest {
     }
 
     /**
-     * Test case for getNormal() method of Plane class.
-     */
+      * Test case for getNormal() method of Plane class.
+      */
     @Test
     public void testGetNormal() {
         // Define three coplanar points
@@ -42,22 +42,24 @@ class PlaneTest {
 
         // Construct a plane with the three points
         Plane plane = new Plane(p1, p2, p3);
-        // ============ Equivalence Partitions Tests ==============
+
         // Test getNormal() method for a point on the plane
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(p1),
-                "ERROR: Incorrect normal vector for a point on the plane");
+        assertEquals(new Vector(0, 0, 1), plane.getNormal(p1), "Incorrect normal vector for a point on the plane");
+
         // Test getNormal() method for a different point on the plane
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(p2),
-                "ERROR: Incorrect normal vector for a point on the plane");
+        assertEquals(new Vector(0, 0, 1), plane.getNormal(p2), "Incorrect normal vector for a point on the plane");
+
         // Test getNormal() method for a third point on the plane
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(p3),
-                "ERROR: Incorrect normal vector for a point on the plane");
+        assertEquals(new Vector(0, 0, 1), plane.getNormal(p3), "Incorrect normal vector for a point on the plane");
 
         // Define three non-coplanar points
         Point p4 = new Point(0, 0, 1);
+
         // Check if attempting to calculate normal for a non-coplanar point throws an exception
-        assertThrows(IllegalArgumentException.class, () -> plane.getNormal(p4),
-                "ERROR: Expected exception when calculating normal for a non-coplanar point");
+        assertThrows(IllegalArgumentException.class, () -> plane.getNormal(p4), "Expected exception when calculating normal for a non-coplanar point");
     }
 
-}
+    }
+
+
+

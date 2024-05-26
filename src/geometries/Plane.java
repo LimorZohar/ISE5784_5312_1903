@@ -18,9 +18,15 @@ public class Plane implements Geometry {
      * @param v2 The third point.
      */
     public Plane(Point v0, Point v1, Point v2) {
-        center = v0;
-        Vnormal = null;
+        this.center = v1;
+        // Calculate the normal vector
+        Vector v01 = v1.subtract(v0);
+        Vector v02 = v2.subtract(v0);
+        // Set the center to be the middle point between v0 and v
+        // Set the normal vector
+        Vnormal = v01.crossProduct(v02).normalize();
     }
+
     public Plane(Point center, Vector Vnormal) {
         this.center = center;
         this.Vnormal = (Vector) Vnormal.normalize();
