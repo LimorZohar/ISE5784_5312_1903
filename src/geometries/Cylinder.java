@@ -5,6 +5,7 @@ import primitives.Ray;
  * Represents a cylinder in three-dimensional space, extending the Tube class.
  */
 public class Cylinder extends Tube {
+
     /** The height of the cylinder. */
     final double height;
 

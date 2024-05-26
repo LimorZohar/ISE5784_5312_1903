@@ -23,7 +23,7 @@ class PlaneTest {
         // Verify that the calculated normal is correct
         assertEquals(new Vector(0, 0, 1), plane.getNormal(),
                 "ERROR: Incorrect normal vector calculation");
-        // =============== Boundary Values Tests ==================
+
         // Define three non-coplanar points
         Point p4 = new Point(0, 0, 1);
         // Verify that constructing a plane with non-coplanar points throws an exception
@@ -52,7 +52,7 @@ class PlaneTest {
         // Test getNormal() method for a third point on the plane
         assertEquals(new Vector(0, 0, 1), plane.getNormal(p3),
                 "ERROR: Incorrect normal vector for a point on the plane");
-        // =============== Boundary Values Tests ==================
+
         // Define three non-coplanar points
         Point p4 = new Point(0, 0, 1);
         // Check if attempting to calculate normal for a non-coplanar point throws an exception
