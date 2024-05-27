@@ -1,4 +1,5 @@
 package geometries;
+
 import primitives.Ray;
 import primitives.Point;
 import primitives.Vector;
@@ -7,13 +8,16 @@ import primitives.Vector;
  * Represents a tube in three-dimensional space.
  */
 public class Tube extends RadialGeometry {
-    /** The axis of the tube defined by a ray. */
-    final Ray axis;
+    /**
+     * The axis of the tube defined by a ray.
+     */
+    final protected Ray axis;
 
     /**
      * Constructs a new Tube with the specified radius and axis.
+     *
      * @param radius The radius of the tube.
-     * @param axis The axis of the tube defined by a ray.
+     * @param axis   The axis of the tube defined by a ray.
      */
     protected Tube(double radius, Ray axis) {
         super(radius);
@@ -22,6 +26,7 @@ public class Tube extends RadialGeometry {
 
     /**
      * Calculates the normal vector to the tube at a given point (implementation required).
+     *
      * @param p The point on the tube to calculate the normal at.
      * @return The normal vector to the tube at the given point.
      */

@@ -1,6 +1,7 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
 
@@ -18,7 +19,9 @@ class VectorTest {
      */
     @Test
     void testVector() {
-        assertThrows(IllegalArgumentException.class, () -> {new Vector(0, 0, 0);}, "Expected constructor to throw an IllegalArgumentException for zero vector");
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Vector(0, 0, 0);
+        }, "Expected constructor to throw an IllegalArgumentException for zero vector");
     }
 
     /**
@@ -110,13 +113,13 @@ class VectorTest {
                 "testCrossProduct(): Incorrect cross product of the vectors");
         // =============== Boundary Values Tests ==================
         // parallel
-        assertThrows(IllegalArgumentException.class, ()->v1.crossProduct(v1parallel),
+        assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v1parallel),
                 "ERROR: crossProduct() for parallel vectors does not throw an exception");
         // length
         assertTrue(isZero(vr.length() - v1.length() * v1orthogonal.length()),
                 "ERROR: crossProduct() wrong result length");
         // orthogonal
-        assertTrue(isZero(vr.dotProduct(v1)) ||isZero(vr.dotProduct(v1orthogonal)),
+        assertTrue(isZero(vr.dotProduct(v1)) || isZero(vr.dotProduct(v1orthogonal)),
                 "ERROR: crossProduct() result is not orthogonal to its operands");
     }
 

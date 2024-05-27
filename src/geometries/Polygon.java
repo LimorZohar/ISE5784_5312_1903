@@ -1,6 +1,7 @@
 package geometries;
 
 import java.util.List;
+
 import static primitives.Util.isZero;
 
 import primitives.Point;
@@ -9,21 +10,29 @@ import primitives.Vector;
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
+ *
  * @author Dan
  */
 public class Polygon implements Geometry {
-    /** List of polygon's vertices */
+    /**
+     * List of polygon's vertices
+     */
     protected final List<Point> vertices;
-    /** Associated plane in which the polygon lays */
-    protected final Plane       plane;
-    /** The size of the polygon - the amount of the vertices in the polygon */
-    private final int           size;
+    /**
+     * Associated plane in which the polygon lays
+     */
+    protected final Plane plane;
+    /**
+     * The size of the polygon - the amount of the vertices in the polygon
+     */
+    private final int size;
 
     /**
      * Polygon constructor based on vertices list. The list must be ordered by edge
      * path. The polygon must be convex.
-     * @param  vertices                 list of vertices according to their order by
-     *                                  edge path
+     *
+     * @param vertices list of vertices according to their order by
+     *                 edge path
      * @throws IllegalArgumentException in any case of illegal combination of
      *                                  vertices:
      *                                  <ul>
@@ -52,11 +61,11 @@ public class Polygon implements Geometry {
         plane = new Plane(vertices[0], vertices[1], vertices[2]);
         if (size == 3) return; // no need for more tests for a Triangle
 
-        Vector  n        = plane.getNormal();
+        Vector n = plane.getNormal();
         // Subtracting any subsequent points will throw an IllegalArgumentException
         // because of Zero Vector if they are in the same point
-        Vector  edge1    = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
-        Vector  edge2    = vertices[0].subtract(vertices[vertices.length - 1]);
+        Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
+        Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
 
         // Cross Product of any subsequent edges will throw an IllegalArgumentException
         // because of Zero Vector if they connect three vertices that lay in the same
@@ -79,6 +88,8 @@ public class Polygon implements Geometry {
     }
 
     @Override
-    public Vector getNormal(Point point) { return plane.getNormal(); }
+    public Vector getNormal(Point point) {
+        return plane.getNormal();
+    }
 
 }

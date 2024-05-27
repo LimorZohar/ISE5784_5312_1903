@@ -1,6 +1,7 @@
 package primitives;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
 
@@ -66,8 +67,8 @@ PointTest {
         Point p1 = new Point(1, 2, 3);
         Point p2 = new Point(2, 4, 5);
         // ============ Equivalence Partitions Tests ==============
-        assertTrue(isZero(p1.distanceSquared(p2) - 9)|| isZero(p2.distanceSquared(p1) - 9),
-                "ERROR: squared distance between points is wrong" );
+        assertTrue(isZero(p1.distanceSquared(p2) - 9) || isZero(p2.distanceSquared(p1) - 9),
+                "ERROR: squared distance between points is wrong");
         // =============== Boundary Values Tests ==================
         // Test squared distance between a point and itself, expecting zero
         assertTrue(isZero(p1.distanceSquared(p1)),
@@ -82,7 +83,7 @@ PointTest {
         Point p1 = new Point(1, 2, 3);
         Point p2 = new Point(2, 4, 5);
         // ============ Equivalence Partitions Tests ==============
-        assertTrue(isZero(p1.distance(p2) - 3)|| isZero(p2.distance(p1) - 3),
+        assertTrue(isZero(p1.distance(p2) - 3) || isZero(p2.distance(p1) - 3),
                 "ERROR: distance between points is wrong");
         // =============== Boundary Values Tests ==================
         // Test distance between two points, expecting correct value

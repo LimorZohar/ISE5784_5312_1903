@@ -1,4 +1,5 @@
 package geometries;
+
 import primitives.Ray;
 
 /**
@@ -6,13 +7,16 @@ import primitives.Ray;
  */
 public class Cylinder extends Tube {
 
-    /** The height of the cylinder. */
-    final double height;
+    /**
+     * The height of the cylinder.
+     */
+    final protected double height;
 
     /**
      * Constructs a new Cylinder with the specified radius, axis, and height.
+     *
      * @param radius The radius of the cylinder.
-     * @param axis The axis of the cylinder defined by a ray.
+     * @param axis   The axis of the cylinder defined by a ray.
      * @param height The height of the cylinder.
      */
     protected Cylinder(double radius, Ray axis, double height) {

@@ -12,7 +12,7 @@ class SphereTest {
 
     @Test
     public void testGetNormal() {
-        Sphere sphere = new Sphere(new Point(0,0,0), 1.0);
+        Sphere sphere = new Sphere(new Point(0, 0, 0), 1.0);
         Point p = new Point(1, 0, 0);
         Vector expect = new Vector(1, 0, 0).normalize();
         // ============ Equivalence Partitions Tests ==============

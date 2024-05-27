@@ -10,6 +10,7 @@ public class Triangle extends Polygon {
 
     /**
      * Constructs a triangle with the specified vertices.
+     *
      * @param a The first vertex of the triangle.
      * @param b The second vertex of the triangle.
      * @param c The third vertex of the triangle.

@@ -1,4 +1,5 @@
 package geometries;
+
 import primitives.Point;
 import primitives.Vector;
 
@@ -6,11 +7,14 @@ import primitives.Vector;
  * Represents a sphere in three-dimensional space.
  */
 public class Sphere extends RadialGeometry {
-    /** The center point of the sphere. */
-    final Point center;
+    /**
+     * The center point of the sphere.
+     */
+    final protected Point center;
 
     /**
      * Constructs a new Sphere with the specified center point and radius.
+     *
      * @param center The center point of the sphere.
      * @param radius The radius of the sphere.
      */
@@ -21,6 +25,7 @@ public class Sphere extends RadialGeometry {
 
     /**
      * Calculates the normal vector to the sphere at a given point (implementation required).
+     *
      * @param p The point on the sphere to calculate the normal at.
      * @return The normal vector to the sphere at the given point.
      */

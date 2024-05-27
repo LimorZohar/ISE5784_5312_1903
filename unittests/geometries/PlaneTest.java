@@ -31,8 +31,8 @@ class PlaneTest {
     }
 
     /**
-      * Test case for getNormal() method of Plane class.
-      */
+     * Test case for getNormal() method of Plane class.
+     */
     @Test
     public void testGetNormal() {
         // Define three coplanar points
@@ -59,7 +59,7 @@ class PlaneTest {
         assertThrows(IllegalArgumentException.class, () -> plane.getNormal(p4), "Expected exception when calculating normal for a non-coplanar point");
     }
 
-    }
+}
 
 
 

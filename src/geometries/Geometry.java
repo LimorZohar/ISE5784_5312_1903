@@ -1,4 +1,5 @@
 package geometries;
+
 import primitives.*;
 
 /**
@@ -7,6 +8,7 @@ import primitives.*;
 public interface Geometry {
     /**
      * Calculates the normal vector to this geometry at the given point.
+     *
      * @param p The point on the geometry to calculate the normal at.
      * @return The normal vector to the geometry at the given point.
      */
