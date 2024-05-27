@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlaneTest {
     /**
      * Test case for constructing a plane using three points.
-     * Verifies that a plane is correctly constructed using three coplanar points,
-     * and that an exception is thrown when attempting to construct a plane with non-coplanar points.
      */
     @Test
     public void testConstructor() {

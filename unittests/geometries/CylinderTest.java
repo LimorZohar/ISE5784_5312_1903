@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * A class to test the functionality of the Cylinder class.
  */
 public class CylinderTest {
-    final double DELTA = 0.000001;
+    private final double DELTA = 0.000001;
 
     /**
      * Test case for constructing a Cylinder.
