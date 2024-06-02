@@ -4,28 +4,26 @@ import primitives.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static primitives.Util.isZero;
 
 class PlaneTest {
+    private final double DELTA = 0.000001;
+
     /**
      * Test case for constructing a plane using three points.
      */
     @Test
     public void testConstructor() {
-        // Define three coplanar points
-        Point p1 = new Point(0, 0, 0);
-        Point p2 = new Point(1, 0, 0);
-        Point p3 = new Point(0, 1, 0);
-        // Construct a plane with the three points
-        Plane plane = new Plane(p1, p2, p3);
-        // ============ Equivalence Partitions Tests ==============
-        // Verify that the calculated normal is correct
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(),
-                "ERROR: Incorrect normal vector calculation");
-        // =============== Boundary Values Tests ==================
-        // Define three non-coplanar points
-        Point p4 = new Point(0, 0, 1);
-        // Verify that constructing a plane with non-coplanar points throws an exception
-        assertThrows(IllegalArgumentException.class, () -> new Plane(p1, p2, p4), "Expected exception when constructing a plane with non-coplanar points");
+        // ============ Boundary Values Tests ==================
+        // Test constructor with two identical points
+        assertThrows(IllegalArgumentException.class, () -> new Plane(new Point(1, 1, 1),
+                        new Point(1, 1, 1), new Point(0, 0, 0)),
+                "Plane constructor does not throw an exception for identical points");
+
+        // Test constructor with collinear points
+        assertThrows(IllegalArgumentException.class, () -> new Plane(new Point(1, 1, 1),
+                        new Point(2, 2, 2), new Point(3, 3, 3)),
+                "Plane constructor does not throw an exception for collinear points");
     }
 
     /**
@@ -33,28 +31,14 @@ class PlaneTest {
      */
     @Test
     public void testGetNormal() {
-        // Define three coplanar points
-        Point p1 = new Point(0, 0, 0);
-        Point p2 = new Point(1, 0, 0);
-        Point p3 = new Point(0, 1, 0);
-
-        // Construct a plane with the three points
-        Plane plane = new Plane(p1, p2, p3);
-
-        // Test getNormal() method for a point on the plane
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(p1), "Incorrect normal vector for a point on the plane");
-
-        // Test getNormal() method for a different point on the plane
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(p2), "Incorrect normal vector for a point on the plane");
-
-        // Test getNormal() method for a third point on the plane
-        assertEquals(new Vector(0, 0, 1), plane.getNormal(p3), "Incorrect normal vector for a point on the plane");
-
-        // Define three non-coplanar points
-        Point p4 = new Point(0, 0, 1);
-
-        // Check if attempting to calculate normal for a non-coplanar point throws an exception
-        assertThrows(IllegalArgumentException.class, () -> plane.getNormal(p4), "Expected exception when calculating normal for a non-coplanar point");
+        // ============ Equivalence Partitions Tests ==============
+        Plane p = new Plane(new Point(0, 0, 1), new Point(0, 1, 0), new Point(1, 0, 0));
+        Vector result = p.getNormal(new Point(0, 0, 1));
+        // test that the length is 1
+        assertEquals(1, result.length(), DELTA, "ERROR: the length of the normal is not 1");
+        // check the normal in orthogonal to the plane
+        assertTrue(isZero(result.dotProduct(new Vector(0, -1, 1))));
+        assertTrue(isZero(result.dotProduct(new Vector(-1, 1, 0))));
     }
 
 }
