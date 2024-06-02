@@ -12,11 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class SphereTest {
 
     /**
-     * A small delta value for floating-point comparison accuracy.
-     */
-    private final double DELTA = 0.000001;
-
-    /**
      * Test case for the getNormal method of Sphere.
      * This test ensures that the normal vector at a point on the sphere's surface is calculated correctly.
      */

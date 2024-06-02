@@ -25,15 +25,17 @@ public class Tube extends RadialGeometry {
     }
 
     /**
-     * Calculates the normal vector to the tube at a given point (implementation required).
+     * Calculates the normal vector to the tube at a given point.
+     * <p>
+     * The normal vector at a given point on the surface of a tube is calculated
+     * by projecting the point onto the axis of the tube, then finding the vector
+     * from the axis to the point and normalizing it.
      *
-     * @param p The point on the tube to calculate the normal at.
+     * @param point The point on the tube to calculate the normal at.
      * @return The normal vector to the tube at the given point.
      */
     @Override
-    public Vector getNormal(Point p) {
-        // Implement this method based on the specific tube equation
-        // For now, return null as the normal calculation is not provided
-        return null;
+    public Vector getNormal(Point point) {
+        return axis.getDirection().crossProduct(point.subtract(axis.getHead())).normalize();
     }
 }

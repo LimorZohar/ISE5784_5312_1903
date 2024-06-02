@@ -24,15 +24,16 @@ public class Sphere extends RadialGeometry {
     }
 
     /**
-     * Calculates the normal vector to the sphere at a given point (implementation required).
+     * Calculates the normal vector to the sphere at a given point.
      *
-     * @param p The point on the sphere to calculate the normal at.
+     * The normal vector at a given point on the surface of a sphere is calculated
+     * by taking the vector from the center of the sphere to the given point and normalizing it.
+     *
+     * @param point The point on the sphere to calculate the normal at.
      * @return The normal vector to the sphere at the given point.
      */
     @Override
-    public Vector getNormal(Point p) {
-        // Implement this method based on the specific sphere equation
-        // For now, return null as the normal calculation is not provided
-        return null;
+    public Vector getNormal(Point point) {
+        return point.subtract(center).normalize();
     }
 }

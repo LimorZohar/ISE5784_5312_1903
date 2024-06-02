@@ -11,7 +11,7 @@ import static primitives.Util.isZero;
  */
 class VectorTest {
 
-    final double DELTA = 0.0000001;
+    private double DELTA = 0.00001;
 
     /**
      * Tests the constructor of the Vector class.
@@ -54,11 +54,12 @@ class VectorTest {
     void testDotProduct() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(1, 2, 4);
-        Vector v1orthogonal = new Vector(0, 3, -2);
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(17, v1.dotProduct(v2), DELTA, "testDotProduct(): Incorrect dot product of the vectors");
+        assertEquals(17, v1.dotProduct(v2), DELTA,
+                "testDotProduct(): Incorrect dot product of the vectors");
         // =============== Boundary Values Tests ==================
-        assertEquals(0, v1.dotProduct(v1orthogonal), DELTA, "ERROR: dotProduct() for orthogonal vectors is not zero");
+        assertEquals(0, v1.dotProduct( new Vector(0, 3, -2)), DELTA,
+                "ERROR: dotProduct() for orthogonal vectors is not zero");
     }
 
     /**
@@ -76,9 +77,8 @@ class VectorTest {
         assertEquals(new Vector(0, 0, -1), v1.subtract(v2),
                 "testAdd(): Vector subtraction did not work correctly");
         // =============== Boundary Values Tests ==================
-        Vector v1Opposite = new Vector(-1, -2, -3);
         // Check addition of vector and its opposite
-        assertThrows(IllegalArgumentException.class, () -> v1.add(v1Opposite),
+        assertThrows(IllegalArgumentException.class, () -> v1.add(new Vector(-1, -2, -3)),
                 "testAdd(): Expected addition of a vector and its opposite to throw IllegalArgumentException");
         // Check subtract of vector and itself
         assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1),
@@ -91,10 +91,10 @@ class VectorTest {
      */
     @Test
     void testScale() {
-        // ============ Equivalence Partitions Tests ==============
-        double scalar = 2.0;
+        // ============ Equivalence Partitions Tests ==============double scalar = 2.0;
         Vector v1 = new Vector(1, 2, 3);
-        assertEquals(new Vector(2, 4, 6), v1.scale(scalar), "testScale(): Incorrect scaling of the vector");
+        assertEquals(new Vector(2, 4, 6), v1.scale(2.0),
+                "testScale(): Incorrect scaling of the vector");
     }
 
     /**
@@ -141,7 +141,8 @@ class VectorTest {
         assertThrows(IllegalArgumentException.class, () -> v.crossProduct(u),
                 "ERROR: the normalized vector is not parallel to the original one");
         // Check that the normalized vector is not opposite to the original one
-        assertTrue(v.dotProduct(u) > 0, "ERROR: the normalized vector is opposite to the original one");
+        assertTrue(v.dotProduct(u) > 0,
+                "ERROR: the normalized vector is opposite to the original one");
     }
 
 }

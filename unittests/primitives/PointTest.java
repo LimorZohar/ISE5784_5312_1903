@@ -17,11 +17,13 @@ PointTest {
     @Test
     public void testConstructors() {
         Point p1 = new Point(1, 2, 3);
-        assertEquals(new Double3(1, 2, 3), p1.xyz, "testConstructors: Point should be constructed with correct coordinates");
+        assertEquals(new Double3(1, 2, 3), p1.xyz,
+                "testConstructors: Point should be constructed with correct coordinates");
 
         Double3 d3 = new Double3(4, 5, 6);
         Point p2 = new Point(d3);
-        assertEquals(d3, p2.xyz, "testConstructors: Point should be constructed with correct Double3 coordinates");
+        assertEquals(d3, p2.xyz,
+                "testConstructors: Point should be constructed with correct Double3 coordinates");
     }
 
     /**
@@ -48,14 +50,12 @@ PointTest {
     public void testAdd() {
         Point p1 = new Point(1, 2, 3);
         Vector v1 = new Vector(1, 2, 3);
-        Vector v1Opposite = new Vector(-1, -2, -3);
-        Point p2 = new Point(2, 4, 6);
         // ============ Equivalence Partitions Tests ==============
-        assertTrue(p1.add(v1).equals(p2),
+        assertTrue(p1.add(v1).equals(new Point(2, 4, 6)),
                 "ERROR: (point + vector) = other point does not work correctly");
         // =============== Boundary Values Tests ==================
         // Test adding a vector to the point, expecting the center of coordinates
-        assertTrue(p1.add(v1Opposite).equals(Point.ZERO),
+        assertTrue(p1.add(new Vector(-1, -2, -3)).equals(Point.ZERO),
                 "ERROR: (point + vector) = center of coordinates does not work correctly");
     }
 
