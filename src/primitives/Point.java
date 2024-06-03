@@ -40,7 +40,9 @@ public class Point {
      * @param p The other point to subtract from this point.
      * @return The vector from this point to the other point.
      */
-    public Vector subtract(Point p) {return new Vector(xyz.subtract(p.xyz));}
+    public Vector subtract(Point p) {
+        return new Vector(xyz.subtract(p.xyz));
+    }
 
     /**
      * Adds a vector to this point and returns the resulting point.
@@ -60,9 +62,9 @@ public class Point {
      */
     public double distanceSquared(Point point) {
         Double dx = this.xyz.d1 - point.xyz.d1;
-        Double dy= this.xyz.d2 - point.xyz.d2;
-        Double dz= this.xyz.d3 - point.xyz.d3;
-        return dx*dx + dy*dy + dz*dz;
+        Double dy = this.xyz.d2 - point.xyz.d2;
+        Double dz = this.xyz.d3 - point.xyz.d3;
+        return dx * dx + dy * dy + dz * dz;
     }
 
     /**

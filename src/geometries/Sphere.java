@@ -25,7 +25,7 @@ public class Sphere extends RadialGeometry {
 
     /**
      * Calculates the normal vector to the sphere at a given point.
-     *
+     * <p>
      * The normal vector at a given point on the surface of a sphere is calculated
      * by taking the vector from the center of the sphere to the given point and normalizing it.
      *

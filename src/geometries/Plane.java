@@ -1,22 +1,25 @@
+package geometries;
+
+import primitives.Point;
+import primitives.Vector;
+
 /**
  * Represents a plane in three-dimensional space.
  */
-package geometries;
-
-import primitives.*;
-
 public class Plane implements Geometry {
     /**
      * The center point of the plane.
      */
     final protected Point center;
+
     /**
      * The normal vector to the plane (normalized).
      */
     final protected Vector vnormal;
 
     /**
-     * Constructs a new Plane using three points and additional parameters.
+     * Constructs a new Plane using three points.
+     * The normal vector is calculated as the normalized cross product of two vectors formed by these points.
      *
      * @param v0 The first point.
      * @param v1 The second point.
@@ -27,7 +30,6 @@ public class Plane implements Geometry {
         // Calculate the normal vector
         Vector v01 = v1.subtract(v0);
         Vector v02 = v2.subtract(v0);
-        // Set the center to be the middle point between v0 and v
         // Set the normal vector
         vnormal = v01.crossProduct(v02).normalize();
     }
@@ -45,6 +47,7 @@ public class Plane implements Geometry {
 
     /**
      * Calculates the normal vector to the plane at a given point.
+     * Since the normal vector is constant for a plane, it returns the pre-calculated normal vector.
      *
      * @param p The point on the plane to calculate the normal at.
      * @return The normal vector to the plane at the given point.

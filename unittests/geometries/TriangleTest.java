@@ -13,6 +13,7 @@ class TriangleTest {
     /**
      * Test case for getting the normal vector of a triangle.
      */
+    //לתקן
     @Test
     void testGetNormal() {
         // Arrange

@@ -60,30 +60,25 @@ public class Vector extends Point {
         return this.xyz.d1 * v3.xyz.d1 + this.xyz.d2 * v3.xyz.d2 + this.xyz.d3 * v3.xyz.d3;
     }
 
-    @Override
-    public Vector add(Vector v1) { return new Vector(this.xyz.add(v1.xyz));}
+    /**
+     * Adds this vector to another vector and returns the result as a new vector.
+     *
+     * @param v1 The vector to add to this vector.
+     * @return The result of the addition as a new vector.
+     */
+    public Vector add(Vector v1) {
+        return new Vector(this.xyz.add(v1.xyz));
+    }
 
     /**
      * Multiplies this vector by a scalar and returns the result as a new vector.
      *
      * @param scalar The scalar value to multiply this vector by.
      * @return The result of multiplying the vector by the scalar as a new vector.
+     * @throws IllegalArgumentException If scaling by zero or a very small number.
      */
     public Vector scale(double scalar) {
-        if(isZero(scalar))
-            throw new IllegalArgumentException("Vector scale cannot be zero");
         return new Vector(this.xyz.scale(scalar));
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        return obj instanceof Vector && super.equals(obj);
-    }
-
-    @Override
-    public String toString() {
-        return "vector" + xyz;
     }
 
     /**
@@ -91,6 +86,7 @@ public class Vector extends Point {
      *
      * @param v2 The other vector to calculate the cross product with.
      * @return The cross product of this vector and the given vector as a new vector.
+     * @throws IllegalArgumentException If the vectors are parallel.
      */
     public Vector crossProduct(Vector v2) {
         double x = this.xyz.d2 * v2.xyz.d3 - this.xyz.d3 * v2.xyz.d2;
@@ -103,13 +99,32 @@ public class Vector extends Point {
      * Returns a new vector representing the normalized version of this vector.
      *
      * @return A vector representing the normalized vector.
-     * @throws IllegalArgumentException If the vector is a zero vector (cannot be normalized).
      */
     public Vector normalize() {
-        double length = length();
         // Utilizing the scale function to multiply by scalar and divide by 1
-        return scale(1 / length);
+        return scale(1 / length());
     }
 
-}
+    /**
+     * Compares this vector to the specified object. The result is true if and only if the argument is not null
+     * and is a Vector object that represents the same vector as this object.
+     *
+     * @param obj The object to compare this vector against.
+     * @return true if the given object represents a Vector equivalent to this vector, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        return obj instanceof Vector && super.equals(obj);
+    }
 
+    /**
+     * Returns a string representation of this vector.
+     *
+     * @return A string representation of this vector.
+     */
+    @Override
+    public String toString() {
+        return "vector" + xyz;
+    }
+}

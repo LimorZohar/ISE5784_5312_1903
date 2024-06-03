@@ -47,6 +47,23 @@ class VectorTest {
     }
 
     /**
+     * Tests the add and subtract methods of the Vector class.
+     * It verifies the correctness of vector addition and subtraction operations.
+     */
+    @Test
+    void testAdd() {
+        Vector v1 = new Vector(1, 2, 3);
+        Vector v2 = new Vector(1, 2, 4);
+        // ============ Equivalence Partitions Tests ==============
+        assertEquals(new Vector(2, 4, 7), v1.add(v2),
+                "testAdd(): Vector addition did not work correctly");
+        // =============== Boundary Values Tests ==================
+        // Check addition of vector and its opposite
+        assertThrows(IllegalArgumentException.class, () -> v1.add(new Vector(-1, -2, -3)),
+                "testAdd(): Expected addition of a vector and its opposite to throw IllegalArgumentException");
+    }
+
+    /**
      * Tests the dotProduct method of the Vector class.
      * It verifies the correctness of the dot product calculation between vectors.
      */
@@ -58,28 +75,22 @@ class VectorTest {
         assertEquals(17, v1.dotProduct(v2), DELTA,
                 "testDotProduct(): Incorrect dot product of the vectors");
         // =============== Boundary Values Tests ==================
-        assertEquals(0, v1.dotProduct( new Vector(0, 3, -2)), DELTA,
+        assertEquals(0, v1.dotProduct(new Vector(0, 3, -2)), DELTA,
                 "ERROR: dotProduct() for orthogonal vectors is not zero");
     }
 
     /**
-     * Tests the add and subtract methods of the Vector class.
-     * It verifies the correctness of vector addition and subtraction operations.
+     * Tests the subtract method of the Vector class.
+     * It verifies the correctness of vector subtraction operations.
      */
     @Test
-    void testAdd() {
+    void testSubtract() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(1, 2, 4);
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(new Vector(2, 4, 7), v1.add(v2),
-                "testAdd(): Vector addition did not work correctly");
-        // Test subtract
-        assertEquals(new Vector(0, 0, -1), v1.subtract(v2),
-                "testAdd(): Vector subtraction did not work correctly");
+        assertEquals(new Vector(0, 0, 1), v2.subtract(v1),
+                "testSubtract: Subtraction of vectors did not produce the expected result");
         // =============== Boundary Values Tests ==================
-        // Check addition of vector and its opposite
-        assertThrows(IllegalArgumentException.class, () -> v1.add(new Vector(-1, -2, -3)),
-                "testAdd(): Expected addition of a vector and its opposite to throw IllegalArgumentException");
         // Check subtract of vector and itself
         assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1),
                 "testAdd(): Expected subtraction of a vector from itself to throw IllegalArgumentException");
@@ -95,6 +106,10 @@ class VectorTest {
         Vector v1 = new Vector(1, 2, 3);
         assertEquals(new Vector(2, 4, 6), v1.scale(2.0),
                 "testScale(): Incorrect scaling of the vector");
+        // =============== Boundary Values Tests ==================
+        // Test scaling with zero should throw an IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> v1.scale(0.0),
+                "testScale(): Scaling by zero should throw IllegalArgumentException");
     }
 
     /**
@@ -134,9 +149,8 @@ class VectorTest {
         Vector u = v.normalize();
         // ============ Equivalence Partitions Tests ==============
         // Check if the normalized vector is a unit vector
-        assertTrue(isZero(u.length() - 1),
+        assertEquals(1.0, u.length(), DELTA,
                 "ERROR: the normalized vector is not a unit vector");
-        // =============== Boundary Values Tests ==================
         // Check that the vectors are co-lined
         assertThrows(IllegalArgumentException.class, () -> v.crossProduct(u),
                 "ERROR: the normalized vector is not parallel to the original one");
