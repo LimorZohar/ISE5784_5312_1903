@@ -61,6 +61,7 @@ class VectorTest {
     void testAdd() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(1, 2, 4);
+
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Verify vector addition
@@ -82,6 +83,7 @@ class VectorTest {
     void testDotProduct() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(1, 2, 4);
+
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Verify dot product calculation
@@ -103,6 +105,7 @@ class VectorTest {
     void testSubtract() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(1, 2, 4);
+
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Verify vector subtraction

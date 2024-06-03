@@ -39,7 +39,7 @@ class PlaneTest {
         // Test that the length of the normal is 1
         assertEquals(1, result.length(), DELTA, "ERROR: the length of the normal is not 1");
         // Check that the normal vector is orthogonal to the plane
-        assertTrue(isZero(result.dotProduct(new Vector(0, -1, 1))));
-        assertTrue(isZero(result.dotProduct(new Vector(-1, 1, 0))));
+        assertEquals(0.0, result.dotProduct(new Vector(0, -1, 1)), DELTA, "ERROR: the normal vector is not orthogonal to the vector (0, -1, 1)");
+        assertEquals(0.0, result.dotProduct(new Vector(-1, 1, 0)), DELTA, "ERROR: the normal vector is not orthogonal to the vector (-1, 1, 0)");
     }
 }
