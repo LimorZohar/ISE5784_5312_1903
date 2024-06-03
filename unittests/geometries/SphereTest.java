@@ -19,13 +19,10 @@ class SphereTest {
     public void testGetNormal() {
         // Create a sphere centered at the origin with a radius of 1
         Sphere sphere = new Sphere(new Point(0, 0, 0), 1.0);
-        // Define a point on the sphere's surface
-        Point p = new Point(1, 0, 0);
-        // Define the expected normal vector at the given point
-        Vector expect = new Vector(1, 0, 0).normalize();
 
         // ============ Equivalence Partitions Tests ==============
-        // Test that the normal at the point is as expected
-        assertEquals(expect, sphere.getNormal(p), "getNormal() for Sphere did not return the expected normal");
+        // TC01: Test that the normal at the point is as expected
+        assertEquals(new Vector(1, 0, 0).normalize(), sphere.getNormal(new Point(1, 0, 0)),
+                "getNormal() for Sphere did not return the expected normal");
     }
 }

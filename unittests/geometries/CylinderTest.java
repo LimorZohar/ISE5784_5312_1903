@@ -22,7 +22,9 @@ public class CylinderTest {
         double height = 5.0;
         // Create a cylinder
         Cylinder cylinder = new Cylinder(radius, axis, height);
-        // Check if the cylinder was constructed correctly
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Check if the cylinder was constructed correctly
         assertEquals(radius, cylinder.radius, DELTA,
                 "ERROR: Cylinder radius is not correct");
         assertEquals(axis, cylinder.axis,

@@ -30,12 +30,12 @@ class TubeTest {
         Tube tube = new Tube(2.0, new Ray(new Point(1, 1, 1), new Vector(0, 0, 1)));
 
         // ============ Equivalence Partitions Tests ==============
-        // Test point on the tube
+        // TC01: Test point on the tube
         assertEquals(new Vector(1, 0, 0), tube.getNormal(new Point(3, 1, 2)),
                 "getNormal() for Tube did not return the expected normal");
 
         // =============== Boundary Values Tests ==================
-        // Test point at the boundary of the tube (should be a point on the surface)
+        // TC10: Test point at the boundary of the tube (should be a point on the surface)
         assertEquals(new Vector(1, 0, 0), tube.getNormal(new Point(3, 1, 3)),
                 "getNormal() for Tube at boundary did not return the expected normal");
     }

@@ -13,18 +13,16 @@ class TriangleTest {
     /**
      * Test case for getting the normal vector of a triangle.
      */
-    //לתקן
     @Test
     void testGetNormal() {
         // Arrange
         Triangle triangle = new Triangle(new Point(0, 0, 0), new Point(1, 0, 0),
                 new Point(0, 1, 0));
 
-        // Act
-        Vector normal = triangle.getNormal(new Point(0, 0, 0));
+        // ============ Equivalence Partitions Tests ==============
 
-        // Assert
-        assertEquals(new Vector(0, 0, 1), normal,
+        // TC01: Correct normal vector calculation
+        assertEquals(new Vector(0, 0, 1), triangle.getNormal(new Point(0, 0, 0)),
                 "getNormal() did not return the expected normal vector.");
     }
 }
