@@ -77,6 +77,33 @@ public class Point {
         return Math.sqrt(distanceSquared(p));
     }
 
+    /**
+     * Gets the x-coordinate of this point.
+     *
+     * @return The x-coordinate of this point.
+     */
+    public double getX() {
+        return xyz.d1;
+    }
+
+    /**
+     * Gets the y-coordinate of this point.
+     *
+     * @return The y-coordinate of this point.
+     */
+    public double getY() {
+        return xyz.d2;
+    }
+
+    /**
+     * Gets the z-coordinate of this point.
+     *
+     * @return The z-coordinate of this point.
+     */
+    public double getZ() {
+        return xyz.d3;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

@@ -44,6 +44,17 @@ public class Ray {
     }
 
     /**
+     * Gets a point on the ray
+     * by calculating head + t*direction.
+     *
+     * @param t A scalar to calculate the point.
+     * @return A point on the ray.
+     */
+    public Point getPoint(double t) {
+        return Util.isZero(t) ? head : head.add(direction.scale(t));
+    }
+
+    /**
      * Compares this ray to the specified object. The result is true if and only if the argument is not null
      * and is a Ray object that has the same direction vector and head point as this ray.
      *

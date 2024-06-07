@@ -5,6 +5,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -38,5 +40,29 @@ class TubeTest {
         // TC10: Test point at the boundary of the tube (should be a point on the surface)
         assertEquals(new Vector(1, 0, 0), tube.getNormal(new Point(3, 1, 3)),
                 "getNormal() for Tube at boundary did not return the expected normal");
+    }
+
+    /**
+     * Test method for {@link geometries.Tube#findIntersections(Ray)}.
+     */
+    @Test
+    public void testFindIntersections() {
+        Tube tube = new Tube(1.0, new Ray(new Point(0, 0, 0),new Vector(0, 0, 1)));
+
+        // =============== Boundary Values Tests ==================
+        // Test case 1: Ray intersects the tube
+        List<Point> intersections1 = tube.findIntersections(new Ray( new Point(0, 0, -1),
+                new Vector(1, 1, 1)
+               ));
+        assertNotNull(intersections1,
+                "Expected intersections with the tube");
+        assertTrue(intersections1.size() > 0,
+                "Expected intersections with the tube");
+
+        // Test case 2: Ray does not intersect the tube
+        List<Point> intersections2 = tube.findIntersections(new Ray(new Point(10, 10, 10),
+                new Vector(0, 0, 1)
+              ));
+        assertNull(intersections2, "Expected no intersections with the tube");
     }
 }
