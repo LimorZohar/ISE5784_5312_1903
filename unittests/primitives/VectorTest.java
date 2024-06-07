@@ -10,7 +10,9 @@ import static primitives.Util.isZero;
  * It covers various functionalities and edge cases of the Vector class methods.
  */
 class VectorTest {
-
+    /**
+     * A small delta value for comparing floating-point numbers.
+     */
     private double DELTA = 0.00001;
 
     /**

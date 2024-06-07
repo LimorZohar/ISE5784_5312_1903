@@ -9,10 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
  * A class to test the functionality of the Cylinder class.
  */
 public class CylinderTest {
+
+    /**
+     * A small delta value for comparing floating-point numbers.
+     */
     private double DELTA = 0.00001;
 
     /**
      * Test case for constructing a Cylinder.
+     * This test ensures that the Cylinder constructor initializes the radius, axis, and height correctly.
      */
     @Test
     public void testConstructor() {
@@ -22,6 +27,7 @@ public class CylinderTest {
         double height = 5.0;
         // Create a cylinder
         Cylinder cylinder = new Cylinder(radius, axis, height);
+
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Check if the cylinder was constructed correctly

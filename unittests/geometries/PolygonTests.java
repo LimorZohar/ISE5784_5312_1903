@@ -104,8 +104,8 @@ public class PolygonTests {
     void testTestGetNormal() {
     }
 
-    /** Test method for {@link geometries.Polygon#findIntersections(Ray)}.
-     *
+    /**
+     * Test method for {@link geometries.Polygon#findIntersections(Ray)}.
      */
     @Test
     public void testFindIntersections() {
@@ -113,7 +113,7 @@ public class PolygonTests {
                 new Point(1, 0, 0),
                 new Point(0, 1, 0),
                 new Point(-2, 0, 0),
-                new Point(0,-1,0)
+                new Point(0, -1, 0)
         );
 
         // ============ Equivalence Partitions Tests ==============
@@ -155,11 +155,11 @@ public class PolygonTests {
                 "Ray  isn't on edge of the polygon");
 
         ///TC06: Ray in vertex
-        assertNull(polygon.findIntersections(new Ray(new Point(0, 1, 0),new Vector(-2d, -1d, 3))),
+        assertNull(polygon.findIntersections(new Ray(new Point(0, 1, 0), new Vector(-2d, -1d, 3))),
                 "Ray  isn't on vertex of the polygon");
 
         //TC07: Ray On edge's continuation
-        assertNull(polygon.findIntersections(new Ray(new Point(-1, 2, 0),new Vector(-1d, -2d, 3))),
+        assertNull(polygon.findIntersections(new Ray(new Point(-1, 2, 0), new Vector(-1d, -2d, 3))),
                 "Ray  isn't On edge's continuation");
 
 

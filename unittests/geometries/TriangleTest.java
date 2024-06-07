@@ -80,18 +80,18 @@ class TriangleTest {
 
         // ============ Boundary Values Tests =============
         //TC05: Ray On edge
-        assertNull(triangle.findIntersections(new Ray(new Point(0,0.5d,0.5d),
-                        new Vector(-2.9d,0.85d,-0.5d))),
+        assertNull(triangle.findIntersections(new Ray(new Point(0, 0.5d, 0.5d),
+                        new Vector(-2.9d, 0.85d, -0.5d))),
                 "Ray On edge");
 
         //TC06: Ray in vertex
-        assertNull(triangle.findIntersections(new Ray(new Point(1,0,0),
-                        new Vector(0.32d,-0.09d,0))),
+        assertNull(triangle.findIntersections(new Ray(new Point(1, 0, 0),
+                        new Vector(0.32d, -0.09d, 0))),
                 "Ray On vertex");
 
         //TC07: Ray On edge's continuation
-        assertNull(triangle.findIntersections(new Ray(new Point(0,-0.5d,1.5d),
-                        new Vector(-2.31d,-1d,-1.5d))),
+        assertNull(triangle.findIntersections(new Ray(new Point(0, -0.5d, 1.5d),
+                        new Vector(-2.31d, -1d, -1.5d))),
                 "Ray On edge's continuation");
     }
 }

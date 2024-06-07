@@ -9,7 +9,9 @@ import static primitives.Util.isZero;
  * A class to test the functionality of the Point class.
  */
 public class PointTest {
-
+    /**
+     * A small delta value for comparing floating-point numbers.
+     */
     private static final double DELTA = 0.00001;
 
     /**

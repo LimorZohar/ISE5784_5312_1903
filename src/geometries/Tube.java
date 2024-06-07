@@ -68,6 +68,7 @@ public class Tube extends RadialGeometry {
         // Step 5: Normalize this vector to obtain the normal vector
         return normalVector.normalize();
     }
+
     @Override
     public List<Point> findIntersections(Ray ray) {
         Vector ray_dir = ray.getDirection();
