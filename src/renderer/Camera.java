@@ -1,10 +1,7 @@
 package renderer;
 
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
-
-import static primitives.Util.isZero;
+import primitives.*;
+import static primitives.Util.*;
 
 /**
  * The Camera class represents a camera in a 3D space.
