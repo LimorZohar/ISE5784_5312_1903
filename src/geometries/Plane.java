@@ -21,7 +21,7 @@ public class Plane implements Geometry {
     /**
      * The normal vector to the plane (normalized).
      */
-    final protected Vector vnormal;
+    final protected Vector vNormal;
 
     /**
      * Constructs a new Plane using three points.
@@ -37,7 +37,7 @@ public class Plane implements Geometry {
         Vector v01 = v1.subtract(v0);
         Vector v02 = v2.subtract(v0);
         // Set the normal vector
-        vnormal = v01.crossProduct(v02).normalize();
+        vNormal = v01.crossProduct(v02).normalize();
     }
 
     /**
@@ -48,7 +48,7 @@ public class Plane implements Geometry {
      */
     public Plane(Point center, Vector normal) {
         this.center = center;
-        this.vnormal = normal.normalize();
+        this.vNormal = normal.normalize();
     }
 
     /**
@@ -61,7 +61,7 @@ public class Plane implements Geometry {
     @Override
     public Vector getNormal(Point p) {
         // For a plane, the normal is constant everywhere, so return the pre-calculated normal vector
-        return vnormal;
+        return vNormal;
     }
 
     /**
@@ -71,7 +71,7 @@ public class Plane implements Geometry {
      */
     public Vector getNormal() {
         // For a plane, the normal is constant everywhere, so return the pre-calculated normal vector
-        return vnormal;
+        return vNormal;
     }
 
     /**
@@ -86,28 +86,19 @@ public class Plane implements Geometry {
     @Override
     public List<Point> findIntersections(Ray ray) {
         Vector dir = ray.getDirection();
-        Point head = ray.getHead();
-        Vector n = vnormal;
-        if (center.equals(head)) {
+        //denominator
+        double ndir = alignZero(vNormal.dotProduct(dir));
+        //ray is lying in the plane axis
+        if (isZero(ndir))
             return null;
-        }
+
+        Point head = ray.getHead();
+        if (center.equals(head)) return null;
+
         Vector head_q = center.subtract((head));
         //numerator
-        double nhead_q = alignZero(n.dotProduct(head_q));
-        if (isZero(nhead_q)) {
-            return null;
-        }
-        //denominator
-        double ndir = alignZero(n.dotProduct(dir));
-
-        //ray is lying in the plane axis
-        if (isZero(ndir)) {
-            return null;
-        }
+        double nhead_q = alignZero(vNormal.dotProduct(head_q));
         double t = alignZero(nhead_q / ndir);
-        if (t <= 0) {
-            return null;
-        }
-        return List.of(ray.getPoint(t));
+        return t <= 0 ? null :List.of(ray.getPoint(t));
     }
 }

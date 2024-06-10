@@ -12,7 +12,13 @@ import java.util.List;
  */
 public class Geometries implements Intersectable {
 
-    List<Intersectable> geometries = new LinkedList<>();
+    private final List<Intersectable> geometries = new LinkedList<>();
+
+    /**
+     * Constructs an empty Geometries object.
+     */
+    public Geometries() {
+    }
 
     /**
      * Constructs a Geometries object with a given array of intersectable geometries.
@@ -32,12 +38,6 @@ public class Geometries implements Intersectable {
         Collections.addAll(this.geometries, geometries);
     }
 
-    /**
-     * Constructs an empty Geometries object.
-     */
-    public Geometries() {
-    }
-
     @Override
     public List<Point> findIntersections(Ray ray) {
         // Returns the list of the geometries that intersect with the ray (input)
@@ -45,10 +45,10 @@ public class Geometries implements Intersectable {
         for (Intersectable item : geometries) {
             List<Point> itemPointList = item.findIntersections(ray);
             if (itemPointList != null) {
-                if (pointList == null) {
-                    pointList = new LinkedList<>();
-                }
-                pointList.addAll(itemPointList);
+                if (pointList == null)
+                    pointList = new LinkedList<>(itemPointList);
+                else
+                    pointList.addAll(itemPointList);
             }
         }
         return pointList;

@@ -24,26 +24,17 @@ public class Sphere extends RadialGeometry {
 
         Vector c_head = center.subtract(head);
         double tm = dir.dotProduct(c_head);
-        double d = alignZero(Math.sqrt(c_head.lengthSquared() - tm * tm));
-
-        if (d >= radius) {
+        double dSquared = c_head.lengthSquared() - tm * tm;
+        double thSquared = radiusSquared - dSquared;
+        if (alignZero(thSquared) <= 0)
             return null;
-        }
 
-        double th = alignZero(Math.sqrt(radius * radius - d * d));
-        double t1 = alignZero(tm - th);
+        double th = Math.sqrt(thSquared); // t1 < t2 (always)
         double t2 = alignZero(tm + th);
+        if (t2 <= 0) return null;
 
-        if (t1 > 0 && t2 > 0) {
-            return List.of(ray.getPoint(t1), ray.getPoint(t2));
-        }
-        if (t1 > 0) {
-            return List.of(ray.getPoint(t1));
-        }
-        if (t2 > 0) {
-            return List.of(ray.getPoint(t2));
-        }
-        return null;
+        double t1 = alignZero(tm - th);
+        return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
     }
 
     /**

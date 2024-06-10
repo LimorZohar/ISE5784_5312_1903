@@ -60,7 +60,7 @@ public class Tube extends RadialGeometry {
         double proj = axis.getDirection().dotProduct(vectorToPoint);
 
         // Step 3: If the projection length is zero, the projection point on the axis is the start of the axis (p0)
-        Point projectionPoint = isZero(proj) ? axis.getHead() : axis.getHead().add(axis.getDirection().scale(proj));
+        Point projectionPoint = axis.getPoint(proj);
 
         // Step 4: Calculate the vector from the projection point on the axis to the given point
         Vector normalVector = point.subtract(projectionPoint);
@@ -71,7 +71,6 @@ public class Tube extends RadialGeometry {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-
         return null;
     }
 }
