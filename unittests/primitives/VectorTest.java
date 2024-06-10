@@ -167,7 +167,7 @@ class VectorTest {
                 "ERROR: crossProduct() for parallel vectors does not throw an exception");
 
         // TC11: Verify the length of the cross product result
-        assertTrue(isZero(vr.length() - v1.length() * v1orthogonal.length()),
+        assertEquals(vr.length() , v1.length() * v1orthogonal.length(), DELTA,
                 "ERROR: crossProduct() wrong result length");
 
         // TC12: Verify the cross product result is orthogonal to the original vectors
