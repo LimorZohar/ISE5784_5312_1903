@@ -85,7 +85,6 @@ public class Camera implements Cloneable {
      * @return a new Builder instance for the Camera class
      */
     public static Builder getBuilder() {
-        // Implement builder pattern if needed
         return new Builder();
     }
 
@@ -107,51 +106,84 @@ public class Camera implements Cloneable {
      * Builder class for constructing Camera instances.
      */
     public static class Builder {
-        // Implement builder pattern fields and methods if needed
+        // Builder instance of Camera
+        private final Camera camera = new Camera();
+
+        /**
+         * Sets the location of the camera.
+         *
+         * @param location the location to set
+         * @return the Builder instance
+         * @throws IllegalArgumentException if the location is null
+         */
+        public Builder setLocation(Point location) {
+            if (location == null) {
+                throw new IllegalArgumentException("Location cannot be null");
+            }
+            camera.location = location;
+            return this;
+        }
+
+        /**
+         * Sets the direction of the camera.
+         *
+         * @param vTo the forward direction vector
+         * @param vUp the up direction vector
+         * @return the Builder instance
+         * @throws IllegalArgumentException if the vectors are null or not orthogonal
+         */
+        public Builder setDirection(Vector vTo, Vector vUp) {
+            if (vTo == null || vUp == null) {
+                throw new IllegalArgumentException("Direction vectors cannot be null");
+            }
+            if (!isZero(vTo.dotProduct(vUp))) {
+                throw new IllegalArgumentException("Direction vectors must be orthogonal");
+            }
+            camera.v_to = vTo.normalize();
+            camera.v_up = vUp.normalize();
+            camera.v_right = vTo.crossProduct(vUp).normalize();
+            return this;
+        }
+
+        /**
+         * Sets the size of the view plane.
+         *
+         * @param width  the width to set
+         * @param height the height to set
+         * @return the Builder instance
+         * @throws IllegalArgumentException if width or height are non-positive
+         */
+        public Builder setVpSize(double width, double height) {
+            if (width <= 0 || height <= 0) {
+                throw new IllegalArgumentException("Width and height must be positive");
+            }
+            camera.width = width;
+            camera.height = height;
+            return this;
+        }
+
+        /**
+         * Sets the distance from the camera to the view plane.
+         *
+         * @param distance the distance to set
+         * @return the Builder instance
+         * @throws IllegalArgumentException if distance is non-positive
+         */
+        public Builder setVpDistance(double distance) {
+            if (distance <= 0) {
+                throw new IllegalArgumentException("Distance must be positive");
+            }
+            camera.distance = distance;
+            return this;
+        }
+
+        /**
+         * Builds and returns the Camera instance.
+         *
+         * @return the constructed Camera instance
+         */
+        public Camera build() {
+            return camera;
+        }
     }
-
-    private final Camera camera = new Camera();
-
-    /**
-     * Sets the location of the camera.
-     *
-     * @param location the location to set
-     * @return the Builder instance
-     * @throws IllegalArgumentException if the location is null
-     */
-    public Builder setLocation(Point location) {
-        return null;
-
-    }
-
-    /**
-     * Sets the direction of the camera.
-     *
-     * @param vTo the forward direction vector
-     * @param vUp the up direction vector
-     * @return the Builder instance
-     * @throws IllegalArgumentException if the vectors are null or not orthogonal
-     */
-    public Builder setDirection(Vector vTo, Vector vUp) {
-        return null;
-
-    }
-
-    /**
-     * Sets the size of the view plane.
-     *
-     * @param width  the width to set
-     * @param height the height to set
-     * @return the Builder instance
-     * @throws IllegalArgumentException if width or height are non-positive
-     */
-    public Builder setVpSize(double width, double height) {
-        return null;
-    }
-
-    public Builder setVpDistance(double distance) {
-        return null;
-    }
-
-
 }
