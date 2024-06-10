@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for primitives.Ray class
+ * Unit tests for primitives.Ray class.
  */
 class RayTest {
     /**
@@ -18,19 +18,16 @@ class RayTest {
         Ray ray3 = new Ray(new Point(0, 0, 0), new Vector(1, 0, 0));
 
         // =============== Boundary Values Tests ==================
-        // Test Negative distance
-        assertEquals(new Point(-1, 0, 0),
-                ray1.getPoint(-1),
+        // TC11 : Test Negative distance
+        assertEquals(new Point(-1, 0, 0), ray1.getPoint(-1),
                 "Negative distance");
 
-        // Test Zero distance
-        assertEquals(new Point(0, 0, 0),
-                ray2.getPoint(0),
+        // TC12 : Test Zero distance
+        assertEquals(new Point(0, 0, 0), ray2.getPoint(0),
                 "Zero distance");
 
-        // Test Positive distance
-        assertEquals(new Point(2, 0, 0),
-                ray3.getPoint(2),
+        // TC13 : Test Positive distance
+        assertEquals(new Point(2, 0, 0), ray3.getPoint(2),
                 "Positive distance");
     }
 }
