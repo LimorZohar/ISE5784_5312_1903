@@ -3,7 +3,7 @@ package primitives;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
 /**
  * The {@code VectorTest} class contains unit tests for the {@link Vector} class.

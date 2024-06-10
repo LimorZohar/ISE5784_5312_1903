@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
 /**
  * Unit tests for the Plane class.
