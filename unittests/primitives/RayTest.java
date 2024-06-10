@@ -13,9 +13,9 @@ class RayTest {
      */
     @Test
     void testGetPoint() {
-        Ray ray1 = new Ray(new Point(0, 0, 0),new Vector(1, 0, 0));
-        Ray ray2 = new Ray(new Point(0, 0, 0),new Vector(1, 0, 0));
-        Ray ray3 = new Ray(new Point(0, 0, 0),new Vector(1, 0, 0));
+        Ray ray1 = new Ray(new Point(0, 0, 0), new Vector(1, 0, 0));
+        Ray ray2 = new Ray(new Point(0, 0, 0), new Vector(1, 0, 0));
+        Ray ray3 = new Ray(new Point(0, 0, 0), new Vector(1, 0, 0));
 
         // =============== Boundary Values Tests ==================
         // Test Negative distance
