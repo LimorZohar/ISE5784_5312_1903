@@ -123,9 +123,7 @@ public class Polygon implements Geometry {
             vn = v.dotProduct(n);
 
             //no intersection
-            if (isZero(vn)) {
-                return null;
-            }
+            if (isZero(vn)) return null;
 
             //not the same sign
             if (vn > 0 != positive) {
@@ -133,6 +131,6 @@ public class Polygon implements Geometry {
             }
         }
 
-        return List.of(result.get(0));
+        return result;
     }
 }
