@@ -1,25 +1,21 @@
 package renderer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
-import primitives.*;
-import renderer.*;
-import scene.Scene;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testing Camera Class
- * @author Dan
- */
 class CameraTest {
+
     /** Camera builder for the tests */
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
-            .setRayTracer(new SimpleRayTracer(new Scene("Test")))
-            .setImageWriter(new ImageWriter("Test", 1, 1))
+            //.setRayTracer(new SimpleRayTracer(new Scene("Test")))
+            // .setImageWriter(new ImageWriter("Test", 1, 1))
             .setLocation(Point.ZERO)
             .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
-            .setVpDistance(10);
+            .setVPDistance(10);
 
     /**
      * Test method for
@@ -60,7 +56,5 @@ class CameraTest {
         // BV06: 3X3 Corner (0,0)
         assertEquals(new Ray(Point.ZERO, new Vector(2, -2, -10)),
                 camera2.constructRay(3, 3, 0, 0), badRay);
-
     }
-
 }
