@@ -1,8 +1,11 @@
 package renderer;
+
 import org.junit.jupiter.api.*;
 import primitives.*;
 import geometries.*;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -10,7 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * and findIntersections(Ray) of Sphere, Plane, and Triangle.
  */
 public class CameraIntegrationsTest {
-
+    /**
+     * A point representing the origin (0,0,0) in 3D space.
+     */
     static final Point ZERO_POINT = new Point(0, 0, 0);
 
     /**
@@ -22,7 +27,7 @@ public class CameraIntegrationsTest {
      * @param nY       number of columns (int)
      * @return the number of intersections
      */
-    private int countIntersectionsCameraGeometry(Camera camera, int nX, int nY, Intersectable geometry){
+    private int countIntersectionsCameraGeometry(Camera camera, int nX, int nY, Intersectable geometry) {
         int count = 0;
         List<Point> intersections;
 
@@ -58,24 +63,24 @@ public class CameraIntegrationsTest {
                 .build();
 
         //TC01: Sphere r=1 (2 intersections)
-        assertEquals(2, countIntersectionsCameraGeometry(camera1, 3,3,
-                new Sphere(new Point(0,0,-3),1d)), "Bad number of intersections");
+        assertEquals(2, countIntersectionsCameraGeometry(camera1, 3, 3,
+                new Sphere(new Point(0, 0, -3), 1d)), "Bad number of intersections");
 
         //TC02: Sphere r=2.5 (18 intersections)
         assertEquals(18, countIntersectionsCameraGeometry(camera2, 3, 3,
-                new Sphere(new Point(0,0,-2.5),2.5)),"Bad number of intersections");
+                new Sphere(new Point(0, 0, -2.5), 2.5)), "Bad number of intersections");
 
         //TC03: Sphere r=2 (10 intersections)
         assertEquals(10, countIntersectionsCameraGeometry(camera2, 3, 3,
-                new Sphere(new Point(0,0,-2),2d)),"Bad number of intersections");
+                new Sphere(new Point(0, 0, -2), 2d)), "Bad number of intersections");
 
         //TC04: Sphere r=4 (9 intersections)
-        assertEquals(9, countIntersectionsCameraGeometry(camera2,3,3,
-                new Sphere(new Point(0, 0, 1),4d)), "Bad number of intersections");
+        assertEquals(9, countIntersectionsCameraGeometry(camera2, 3, 3,
+                new Sphere(new Point(0, 0, 1), 4d)), "Bad number of intersections");
 
         //TC05: Sphere r=0.5 (0 intersections)
-        assertEquals(0, countIntersectionsCameraGeometry(camera1,3,3,
-                new Sphere(new Point(0, 0, 1),0.5)), "Bad number of intersections");
+        assertEquals(0, countIntersectionsCameraGeometry(camera1, 3, 3,
+                new Sphere(new Point(0, 0, 1), 0.5)), "Bad number of intersections");
     }
 
     /**
@@ -94,12 +99,12 @@ public class CameraIntegrationsTest {
                 .build();
 
         //TC01: Small triangle (1 intersection)
-        assertEquals(1, countIntersectionsCameraGeometry(camera,3,3,new Triangle(new Point(1, -1, -2),
-                new Point(-1, -1, -2), new Point(0, 1, -2))),"Bad number of intersections");
+        assertEquals(1, countIntersectionsCameraGeometry(camera, 3, 3, new Triangle(new Point(1, -1, -2),
+                new Point(-1, -1, -2), new Point(0, 1, -2))), "Bad number of intersections");
 
         //TC02: Large triangle (2 intersection)
-        assertEquals(2, countIntersectionsCameraGeometry(camera,3,3,new Triangle(new Point(1, -1, -2),
-                new Point(-1, -1, -2), new Point(0, 20, -2))),"Bad number of intersections");
+        assertEquals(2, countIntersectionsCameraGeometry(camera, 3, 3, new Triangle(new Point(1, -1, -2),
+                new Point(-1, -1, -2), new Point(0, 20, -2))), "Bad number of intersections");
     }
 
 
@@ -120,19 +125,19 @@ public class CameraIntegrationsTest {
 
 
         //TC01: The plane parallel to the View Plane (9 intersections)
-        assertEquals(countIntersectionsCameraGeometry(camera,3,3 ,new Plane(new Point(0, 0, 5),
-                new Vector(0, 0, 1))), 9,"Bad number of intersections");
+        assertEquals(countIntersectionsCameraGeometry(camera, 3, 3, new Plane(new Point(0, 0, 5),
+                new Vector(0, 0, 1))), 9, "Bad number of intersections");
 
         //TC02: Diagonal plane to the View Plane (9 intersections)
-        assertEquals(countIntersectionsCameraGeometry(camera,3,3, new Plane(new Point(0, 0, 5),
-                new Vector(0, -1, 2))), 9,"Bad number of intersections");
+        assertEquals(countIntersectionsCameraGeometry(camera, 3, 3, new Plane(new Point(0, 0, 5),
+                new Vector(0, -1, 2))), 9, "Bad number of intersections");
 
         ////TC03: Diagonal plane with an obtuse angle to the View Plane (6 intersections)
-        assertEquals(6, countIntersectionsCameraGeometry(camera, 3,3, new Plane(new Point(0,0,2),
-                new Vector(1,1,1))), "Bad number of intersections");
+        assertEquals(6, countIntersectionsCameraGeometry(camera, 3, 3, new Plane(new Point(0, 0, 2),
+                new Vector(1, 1, 1))), "Bad number of intersections");
 
         // TC04:The plane behind the view plane (0 intersections)
         assertEquals(0, countIntersectionsCameraGeometry(camera, 3, 3, new Plane(new Point(0, 0, -4),
-                new Vector(0,0,1))), "Bad number of intersections");
+                new Vector(0, 0, 1))), "Bad number of intersections");
     }
 }
