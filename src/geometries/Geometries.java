@@ -11,7 +11,9 @@ import java.util.List;
  * Geometries class represents a collection of intersectable geometries.
  */
 public class Geometries implements Intersectable {
-
+    /**
+     * A list that holds the intersectable geometries.
+     */
     private final List<Intersectable> geometries = new LinkedList<>();
 
     /**
