@@ -221,6 +221,9 @@ public class Camera implements Cloneable {
                 throw new RuntimeException(e);
             }
         }
+
+        public Object setImageWriter(ImageWriter baseRenderTest) {
+        }
     }
 
     /**
