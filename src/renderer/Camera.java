@@ -254,17 +254,15 @@ public class Camera implements Cloneable {
         //if not on zero coordinates add the delta distance
         // to the center of point (i,j)
         // to reach it
-        if (!Util.isZero(xj)) {
+        if (!isZero(xj)) {
             pij = pij.add(vRight.scale(xj));
         }
-        if (!Util.isZero(yi)) {
+        if (!isZero(yi)) {
             pij = pij.add(vUp.scale(yi));
         }
 
-        // vector from camera's eye in the direction of point(i,j) in the view plane
-        Vector Vij = pij.subtract(location);
-
-        return new Ray(location, Vij);
+        // return location and vector from camera's eye in the direction of point(i,j) in the view plane
+        return new Ray(location, pij.subtract(location));
     }
 
 }
