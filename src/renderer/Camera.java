@@ -222,8 +222,17 @@ public class Camera implements Cloneable {
             }
         }
 
-        public Object setImageWriter(ImageWriter baseRenderTest) {
+        //שינויים שהמחלקה RenderTests מחייבת לעשות
+        public Builder setImageWriter(ImageWriter xmlRenderTest) {
+            return null;
         }
+
+        public Builder setRayTracer(SimpleRayTracer simpleRayTracer) {
+            return null;
+        }
+        //        public Object setImageWriter(ImageWriter baseRenderTest) {
+        //            this.
+        //        }
     }
 
     /**
