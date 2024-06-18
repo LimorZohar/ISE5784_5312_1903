@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Represents a ray in three-dimensional space defined by a head point and a direction vector.
  */
@@ -55,6 +57,16 @@ public class Ray {
     }
 
     /**
+     * Finds the closest point from a list of points to the head of the ray.
+     *
+     * @param pointList A list of points to search from.
+     * @return The closest point to the head of the ray, or null if the list is empty.
+     */
+    public Point findClosestPoint(List<Point> pointList) {
+        return null;
+    }
+
+    /**
      * Compares this ray to the specified object. The result is true if and only if the argument is not null
      * and is a Ray object that has the same direction vector and head point as this ray.
      *
@@ -77,4 +89,6 @@ public class Ray {
     public String toString() {
         return this.direction + "->" + this.head;
     }
+
+
 }
