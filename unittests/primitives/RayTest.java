@@ -40,7 +40,8 @@ class RayTest {
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Point in the middle is the closest
-        List<Point> points = List.of(new Point(5, 0, 0), new Point(2, 0, 0), new Point(10, 0, 0));
+        List<Point> points = List.of(new Point(5, 0, 0), new Point(2, 0, 0),
+                new Point(10, 0, 0));
         assertEquals(new Point(2, 0, 0), ray.findClosestPoint(points),
                 "EP: The closest point is in the middle of the list");
 

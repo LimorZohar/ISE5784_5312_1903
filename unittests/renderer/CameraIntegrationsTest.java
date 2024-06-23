@@ -52,14 +52,14 @@ public class CameraIntegrationsTest {
                 .setLocation(Point.ZERO)
                 .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
                 .setVpSize(3d, 3d)
-                .setVPDistance(1d)
+                .setVpDistance(1d)
                 .build();
 
         Camera camera2 = Camera.getBuilder()
                 .setLocation(new Point(0, 0, 0.5))
                 .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
                 .setVpSize(3d, 3d)
-                .setVPDistance(1d)
+                .setVpDistance(1d)
                 .build();
 
         //TC01: Sphere r=1 (2 intersections)
@@ -95,7 +95,7 @@ public class CameraIntegrationsTest {
                 .setLocation(Point.ZERO)
                 .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
                 .setVpSize(3d, 3d)
-                .setVPDistance(1d)
+                .setVpDistance(1d)
                 .build();
 
         //TC01: Small triangle (1 intersection)
@@ -120,7 +120,7 @@ public class CameraIntegrationsTest {
                 .setLocation(Point.ZERO)
                 .setDirection(new Vector(0, 0, 1), new Vector(0, -1, 0))
                 .setVpSize(3d, 3d)
-                .setVPDistance(1d)
+                .setVpDistance(1d)
                 .build();
 
 

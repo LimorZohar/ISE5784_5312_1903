@@ -2,7 +2,7 @@ package scene;
 
 import geometries.Geometries;
 import lighting.AmbientLight;
-import primitives.*;
+import primitives.Color;
 
 /**
  * Scene class represents a scene in 3D space containing various geometries and lighting conditions.
@@ -22,7 +22,7 @@ public class Scene {
     /**
      * The ambient light of the scene. Default is no ambient light.
      */
-    public AmbientLight ambientLight = AmbientLight.None;
+    public AmbientLight ambientLight = AmbientLight.NONE;
 
     /**
      * The collection of geometries in the scene.
@@ -57,7 +57,7 @@ public class Scene {
      * @throws IllegalArgumentException If the ambient light is set to AmbientLight.None.
      */
     public Scene setAmbientLight(AmbientLight ambientLight) {
-        if (ambientLight == AmbientLight.None)
+        if (ambientLight == AmbientLight.NONE)
             throw new IllegalArgumentException("Ambient light cannot be set to None.");
         this.ambientLight = ambientLight;
         return this;

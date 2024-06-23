@@ -63,8 +63,22 @@ public class Ray {
      * @return The closest point to the head of the ray, or null if the list is empty.
      */
     public Point findClosestPoint(List<Point> pointList) {
-        return null;
+        if (pointList == null || pointList.isEmpty()) {
+            return null;
+        }
+        Point closestPoint = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (Point point : pointList) {
+            double distance = head.distance(point);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestPoint = point;
+            }
+        }
+        return closestPoint;
     }
+
 
     /**
      * Compares this ray to the specified object. The result is true if and only if the argument is not null
