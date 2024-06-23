@@ -7,21 +7,24 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the Camera class.
+ */
 class CameraTest {
 
     /**
-     * Camera builder for the tests
+     * Camera builder for the tests.
      */
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             //.setRayTracer(new SimpleRayTracer(new Scene("Test")))
-            // .setImageWriter(new ImageWriter("Test", 1, 1))
+            //.setImageWriter(new ImageWriter("Test", 1, 1))
             .setLocation(Point.ZERO)
             .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
             .setVpDistance(10);
 
     /**
-     * Test method for
-     * {@link renderer.Camera#constructRay(int, int, int, int)}.
+     * Test method for {@link renderer.Camera#constructRay(int, int, int, int)}.
+     * This method tests the construction of rays through different pixels on the view plane.
      */
     @Test
     void testConstructRay() {

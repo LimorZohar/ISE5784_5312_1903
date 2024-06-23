@@ -7,55 +7,97 @@ import java.util.MissingResourceException;
 import static primitives.Util.*;
 
 /**
- * Camera class
+ * Camera class represents a camera in a 3D space with various parameters and methods to construct rays through pixels and render images.
  */
 public class Camera implements Cloneable {
-    private Point p0;
-    private Vector vTo, vUp, vRight;
-    private double width = 0, height = 0, distance = 0;
 
+    /**
+     * The camera's location in 3D space.
+     */
+    private Point p0;
+
+    /**
+     * Vector pointing towards the view direction.
+     */
+    private Vector vTo;
+
+    /**
+     * Vector pointing upwards.
+     */
+    private Vector vUp;
+
+    /**
+     * Vector pointing to the right, perpendicular to both vTo and vUp.
+     */
+    private Vector vRight;
+
+    /**
+     * The width of the view plane.
+     */
+    private double width = 0;
+
+    /**
+     * The height of the view plane.
+     */
+    private double height = 0;
+
+    /**
+     * The distance from the camera to the view plane.
+     */
+    private double distance = 0;
+
+    /**
+     * The ImageWriter used to write the image.
+     */
     private ImageWriter imageWriter;
+
+    /**
+     * The RayTracer used to trace rays and determine pixel colors.
+     */
     private RayTracerBase rayTracer;
 
     /**
-     * empty constructor
+     * Empty constructor for Camera.
      */
-    private Camera() { }
+    private Camera() {
+    }
 
     /**
-     * returns a new Builder
-     * @return Builder
+     * Returns a new Builder instance for constructing a Camera.
+     *
+     * @return Builder instance
      */
     public static Builder getBuilder() {
         return new Builder();
     }
 
     /**
-     * Calculation of the pixel point in the image plane
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
-     * @return
+     * Calculation of the pixel point in the image plane.
+     *
+     * @param nX number of horizontal pixels
+     * @param nY number of vertical pixels
+     * @param j  horizontal index of the pixel
+     * @param i  vertical index of the pixel
+     * @return Ray from the camera through the pixel
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        //pixels width and height
+        // pixels width and height
         double rx = width / nX;
         double ry = height / nY;
 
-        //point[i,j] in view-plane coordinates (center Point)
+        // point[i,j] in view-plane coordinates (center Point)
         Point pij = p0.add(vTo.scale(distance));
 
-        //delta values for moving on the view plane
+        // delta values for moving on the view plane
         double xj = (j - (nX - 1) / 2d) * rx;
         double yi = -(i - (nY - 1) / 2d) * ry;
 
         if (!isZero(xj)) {
-            //add the delta distance to the center of point (i,j)
+            // add the delta distance to the center of point (i,j)
             pij = pij.add(vRight.scale(xj));
         }
         if (!isZero(yi)) {
-            //add the delta distance to the center of point (i,j)
+            // add the delta distance to the center of point (i,j)
             pij = pij.add(vUp.scale(yi));
         }
         Vector Vij = pij.subtract(p0); // vector from camera's place
@@ -64,8 +106,9 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Casts a ray for each pixel
-     * @return a camera
+     * Casts a ray for each pixel in the image plane and renders the image.
+     *
+     * @return Camera instance
      */
     public Camera renderImage() {
         if (this.imageWriter == null)
@@ -75,23 +118,24 @@ public class Camera implements Cloneable {
 
         for (int i = 0; i < this.imageWriter.getNx(); i++) {
             for (int j = 0; j < this.imageWriter.getNy(); j++) {
-                castRay(i,j);
+                castRay(i, j);
             }
         }
         return this;
     }
 
     /**
-     * this function prints a grid net on the image
+     * Prints a grid on the image.
+     *
      * @param interval number of height and width of the grid boxes
-     * @param color for the grid
-     * @return camera
+     * @param color    for the grid
+     * @return Camera instance
      */
     public Camera printGrid(int interval, Color color) {
-        //running on the view plane
+        // running on the view plane
         for (int i = 0; i < imageWriter.getNx(); i++) {
             for (int j = 0; j < imageWriter.getNy(); j++) {
-                //create the net of the grid
+                // create the net of the grid
                 if (i % interval == 0 || j % interval == 0) {
                     imageWriter.writePixel(i, j, color);
                 }
@@ -99,52 +143,55 @@ public class Camera implements Cloneable {
         }
         return this;
     }
+
     /**
-     * This function starts the method to create the image
+     * Starts the process to create the image.
      */
     public void writeToImage() {
         imageWriter.writeToImage();
     }
 
     /**
-     * this function colors the j pixels
-     * @param i  resolution
-     * @param j number of pixels
+     * Casts a ray through the specified pixel and colors the pixel based on the ray tracer.
+     *
+     * @param i horizontal index of the pixel
+     * @param j vertical index of the pixel
      */
-    private void castRay(int i,int j){
+    private void castRay(int i, int j) {
         Ray ray = constructRay(this.imageWriter.getNx(), this.imageWriter.getNy(), j, i);
         Color color = rayTracer.traceRay(ray);
         imageWriter.writePixel(j, i, color);
     }
 
     /**
-     * Builder class in camera class
+     * Builder class for constructing a Camera instance.
      */
     public static class Builder {
         private final Camera camera;
 
         /**
-         * Builder empty constructor
-         * acts like empty constructor for camera
+         * Builder empty constructor.
+         * Acts as an empty constructor for Camera.
          */
         public Builder() {
             this.camera = new Camera();
         }
 
         /**
-         * Builder constructor with parameters
-         * acts like copy constructor for camera
-         * @param camera
+         * Builder constructor with parameters.
+         * Acts as a copy constructor for Camera.
+         *
+         * @param camera Camera instance to copy
          */
         public Builder(Camera camera) {
             this.camera = camera;
         }
 
-        //setters:
         /**
-         * set Location
-         * @param location
-         * @return Builder
+         * Sets the location of the camera.
+         *
+         * @param location Point representing the camera's location
+         * @return Builder instance
          */
         public Builder setLocation(Point location) {
             if (location == null) {
@@ -155,10 +202,11 @@ public class Camera implements Cloneable {
         }
 
         /**
-         * set Direction
-         * @param vTo
-         * @param vUp
-         * @return Builder
+         * Sets the direction of the camera.
+         *
+         * @param vTo Vector pointing to the view direction
+         * @param vUp Vector pointing to the up direction
+         * @return Builder instance
          */
         public Builder setDirection(Vector vTo, Vector vUp) {
             if (vTo == null || vUp == null) {
@@ -174,10 +222,11 @@ public class Camera implements Cloneable {
         }
 
         /**
-         * set VpSize => sets height and width
-         * @param width
-         * @param height
-         * @return
+         * Sets the size of the view plane.
+         *
+         * @param width  width of the view plane
+         * @param height height of the view plane
+         * @return Builder instance
          */
         public Builder setVpSize(double width, double height) {
             if (width <= 0 || height <= 0) {
@@ -189,9 +238,10 @@ public class Camera implements Cloneable {
         }
 
         /**
-         * set VpDistance => distance of camera
-         * @param vpDistance
-         * @return
+         * Sets the distance of the camera from the view plane.
+         *
+         * @param vpDistance distance of the camera from the view plane
+         * @return Builder instance
          */
         public Builder setVpDistance(double vpDistance) {
             if (vpDistance <= 0) {
@@ -202,9 +252,9 @@ public class Camera implements Cloneable {
         }
 
         /**
-         * return the camera
-         * after the function checks the parameters in the camera
-         * @return Camera
+         * Returns the constructed Camera instance after validating the parameters.
+         *
+         * @return Camera instance
          */
         public Camera build() {
             if (camera.p0 == null) {
@@ -219,25 +269,32 @@ public class Camera implements Cloneable {
             if (camera.distance == 0) {
                 throw new MissingResourceException("Missing rendering data", "Camera", "viewport distance");
             }
-            try{
+            try {
                 return (Camera) camera.clone();
             } catch (CloneNotSupportedException e) {
                 throw null;
             }
         }
 
+        /**
+         * Sets the ImageWriter for the camera.
+         *
+         * @param imageWriter ImageWriter instance
+         * @return Builder instance
+         */
         public Builder setImageWriter(ImageWriter imageWriter) {
             if (imageWriter == null) {
-                throw new IllegalArgumentException("Distance must be greater than 0");
+                throw new IllegalArgumentException("ImageWriter cannot be null");
             }
             camera.imageWriter = imageWriter;
             return this;
         }
 
         /**
-         * set RayTracer
-         * @param rayTracer to know the color in a point
-         * @return this
+         * Sets the RayTracer for the camera.
+         *
+         * @param rayTracer RayTracerBase instance
+         * @return Builder instance
          */
         public Builder setRayTracer(RayTracerBase rayTracer) {
             if (rayTracer == null) {

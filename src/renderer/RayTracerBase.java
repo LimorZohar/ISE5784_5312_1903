@@ -18,6 +18,7 @@ public abstract class RayTracerBase {
      * trace the ray and calculate the rey's intersection point color
      * and any other object (or the background if the rey's intersection point
      * doesn't exist)
+     *
      * @param ray for the ray that intersects the point
      * @return Color for the pixel
      */
@@ -25,6 +26,7 @@ public abstract class RayTracerBase {
 
     /**
      * constructor
+     *
      * @param scene A scene where the department is initialized
      */
     public RayTracerBase(Scene scene) {

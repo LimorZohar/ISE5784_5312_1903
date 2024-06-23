@@ -5,8 +5,15 @@ import primitives.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the ImageWriter class.
+ */
 class ImageWriterTest {
 
+    /**
+     * Test method for {@link renderer.ImageWriter#writeToImage()}.
+     * This test creates an image with a yellow background.
+     */
     @Test
     void writeToImage() {
         ImageWriter imageWriter = new ImageWriter("yellow", 800, 500);
