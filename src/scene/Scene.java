@@ -12,7 +12,7 @@ public class Scene {
     /**
      * The name of the scene.
      */
-    public String name;
+    public final String name;
 
     /**
      * The background color of the scene. Default is black.
@@ -54,11 +54,8 @@ public class Scene {
      *
      * @param ambientLight The ambient light to set.
      * @return The current scene object (this) for method chaining.
-     * @throws IllegalArgumentException If the ambient light is set to AmbientLight.None.
      */
     public Scene setAmbientLight(AmbientLight ambientLight) {
-        if (ambientLight == AmbientLight.NONE)
-            throw new IllegalArgumentException("Ambient light cannot be set to None.");
         this.ambientLight = ambientLight;
         return this;
     }

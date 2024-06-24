@@ -86,18 +86,18 @@ public class Plane implements Geometry {
     public List<Point> findIntersections(Ray ray) {
         Vector dir = ray.getDirection();
         //denominator
-        double ndir = alignZero(vNormal.dotProduct(dir));
+        double nDir = alignZero(vNormal.dotProduct(dir));
         //ray is lying in the plane axis
-        if (isZero(ndir))
+        if (isZero(nDir))
             return null;
 
         Point head = ray.getHead();
         if (center.equals(head)) return null;
 
-        Vector head_q = center.subtract((head));
+        Vector headQ = center.subtract((head));
         //numerator
-        double nhead_q = alignZero(vNormal.dotProduct(head_q));
-        double t = alignZero(nhead_q / ndir);
+        double nHeadQ = alignZero(vNormal.dotProduct(headQ));
+        double t = alignZero(nHeadQ / nDir);
         return t <= 0 ? null : List.of(ray.getPoint(t));
     }
 }

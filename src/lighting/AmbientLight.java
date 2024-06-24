@@ -12,7 +12,7 @@ public class AmbientLight {
     /**
      * The intensity of the ambient light.
      */
-    private final Color _intensity;
+    private final Color intensity;
 
     /**
      * Field is initialized to default - the color black.
@@ -27,7 +27,7 @@ public class AmbientLight {
      */
     public AmbientLight(Color Ia, Double3 Ka) {
         // Calculation of the intensity after applying the light factor.
-        this._intensity = Ia.scale(Ka);
+        this.intensity = Ia.scale(Ka);
     }
 
     /**
@@ -38,7 +38,7 @@ public class AmbientLight {
      */
     public AmbientLight(Color Ia, double Kad) {
         // Calculation of the intensity after applying the light factor.
-        this._intensity = Ia.scale(Kad);
+        this.intensity = Ia.scale(Kad);
     }
 
     /**
@@ -47,6 +47,6 @@ public class AmbientLight {
      * @return The intensity of the ambient light.
      */
     public Color getIntensity() {
-        return _intensity;
+        return intensity;
     }
 }

@@ -67,10 +67,10 @@ public class Ray {
             return null;
         }
         Point closestPoint = null;
-        double minDistance = Double.MAX_VALUE;
+        double minDistance = Double.POSITIVE_INFINITY;
 
         for (Point point : pointList) {
-            double distance = head.distance(point);
+            double distance = head.distanceSquared(point);
             if (distance < minDistance) {
                 minDistance = distance;
                 closestPoint = point;

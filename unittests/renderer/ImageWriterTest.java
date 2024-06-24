@@ -1,25 +1,40 @@
 package renderer;
 
 import org.junit.jupiter.api.Test;
-import primitives.*;
+import primitives.Color;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Unit tests for the ImageWriter class.
- */
 class ImageWriterTest {
 
     /**
-     * Test method for {@link renderer.ImageWriter#writeToImage()}.
-     * This test creates an image with a yellow background.
+     * The width of the view plane in pixels.
      */
+    int nX = 800;
+    /**
+     * The height of the view plane in pixels.
+     */
+    int nY = 500;
+    /**
+     * The color yellow for the yellow square on the view plane.
+     */
+    Color yellowColor = new Color(255d, 255d, 0d);
+    /**
+     * The color red for the net on the view plane.
+     */
+    Color redColor = new Color(255d, 0d, 0d);
+
     @Test
-    void writeToImage() {
-        ImageWriter imageWriter = new ImageWriter("yellow", 800, 500);
-        for (int i = 0; i < imageWriter.getNx(); i++) {
-            for (int j = 0; j < imageWriter.getNy(); j++) {
-                imageWriter.writePixel(i, j, new Color(java.awt.Color.YELLOW));
+    void testWriteToImage() {
+        ImageWriter imageWriter = new ImageWriter("yellow", nX, nY);
+        //=== running on the view plane===//
+        for (int i = 0; i < nX; i++) {
+            for (int j = 0; j < nY; j++) {
+                //=== create the net ===//
+                if (i % 50 == 0 || j % 50 == 0) {
+                    imageWriter.writePixel(i, j, redColor);
+                } else {
+                    imageWriter.writePixel(i, j, yellowColor);
+                }
             }
         }
         imageWriter.writeToImage();

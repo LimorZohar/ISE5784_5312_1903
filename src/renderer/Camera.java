@@ -92,17 +92,14 @@ public class Camera implements Cloneable {
         double xj = (j - (nX - 1) / 2d) * rx;
         double yi = -(i - (nY - 1) / 2d) * ry;
 
-        if (!isZero(xj)) {
+        if (!isZero(xj))
             // add the delta distance to the center of point (i,j)
             pij = pij.add(vRight.scale(xj));
-        }
-        if (!isZero(yi)) {
+        if (!isZero(yi))
             // add the delta distance to the center of point (i,j)
             pij = pij.add(vUp.scale(yi));
-        }
-        Vector Vij = pij.subtract(location); // vector from camera's place
 
-        return new Ray(location, Vij);
+        return new Ray(location, pij.subtract(location));
     }
 
     /**
@@ -111,13 +108,10 @@ public class Camera implements Cloneable {
      * @return Camera instance
      */
     public Camera renderImage() {
-        if (this.imageWriter == null)
-            throw new UnsupportedOperationException("Missing imageWriter");
-        if (this.rayTracer == null)
-            throw new UnsupportedOperationException("Missing rayTracerBase");
-
-        for (int i = 0; i < this.imageWriter.getNx(); i++) {
-            for (int j = 0; j < this.imageWriter.getNy(); j++) {
+        int nx = this.imageWriter.getNx();
+        int ny = this.imageWriter.getNy();
+        for (int i = 0; i < nx; i++) {
+            for (int j = 0; j < ny; j++) {
                 castRay(i, j);
             }
         }
@@ -132,9 +126,12 @@ public class Camera implements Cloneable {
      * @return Camera instance
      */
     public Camera printGrid(int interval, Color color) {
+        int nx = imageWriter.getNx();
+        int ny = imageWriter.getNy();
+
         // running on the view plane
-        for (int i = 0; i < imageWriter.getNx(); i++) {
-            for (int j = 0; j < imageWriter.getNy(); j++) {
+        for (int i = 0; i < nx; i++) {
+            for (int j = 0; j < ny; j++) {
                 // create the net of the grid
                 if (i % interval == 0 || j % interval == 0) {
                     imageWriter.writePixel(i, j, color);
@@ -143,6 +140,7 @@ public class Camera implements Cloneable {
         }
         return this;
     }
+
 
     /**
      * Starts the process to create the image.
@@ -187,6 +185,7 @@ public class Camera implements Cloneable {
          *
          * @param camera Camera instance to copy
          */
+        @SuppressWarnings("unused")
         public Builder(Camera camera) {
             this.camera = camera;
         }
@@ -216,7 +215,7 @@ public class Camera implements Cloneable {
             if (vTo == null || vUp == null) {
                 throw new IllegalArgumentException("Vectors cannot be null");
             }
-            if (vTo.dotProduct(vUp) != 0) {
+            if (!isZero(vTo.dotProduct(vUp))) {
                 throw new IllegalArgumentException("vTo and vUp must be orthogonal");
             }
             camera.vTo = vTo.normalize();
@@ -233,7 +232,7 @@ public class Camera implements Cloneable {
          * @return Builder instance
          */
         public Builder setVpSize(double width, double height) {
-            if (width <= 0 || height <= 0) {
+            if (isZero(alignZero(width)) || isZero(alignZero(height))) {
                 throw new IllegalArgumentException("Width and height must be greater than 0");
             }
             camera.width = width;
@@ -241,14 +240,14 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        /**
+         /**
          * Sets the distance of the camera from the view plane.
          *
          * @param vpDistance distance of the camera from the view plane
          * @return Builder instance
          */
         public Builder setVpDistance(double vpDistance) {
-            if (vpDistance <= 0) {
+            if (isZero(alignZero(vpDistance))) {
                 throw new IllegalArgumentException("Distance must be greater than 0");
             }
             camera.distance = vpDistance;
@@ -267,18 +266,22 @@ public class Camera implements Cloneable {
             if (camera.vTo == null || camera.vUp == null || camera.vRight == null) {
                 throw new MissingResourceException("Missing rendering data", "Camera", "direction vectors");
             }
-            if (camera.width == 0 || camera.height == 0) {
-                throw new MissingResourceException("Missing rendering data", "Camera", "viewport size");
+            if (isZero(alignZero(camera.width))) {
+                throw new MissingResourceException("Missing rendering data", "Camera", "viewport width");
             }
-            if (camera.distance == 0) {
+            if (isZero(alignZero(camera.height))) {
+                throw new MissingResourceException("Missing rendering data", "Camera", "viewport height");
+            }
+            if (isZero(alignZero(camera.distance))) {
                 throw new MissingResourceException("Missing rendering data", "Camera", "viewport distance");
             }
             try {
                 return (Camera) camera.clone();
-            } catch (CloneNotSupportedException e) {
-                throw null;
+            } catch (CloneNotSupportedException ignore) {
+                throw new AssertionError();
             }
         }
+
 
         /**
          * Sets the ImageWriter for the camera.
@@ -287,9 +290,8 @@ public class Camera implements Cloneable {
          * @return Builder instance
          */
         public Builder setImageWriter(ImageWriter imageWriter) {
-            if (imageWriter == null) {
+            if (imageWriter == null)
                 throw new IllegalArgumentException("ImageWriter cannot be null");
-            }
             camera.imageWriter = imageWriter;
             return this;
         }

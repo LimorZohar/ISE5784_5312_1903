@@ -22,9 +22,9 @@ public class Sphere extends RadialGeometry {
             return List.of(ray.getPoint(radius));
         }
 
-        Vector c_head = center.subtract(head);
-        double tm = dir.dotProduct(c_head);
-        double dSquared = c_head.lengthSquared() - tm * tm;
+        Vector cHead = center.subtract(head);
+        double tm = dir.dotProduct(cHead);
+        double dSquared = cHead.lengthSquared() - tm * tm;
         double thSquared = radiusSquared - dSquared;
         if (alignZero(thSquared) <= 0)
             return null;

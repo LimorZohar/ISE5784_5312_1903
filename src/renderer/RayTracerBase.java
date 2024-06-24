@@ -12,7 +12,7 @@ public abstract class RayTracerBase {
     /**
      * field for a scene
      */
-    protected Scene _scene;
+    protected final Scene scene;
 
     /**
      * trace the ray and calculate the rey's intersection point color
@@ -20,16 +20,16 @@ public abstract class RayTracerBase {
      * doesn't exist)
      *
      * @param ray for the ray that intersects the point
-     * @return Color for the pixel
+     * @return Color for the ray
      */
     abstract public Color traceRay(Ray ray);
 
     /**
      * constructor
      *
-     * @param scene A scene where the department is initialized
+     * @param scene A scene that the class is initialized with
      */
     public RayTracerBase(Scene scene) {
-        this._scene = scene;
+        this.scene = scene;
     }
 }

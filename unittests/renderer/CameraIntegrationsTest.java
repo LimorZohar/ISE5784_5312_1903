@@ -4,8 +4,6 @@ import org.junit.jupiter.api.*;
 import primitives.*;
 import geometries.*;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -13,11 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * and findIntersections(Ray) of Sphere, Plane, and Triangle.
  */
 public class CameraIntegrationsTest {
-    /**
-     * A point representing the origin (0,0,0) in 3D space.
-     */
-    static final Point ZERO_POINT = new Point(0, 0, 0);
-
     /**
      * Return the number of intersections points of all geometries.
      *
@@ -29,15 +22,16 @@ public class CameraIntegrationsTest {
      */
     private int countIntersectionsCameraGeometry(Camera camera, int nX, int nY, Intersectable geometry) {
         int count = 0;
-        List<Point> intersections;
 
         for (int i = 0; i < nX; i++) {
             for (int j = 0; j < nY; j++) {
-                intersections = geometry.findIntersections(camera.constructRay(nX, nY, j, i));
+                var intersections = geometry.findIntersections(camera.constructRay(nX, nY, j, i));
                 count += intersections == null ? 0 : intersections.size();
             }
         }
-        return count; //Return the number of points of intersection between the geometries and a ray from the camera.
+
+        // Return the number of points of intersection between the geometries and a ray from the camera.
+        return count;
     }
 
     /**
