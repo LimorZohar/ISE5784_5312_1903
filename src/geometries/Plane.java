@@ -98,6 +98,6 @@ public class Plane implements Geometry {
         //numerator
         double nhead_q = alignZero(vNormal.dotProduct(head_q));
         double t = alignZero(nhead_q / ndir);
-        return t <= 0 ? null :List.of(ray.getPoint(t));
+        return t <= 0 ? null : List.of(ray.getPoint(t));
     }
 }

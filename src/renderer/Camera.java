@@ -14,7 +14,7 @@ public class Camera implements Cloneable {
     /**
      * The camera's location in 3D space.
      */
-    private Point p0;
+    private Point location;
 
     /**
      * Vector pointing towards the view direction.
@@ -86,7 +86,7 @@ public class Camera implements Cloneable {
         double ry = height / nY;
 
         // point[i,j] in view-plane coordinates (center Point)
-        Point pij = p0.add(vTo.scale(distance));
+        Point pij = location.add(vTo.scale(distance));
 
         // delta values for moving on the view plane
         double xj = (j - (nX - 1) / 2d) * rx;
@@ -100,9 +100,9 @@ public class Camera implements Cloneable {
             // add the delta distance to the center of point (i,j)
             pij = pij.add(vUp.scale(yi));
         }
-        Vector Vij = pij.subtract(p0); // vector from camera's place
+        Vector Vij = pij.subtract(location); // vector from camera's place
 
-        return new Ray(p0, Vij);
+        return new Ray(location, Vij);
     }
 
     /**
@@ -167,6 +167,10 @@ public class Camera implements Cloneable {
      * Builder class for constructing a Camera instance.
      */
     public static class Builder {
+
+        /**
+         * Camera.
+         */
         private final Camera camera;
 
         /**
@@ -197,7 +201,7 @@ public class Camera implements Cloneable {
             if (location == null) {
                 throw new IllegalArgumentException("Location cannot be null");
             }
-            camera.p0 = location;
+            camera.location = location;
             return this;
         }
 
@@ -257,7 +261,7 @@ public class Camera implements Cloneable {
          * @return Camera instance
          */
         public Camera build() {
-            if (camera.p0 == null) {
+            if (camera.location == null) {
                 throw new MissingResourceException("Missing rendering data", "Camera", "location");
             }
             if (camera.vTo == null || camera.vUp == null || camera.vRight == null) {

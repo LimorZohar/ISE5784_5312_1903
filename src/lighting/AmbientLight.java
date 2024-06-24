@@ -9,6 +9,9 @@ import primitives.Double3;
  */
 public class AmbientLight {
 
+    /**
+     * The intensity of the ambient light.
+     */
     private final Color _intensity;
 
     /**
