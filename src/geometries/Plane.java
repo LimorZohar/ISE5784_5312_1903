@@ -11,7 +11,7 @@ import static primitives.Util.*;
 /**
  * Represents a plane in three-dimensional space.
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     /**
      * The center point of the plane.
      */

@@ -4,7 +4,7 @@ package geometries;
  * This abstract class represents a geometric shape with a radial attribute, such as a sphere or a cylinder.
  * It implements the Geometry interface.
  */
-public abstract class RadialGeometry implements Geometry {
+public abstract class RadialGeometry extends Geometry {
 
     /**
      * The radius of the radial geometry.
