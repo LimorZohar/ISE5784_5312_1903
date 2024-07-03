@@ -2,7 +2,14 @@ package lighting;
 
 import primitives.*;
 
+/**
+ * SpotLight class represents a spotlight in a scene, extending the functionality of a PointLight.
+ */
 public class SpotLight extends PointLight {
+
+    /**
+     * The direction vector of the spotlight.
+     */
     private Vector direction;
 
     /**
