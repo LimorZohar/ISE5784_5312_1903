@@ -6,10 +6,7 @@ import geometries.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testing constructRay(int, int, int, int)
- * and findIntersections(Ray) of Sphere, Plane, and Triangle.
- */
+
 public class CameraIntegrationsTest {
     /**
      * Return the number of intersections points of all geometries.
@@ -25,7 +22,7 @@ public class CameraIntegrationsTest {
 
         for (int i = 0; i < nX; i++) {
             for (int j = 0; j < nY; j++) {
-                var intersections = geometry.findIntersections(camera.constructRay(nX, nY, j, i));
+                var intersections = geometry.findGeoIntersections(camera.constructRay(nX, nY, j, i));
                 count += intersections == null ? 0 : intersections.size();
             }
         }
@@ -37,7 +34,7 @@ public class CameraIntegrationsTest {
     /**
      * Test method for
      * {@link Camera#constructRay(int, int, int, int)}
-     * and {@link geometries.Sphere#findIntersections(Ray)}.
+     * and {@link Intersectable#findGeoIntersections(Ray)}.
      */
     @Test
     public void CameraRaySphereIntegration() {
@@ -80,7 +77,7 @@ public class CameraIntegrationsTest {
     /**
      * Test method for
      * {@link Camera#constructRay(int, int, int, int)}
-     * and {@link geometries.Triangle#findIntersections(Ray)}.
+     * and {@link geometries.Triangle#findGeoIntersections(Ray)}.
      */
     @Test
     public void CameraRayTriangleIntegration() {
@@ -102,11 +99,6 @@ public class CameraIntegrationsTest {
     }
 
 
-    /**
-     * Test method for
-     * {@link Camera#constructRay(int, int, int, int)}
-     * and {@link geometries.Plane#findIntersections(Ray)}.
-     */
     @Test
     public void CameraRayPlaneIntegration() {
 
