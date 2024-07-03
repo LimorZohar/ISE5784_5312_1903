@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Material;
 import primitives.Point;
 import primitives.Ray;
 
@@ -17,6 +18,11 @@ public class Geometries extends Intersectable {
     private final List<Intersectable> geometries = new LinkedList<>();
 
     /**
+     * The material associated with the geometries.
+     */
+    private Material material = new Material();
+
+    /**
      * Constructs an empty Geometries object.
      */
     public Geometries() {
@@ -29,6 +35,26 @@ public class Geometries extends Intersectable {
      */
     public Geometries(Intersectable... geometries) {
         add(geometries);
+    }
+
+    /**
+     * Returns the material of the geometries.
+     *
+     * @return The material of the geometries.
+     */
+    public Material getMaterial() {
+        return material;
+    }
+
+    /**
+     * Sets the material of the geometries.
+     *
+     * @param material The material to set.
+     * @return The current Geometries object for method chaining.
+     */
+    public Geometries setMaterial(Material material) {
+        this.material = material;
+        return this;
     }
 
     /**
