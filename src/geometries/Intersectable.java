@@ -11,14 +11,6 @@ import java.util.Objects;
 public abstract class Intersectable {
 
     /**
-     * Finds the intersection points between the geometric object and a given ray.
-     *
-     * @param ray The ray to intersect with the geometric object.
-     * @return A list of intersection points, or null if there are no intersections.
-     */
-    public abstract List<Point> findIntersections(Ray ray);
-
-    /**
      * GeoPoint is a static helper class that represents a point associated with a geometry.
      */
     public static class GeoPoint {
@@ -62,20 +54,35 @@ public abstract class Intersectable {
     }
 
     /**
-     * Finds the GeoIntersection points between the geometric object and a given ray.
+     * Finds the intersection points between the geometric object and a given ray.
+     * The intersection points are represented as GeoPoints, which include the point
+     * and the geometry it belongs to.
      *
      * @param ray The ray to intersect with the geometric object.
-     * @return A list of GeoPoints, or null if there are no intersections.
+     * @return A list of GeoPoints representing the intersection points, or null if there are no intersections.
      */
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersectionsHelper(ray);
     }
 
     /**
-     * Helper method to find the GeoIntersection points between the geometric object and a given ray.
+     * Helper method to find the intersection points between the geometric object and a given ray.
+     * This method is to be implemented by subclasses to provide the actual intersection logic.
      *
      * @param ray The ray to intersect with the geometric object.
-     * @return A list of GeoPoints, or null if there are no intersections.
+     * @return A list of GeoPoints representing the intersection points, or null if there are no intersections.
      */
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+
+    /**
+     * Finds the intersection points between the geometric object and a given ray.
+     *
+     * @param ray The ray to intersect with the geometric object.
+     * @return A list of intersection points, or null if there are no intersections.
+     */
+    public List<Point> findIntersections(Ray ray) {
+        var geoList = findGeoIntersections(ray);
+        return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
+    }
+
 }

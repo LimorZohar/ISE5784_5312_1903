@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static primitives.Util.*;
 
 /**
  * Unit tests for the Plane class.
@@ -55,7 +54,7 @@ class PlaneTest {
      * Test method for {@link geometries.Plane#findIntersections(Ray)}
      */
     @Test
-    public void findIntersections() {
+    public void testFindIntersections() {
         Plane plane = new Plane
                 (
                         new Point(1, 0, 0),
@@ -74,26 +73,26 @@ class PlaneTest {
                 "Ray intersects the plane");
 
         // TC02: Ray doesn't intersect the plane (0 points)
-        assertNull(plane.findIntersections(new Ray(new Point(0, 1, 1), new Vector(0, 0, 1))),
+        assertNull(plane.findGeoIntersectionsHelper(new Ray(new Point(0, 1, 1), new Vector(0, 0, 1))),
                 "Ray doesn't intersect the plane");
 
         // =============== Boundary Values Tests ==================
         //**** Group: Ray is parallel to the plane
         //TC03: Ray is included in the plane
-        assertNull(plane.findIntersections(new Ray(new Point(0, 0, 1), new Vector(1, -1, 0))),
+        assertNull(plane.findGeoIntersectionsHelper(new Ray(new Point(0, 0, 1), new Vector(1, -1, 0))),
                 "Ray is included in the plane. Ray is parallel to the plane");
 
         //TC04: Ray isn't included in the plane
-        assertNull(plane.findIntersections(new Ray(new Point(0, 0, 2), new Vector(1, -1, 0))),
+        assertNull(plane.findGeoIntersectionsHelper(new Ray(new Point(0, 0, 2), new Vector(1, -1, 0))),
                 "Ray isn't included in the plane. Ray is parallel to the plane");
 
         //**** Group: Special case
         //TC05: Ray begins at the plane (p0 is in the plane, but not the ray)
-        assertNull(plane.findIntersections(new Ray(new Point(1, 0, 0), new Vector(0, 0, -1))),
+        assertNull(plane.findGeoIntersectionsHelper(new Ray(new Point(1, 0, 0), new Vector(0, 0, -1))),
                 "Ray begins at the plane (p0 is in the plane, but not the ray)");
 
         //TC06: Ray begins in the plane's reference point
-        assertNull(plane.findIntersections(new Ray(plane.getCenter(), new Vector(1, 0, 0))),
+        assertNull(plane.findGeoIntersectionsHelper(new Ray(plane.getCenter(), new Vector(1, 0, 0))),
                 "Ray begins in the plane's reference point");
     }
 }

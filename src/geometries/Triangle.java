@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -24,7 +25,7 @@ public class Triangle extends Polygon {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<Point> intersections = plane.findIntersections(ray);
         //there are no intersection points
         if (intersections == null)
@@ -51,6 +52,15 @@ public class Triangle extends Polygon {
         //checks the point is out of triangle
         if (isZero(s3)) return null;
 
-        return ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0)) ? intersections : null;
+        if ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0)) {
+            //List<GeoPoint> result = this.plane.findGeoIntersectionsHelper(ray);
+            List<GeoPoint> result = new LinkedList<GeoPoint>();
+            for (Point p : intersections) {
+                result.add(new GeoPoint(this, p));
+            }
+            return result;
+        } else {
+            return null;
+        }
     }
 }

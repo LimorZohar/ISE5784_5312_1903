@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
+
 /**
  * Represents a ray in three-dimensional space defined by a head point and a direction vector.
  */
@@ -46,8 +48,7 @@ public class Ray {
     }
 
     /**
-     * Gets a point on the ray
-     * by calculating head + t*direction.
+     * Gets a point on the ray by calculating head + t * direction.
      *
      * @param t A scalar to calculate the point.
      * @return A point on the ray.
@@ -59,26 +60,36 @@ public class Ray {
     /**
      * Finds the closest point from a list of points to the head of the ray.
      *
-     * @param pointList A list of points to search from.
+     * @param points A list of points to search from.
      * @return The closest point to the head of the ray, or null if the list is empty.
      */
-    public Point findClosestPoint(List<Point> pointList) {
-        if (pointList == null || pointList.isEmpty()) {
-            return null;
-        }
-        Point closestPoint = null;
-        double minDistance = Double.POSITIVE_INFINITY;
-
-        for (Point point : pointList) {
-            double distance = head.distanceSquared(point);
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestPoint = point;
-            }
-        }
-        return closestPoint;
+    public Point findClosestPoint(List<Point> points) {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
 
+    /**
+     * Finds the closest GeoPoint from a list of GeoPoints to the head of the ray.
+     *
+     * @param geoPointList A list of GeoPoints to search from.
+     * @return The closest GeoPoint to the head of the ray, or null if the list is empty.
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList) {
+        if (geoPointList == null || geoPointList.isEmpty()) {
+            return null;
+        }
+        GeoPoint closestGeoPoint = null;
+        double minDistance = Double.POSITIVE_INFINITY;
+
+        for (GeoPoint geoPoint : geoPointList) {
+            double distance = head.distanceSquared(geoPoint.point);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestGeoPoint = geoPoint;
+            }
+        }
+        return closestGeoPoint;
+    }
 
     /**
      * Compares this ray to the specified object. The result is true if and only if the argument is not null
@@ -103,6 +114,4 @@ public class Ray {
     public String toString() {
         return this.direction + "->" + this.head;
     }
-
-
 }

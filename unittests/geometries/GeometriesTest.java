@@ -6,6 +6,7 @@ import primitives.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * Unit tests for geometries.Geometries class
@@ -13,23 +14,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GeometriesTest {
 
     /**
-     * Test method for {@link geometries.Geometries#findIntersections(Ray)}.
+     * Test method for {@link geometries.Geometries#findGeoIntersectionsHelper(Ray)}.
      */
     @Test
-    public void findIntersections() {
+    public void findGeoIntersectionsHelper() {
         Geometries geometries = new Geometries();
 
         // =============== Boundary Values Tests ==================
         //TC01: empty geometries list
-        assertNull(geometries.findIntersections(new Ray(new Point(0.0, 1.0, 0.0), new Vector(1.0, 0.0, 5.0))));
+        assertNull(geometries.findGeoIntersections(new Ray(new Point(0.0, 1.0, 0.0), new Vector(1.0, 0.0, 5.0))));
 
         geometries.add(new Plane(new Point(1.0, 1.0, 0.0), new Vector(0.0, 0.0, 1.0)));
         geometries.add(new Triangle(new Point(1.0, 0.0, 0.0), new Point(0.0, 1.0, 0.0), new Point(0.0, 0.0, 1.0)));
         geometries.add(new Sphere(new Point(1.0, 0.0, 0.0), 1.0));
         //TC02: each geometry doesn't have intersection points
-        assertNull(geometries.findIntersections(new Ray(new Point(0.0, 0.0, 2.0), new Vector(0.0, -1.0, 0.0))));
+        assertNull(geometries.findGeoIntersections(new Ray(new Point(0.0, 0.0, 2.0), new Vector(0.0, -1.0, 0.0))));
 
-        List<Point> points = geometries.findIntersections(new Ray(new Point(0.0, 5.0, -1.0), new Vector(0.0, 0.0, 1.0)));
+        List<Intersectable.GeoPoint> points = geometries.findGeoIntersections(new Ray(new Point(0.0, 5.0, -1.0), new Vector(0.0, 0.0, 1.0)));
         //TC03: just one geometry has intersections point
         assertEquals(1, points.size());
 
@@ -48,7 +49,8 @@ public class GeometriesTest {
                         new Point(0, 0, 1)
                 )
         );
-        List<Point> result = geometries1.findIntersections(new Ray(new Point(0.2, 0.2, -0.6), new Vector(0, 0, 1)));
+        List<GeoPoint> result = geometries1.findGeoIntersections
+                (new Ray(new Point(0.2, 0.2, -0.6), new Vector(0, 0, 1)));
         assertEquals(4,
                 result.size(),
                 "All geometries intersects");
@@ -56,6 +58,6 @@ public class GeometriesTest {
         // ============ Equivalence Partitions Tests ==============
         //TC05: part of the geometries has intersection points
         assertEquals(2,
-                geometries.findIntersections(new Ray(new Point(1.0, 0.0, -1.0), new Vector(0.0, 0.0, 1.0))).size());
+                geometries.findGeoIntersections(new Ray(new Point(1.0, 0.0, -1.0), new Vector(0.0, 0.0, 1.0))).size());
     }
 }

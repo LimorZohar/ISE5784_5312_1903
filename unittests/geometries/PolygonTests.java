@@ -4,11 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import geometries.Polygon;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
+import geometries.Intersectable.GeoPoint;
 import java.util.List;
 
 /**
@@ -101,10 +100,10 @@ public class PolygonTests {
     }
 
     /**
-     * Test method for {@link geometries.Polygon#findIntersections(Ray)}.
+     * Test method for {@link Intersectable#findGeoIntersectionsHelper(Ray)}.
      */
     @Test
-    public void testFindIntersections() {
+    public void testFindGeoIntersectionsHelper() {
         Polygon polygon = new Polygon(
                 new Point(1, 0, 0),
                 new Point(0, 1, 0),
@@ -114,7 +113,7 @@ public class PolygonTests {
 
         // ============ Equivalence Partitions Tests ==============
         //TC01: Ray intersects the polygon
-        List<Point> result = polygon.findIntersections(new Ray(new Point(-0.5, -0.5, -1),
+        List<GeoPoint> result = polygon.findGeoIntersections(new Ray(new Point(-0.5, -0.5, -1),
                 new Vector(0.5, 0.5, 3)));
 
         assertEquals(1,
@@ -125,23 +124,23 @@ public class PolygonTests {
                 "Ray doesn't intersect the polygon");
 
         //TC02:Ray outside against vertex
-        assertNull(polygon.findIntersections(new Ray(new Point(0, -2, 0),
+        assertNull(polygon.findGeoIntersections(new Ray(new Point(0, -2, 0),
                         new Vector(0, 0, 4))),
                 "Ray isn't outside against vertex");
 
         //TC03: Ray outside against edge
-        assertNull(polygon.findIntersections(new Ray(new Point(-1, -1, 0),
+        assertNull(polygon.findGeoIntersections(new Ray(new Point(-1, -1, 0),
                         new Vector(0, 0, 3))),
                 "Ray isn't outside against edge");
 
         //TC04:Ray inside the polygon
-        assertNull(polygon.findIntersections(new Ray(new Point(0, 0, 0),
+        assertNull(polygon.findGeoIntersections(new Ray(new Point(0, 0, 0),
                         new Vector(-1, 0, 0))),
                 "Ray  isn't inside the polygon");
 
         // ============ Boundary Values Tests =============
         //TC05: Ray On edge
-        result = polygon.findIntersections(new Ray(new Point(-2, 0, 3),
+        result = polygon.findGeoIntersections(new Ray(new Point(-2, 0, 3),
                 new Vector(1.03d, 0.51d, -3)));
         assertEquals(1,
                 result.size(),
@@ -151,11 +150,11 @@ public class PolygonTests {
                 "Ray  isn't on edge of the polygon");
 
         ///TC06: Ray in vertex
-        assertNull(polygon.findIntersections(new Ray(new Point(0, 1, 0), new Vector(-2d, -1d, 3))),
+        assertNull(polygon.findGeoIntersections(new Ray(new Point(0, 1, 0), new Vector(-2d, -1d, 3))),
                 "Ray  isn't on vertex of the polygon");
 
         //TC07: Ray On edge's continuation
-        assertNull(polygon.findIntersections(new Ray(new Point(-1, 2, 0), new Vector(-1d, -2d, 3))),
+        assertNull(polygon.findGeoIntersections(new Ray(new Point(-1, 2, 0), new Vector(-1d, -2d, 3))),
                 "Ray  isn't On edge's continuation");
 
 
