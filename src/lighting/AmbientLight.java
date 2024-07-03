@@ -4,49 +4,34 @@ import primitives.Color;
 import primitives.Double3;
 
 /**
- * Ambient Light for all objects in 3D space.
- * This class represents the ambient light (תאורה סביבתית).
+ * Represents ambient light in 3D space.
+ * Ambient light illuminates all objects uniformly.
  */
-public class AmbientLight {
+public class AmbientLight extends Light {
 
     /**
-     * The intensity of the ambient light.
-     */
-    private final Color intensity;
-
-    /**
-     * Field is initialized to default - the color black.
+     * A predefined ambient light with no effect (black color).
      */
     static public AmbientLight NONE = new AmbientLight(Color.BLACK, 0);
 
     /**
-     * Constructor for calculating the intensity after applying the light factor.
+     * Constructs an ambient light with a given intensity and coefficient.
      *
-     * @param Ia Light illumination (RGB).
-     * @param Ka Light factor.
+     * @param Ia The intensity of the ambient light, represented as a color.
+     * @param Ka The coefficient for the ambient light, represented as a vector of doubles.
      */
     public AmbientLight(Color Ia, Double3 Ka) {
-        // Calculation of the intensity after applying the light factor.
-        this.intensity = Ia.scale(Ka);
+        super(Ia.scale(Ka));
     }
 
     /**
-     * Constructor for calculating the intensity after applying the light factor.
+     * Constructs an ambient light with a given intensity and coefficient.
      *
-     * @param Ia  Light illumination (RGB).
-     * @param Kad Light factor as a double.
+     * @param Ia  The intensity of the ambient light, represented as a color.
+     * @param Kad The coefficient for the ambient light, represented as a double.
      */
     public AmbientLight(Color Ia, double Kad) {
-        // Calculation of the intensity after applying the light factor.
-        this.intensity = Ia.scale(Kad);
+        super(Ia.scale(Kad));
     }
 
-    /**
-     * Getter for the intensity.
-     *
-     * @return The intensity of the ambient light.
-     */
-    public Color getIntensity() {
-        return intensity;
-    }
 }
