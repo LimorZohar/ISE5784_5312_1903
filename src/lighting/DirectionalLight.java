@@ -18,7 +18,7 @@ public class DirectionalLight extends Light implements LightSource {
      * @param intensity The intensity of the light source, represented by a color.
      * @param direction The direction of the light rays.
      */
-    protected DirectionalLight(Color intensity, Vector direction) {
+    public DirectionalLight(Color intensity, Vector direction) {
         super(intensity);
         this.direction = direction;
     }

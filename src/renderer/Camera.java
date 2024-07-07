@@ -240,7 +240,7 @@ public class Camera implements Cloneable {
             return this;
         }
 
-         /**
+        /**
          * Sets the distance of the camera from the view plane.
          *
          * @param vpDistance distance of the camera from the view plane
