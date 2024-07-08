@@ -6,31 +6,35 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
- * SpotLight class represents a spotlight in a scene, extending the functionality of a PointLight.
+ * spot light class
+ * son of point light
+ * like spot-light light
  */
-public class SpotLight extends PointLight {
-
+public class SpotLight extends PointLight{
     /**
-     * The direction vector of the spotlight.
+     * The direction vector of the spot light.
      */
     private final Vector direction;
-    private double narrowBeam = 1;   // Default value for a wide beam
 
     /**
-     * Constructs a SpotLight with the given intensity, position, and direction.
-     *
-     * @param intensity The intensity of the light source, represented by a color.
-     * @param position  The position of the light source.
-     * @param direction The direction of the spotlight.
+     * The narrow beam factor for the spot light.
+     */
+    private double narrowBeam = 1; // Default value for a wide beam
+
+
+    /**
+     * constructor with parameters
+     * @param direction vector
+     * @param intensity color
+     * @param position point
      */
     public SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
-        this.direction = direction;
+        this.direction = direction.normalize();
     }
 
     /**
      * set the NarrowBeam
-     *
      * @param beamAngle double
      * @return this
      */
@@ -56,11 +60,11 @@ public class SpotLight extends PointLight {
 
     @Override
     public Color getIntensity(Point p) {
-        if (narrowBeam == 1) { // when here is no narrowBeam
+        if(narrowBeam == 1) { // when here is no narrowBeam
             double cos = alignZero(direction.dotProduct(getL(p)));
             if (isZero(cos) || cos < 0) return Color.BLACK;
             return super.getIntensity().scale(cos);
-        } else {  // when here is narrowBeam
+        }else{  // when here is narrowBeam
             double projection = direction.dotProduct(getL(p));
             if (projection <= 0) {
                 return Color.BLACK;
