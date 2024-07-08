@@ -6,6 +6,10 @@ import static primitives.Util.isZero;
  * Represents a vector in three-dimensional space, extending the Point class.
  */
 public class Vector extends Point {
+
+    /**
+     * Constant vector pointing in the Y direction (0, 1, 0).
+     */
     public static final Vector Y = new Vector(0, 1, 0); // הוספת הקבוע Y
 
     /**
