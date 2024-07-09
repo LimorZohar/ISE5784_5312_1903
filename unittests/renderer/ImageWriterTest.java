@@ -11,12 +11,12 @@ class ImageWriterTest {
     /**
      * The width of the view plane in pixels.
      */
-    int nX = 800;
+    int nX = 801;
 
     /**
      * The height of the view plane in pixels.
      */
-    int nY = 500;
+    int nY = 501;
 
     /**
      * The color yellow for the yellow square on the view plane.
@@ -39,11 +39,7 @@ class ImageWriterTest {
         for (int i = 0; i < nX; i++) {
             for (int j = 0; j < nY; j++) {
                 //=== create the net ===//
-                if (i % 50 == 0 || j % 50 == 0) {
-                    imageWriter.writePixel(i, j, redColor);
-                } else {
-                    imageWriter.writePixel(i, j, yellowColor);
-                }
+                    imageWriter.writePixel(i, j, i % 50 == 0 || j % 50 == 0 ? yellowColor : redColor);
             }
         }
         imageWriter.writeToImage();

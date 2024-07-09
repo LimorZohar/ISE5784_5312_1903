@@ -116,18 +116,13 @@ public class Tube extends RadialGeometry {
         }
 
         double delta = Math.sqrt(squaredDelta);
-        double t1 = alignZero((-b + delta) / (2 * a));
-        double t2 = alignZero((-b - delta) / (2 * a));
+        double t2 = alignZero((-b + delta) / (2 * a));
+        if (t2 <= 0) return null; // t2 is always greater than t1
 
-        // בדיקת תוצאות והחזרת נקודות החיתוך המתאימות
-        if (t1 > 0 && t2 > 0)
-            return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
-        if (t1 > 0)
-            return List.of(new GeoPoint(this, ray.getPoint(t1)));
-        if (t2 > 0)
-            return List.of(new GeoPoint(this, ray.getPoint(t2)));
-
-        return null;
+        double t1 = alignZero((-b - delta) / (2 * a));
+        return t1 > 0
+            ? List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)))
+            : List.of(new GeoPoint(this, ray.getPoint(t2)));
     }
 
 }

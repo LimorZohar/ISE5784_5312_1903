@@ -2,8 +2,7 @@ package lighting;
 
 import primitives.*;
 
-import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
 /**
  * spot light class
@@ -62,17 +61,8 @@ public class SpotLight extends PointLight {
 
     @Override
     public Color getIntensity(Point p) {
-        if (narrowBeam == 1) { // when here is no narrowBeam
             double cos = alignZero(direction.dotProduct(getL(p)));
-            if (isZero(cos) || cos < 0) return Color.BLACK;
-            return super.getIntensity().scale(cos);
-        } else {  // when here is narrowBeam
-            double projection = direction.dotProduct(getL(p));
-            if (projection <= 0) {
-                return Color.BLACK;
-            }
-            double factor = Math.pow(projection, narrowBeam);
-            return super.getIntensity(p).scale(factor);
-        }
+            if (alignZero(cos) <= 0) return Color.BLACK;
+            return super.getIntensity(p).scale(narrowBeam == 1 ? cos : Math.pow(cos, narrowBeam));
     }
 }

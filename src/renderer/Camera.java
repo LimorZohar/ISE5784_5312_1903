@@ -232,7 +232,7 @@ public class Camera implements Cloneable {
          * @return Builder instance
          */
         public Builder setVpSize(double width, double height) {
-            if (isZero(alignZero(width)) || isZero(alignZero(height))) {
+            if (isZero(width) || isZero(height)) {
                 throw new IllegalArgumentException("Width and height must be greater than 0");
             }
             camera.width = width;
