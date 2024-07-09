@@ -26,7 +26,7 @@ public class SimpleRayTracer extends RayTracerBase {
      * Get the color of an intersection point
      *
      * @param point point of intersection
-     * @param ray for the ray
+     * @param ray   for the ray
      * @return Color of the intersection point
      */
     private Color calcColor(Intersectable.GeoPoint point, Ray ray) {
@@ -48,7 +48,7 @@ public class SimpleRayTracer extends RayTracerBase {
      * This method calculates the local effects (diffuse and specular) of lighting at a given intersection point.
      *
      * @param intersection The intersection point and geometry information.
-     * @param ray The ray that intersects with the geometry.
+     * @param ray          The ray that intersects with the geometry.
      * @return The color result of local lighting effects.
      */
     private Color calcLocalEffects(Intersectable.GeoPoint intersection, Ray ray) {
@@ -81,9 +81,9 @@ public class SimpleRayTracer extends RayTracerBase {
     /**
      * This method calculates the diffuse component of lighting at a given point.
      *
-     * @param kd The diffuse reflection coefficient.
-     * @param l The direction vector from the light source to the point.
-     * @param n The normal vector at the point.
+     * @param kd             The diffuse reflection coefficient.
+     * @param l              The direction vector from the light source to the point.
+     * @param n              The normal vector at the point.
      * @param lightIntensity The intensity of the light at the point.
      * @return The color result of the diffuse component.
      */
@@ -94,17 +94,16 @@ public class SimpleRayTracer extends RayTracerBase {
     /**
      * This method calculates the specular component of lighting at a given point.
      *
-     * @param ks The specular reflection coefficient.
-     * @param l The direction vector from the light source to the point.
-     * @param n The normal vector at the point.
-     * @param v The direction vector of the viewer (or camera).
-     * @param nShininess The shininess factor of the material.
+     * @param ks             The specular reflection coefficient.
+     * @param l              The direction vector from the light source to the point.
+     * @param n              The normal vector at the point.
+     * @param v              The direction vector of the viewer (or camera).
+     * @param nShininess     The shininess factor of the material.
      * @param lightIntensity The intensity of the light at the point.
      * @return The color result of the specular component.
      */
-    private Color calcSpecular(Double3 ks, Vector l, Vector n, Vector v, double nShininess, Color lightIntensity)
-    {
-        double max = Math.max(0,-v.dotProduct( l.subtract(n.scale(l.dotProduct(n)).scale(2)).normalize()));
+    private Color calcSpecular(Double3 ks, Vector l, Vector n, Vector v, double nShininess, Color lightIntensity) {
+        double max = Math.max(0, -v.dotProduct(l.subtract(n.scale(l.dotProduct(n)).scale(2)).normalize()));
 
         double maxNs = Math.pow(max, nShininess);
         Double3 ksMaxNs = ks.scale(maxNs);
