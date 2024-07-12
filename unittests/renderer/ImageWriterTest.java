@@ -39,7 +39,7 @@ class ImageWriterTest {
         for (int i = 0; i < nX; i++) {
             for (int j = 0; j < nY; j++) {
                 //=== create the net ===//
-                    imageWriter.writePixel(i, j, i % 50 == 0 || j % 50 == 0 ? yellowColor : redColor);
+                imageWriter.writePixel(i, j, i % 50 == 0 || j % 50 == 0 ? yellowColor : redColor);
             }
         }
         imageWriter.writeToImage();

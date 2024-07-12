@@ -18,12 +18,12 @@ public abstract class Intersectable {
         /**
          * The geometry associated with this point.
          */
-        public Geometry geometry;
+        public final Geometry geometry;
 
         /**
          * The point associated with this geometry.
          */
-        public Point point;
+        public final Point point;
 
         /**
          * Constructs a GeoPoint with the given geometry and point.
@@ -41,7 +41,8 @@ public abstract class Intersectable {
             if (this == obj) return true;
             if (obj == null || getClass() != obj.getClass()) return false;
             GeoPoint geoPoint = (GeoPoint) obj;
-            return geometry == geoPoint.geometry && Objects.equals(point, geoPoint.point);
+            return Objects.equals(geometry, geoPoint.geometry) &&
+                    Objects.equals(point, geoPoint.point);
         }
 
         @Override

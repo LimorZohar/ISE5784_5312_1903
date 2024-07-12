@@ -9,7 +9,7 @@ public abstract class Light {
     /**
      * The intensity of the light source, represented by a Color object.
      */
-    protected Color intensity;
+    final protected Color intensity;
 
     /**
      * Constructs a light source with a given intensity.
