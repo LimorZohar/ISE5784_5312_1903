@@ -71,18 +71,18 @@ public class Tube extends RadialGeometry {
 
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        Vector ray_dir = ray.getDirection(); // כיוון הקרן
-        Vector axis_dir = axis.getDirection(); // כיוון הציר של הצינור
+        Vector rayDir = ray.getDirection();
+        Vector axisDir = axis.getDirection();
 
-        // חישוב רכיב הווקטור המכוון בניצב לציר
-        Vector v_ray_dir = ray_dir;
-        double d = ray_dir.dotProduct(axis_dir);
+        // Calculation of the vector component directed perpendicular to the axis
+        Vector vRayDir = rayDir;
+        double d = rayDir.dotProduct(axisDir);
         if (!isZero(d)) {
-            Vector axis_dir_d = axis_dir.scale(d);
-            if (ray_dir.equals(axis_dir_d)) {
+            Vector axisDirD = axisDir.scale(d);
+            if (rayDir.equals(axisDirD)) {
                 return null;
             }
-            v_ray_dir = ray_dir.subtract(axis_dir_d);
+            vRayDir = rayDir.subtract(axisDirD);
         }
 
         double d1 = 0;
@@ -90,26 +90,26 @@ public class Tube extends RadialGeometry {
         if (!ray.getHead().equals(axis.getHead())) {
             Vector dp = ray.getHead().subtract(axis.getHead());
             Vector tempV = dp;
-            double dpv0 = dp.dotProduct(axis_dir);
+            double dpv0 = dp.dotProduct(axisDir);
             if (isZero(dpv0)) {
-                d1 = v_ray_dir.dotProduct(tempV);
+                d1 = vRayDir.dotProduct(tempV);
                 d2 = tempV.lengthSquared();
             } else {
-                Vector v0dpv0 = axis_dir.scale(dpv0);
+                Vector v0dpv0 = axisDir.scale(dpv0);
                 if (!dp.equals(v0dpv0)) {
                     tempV = dp.subtract(v0dpv0);
-                    d1 = v_ray_dir.dotProduct(tempV);
+                    d1 = vRayDir.dotProduct(tempV);
                     d2 = tempV.lengthSquared();
                 }
             }
         }
 
-        // חישוב פרמטרי המשוואה הריבועית
-        double a = v_ray_dir.lengthSquared();
+        // Calculation of the parameters of the quadratic equation
+        double a = vRayDir.lengthSquared();
         double b = 2 * d1;
         double c = alignZero(d2 - radius * radius);
 
-        // חישוב הדיסקרימיננטה
+        // Calculate the discriminant
         double squaredDelta = alignZero(b * b - 4 * a * c);
         if (squaredDelta <= 0) {
             return null;
@@ -121,8 +121,8 @@ public class Tube extends RadialGeometry {
 
         double t1 = alignZero((-b - delta) / (2 * a));
         return t1 > 0
-            ? List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)))
-            : List.of(new GeoPoint(this, ray.getPoint(t2)));
+                ? List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)))
+                : List.of(new GeoPoint(this, ray.getPoint(t2)));
     }
 
 }

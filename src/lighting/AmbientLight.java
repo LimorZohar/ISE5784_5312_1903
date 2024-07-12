@@ -17,21 +17,21 @@ public class AmbientLight extends Light {
     /**
      * Constructs an ambient light with a given intensity and coefficient.
      *
-     * @param Ia The intensity of the ambient light, represented as a color.
-     * @param Ka The coefficient for the ambient light, represented as a vector of doubles.
+     * @param iA The intensity of the ambient light, represented as a color.
+     * @param ka The coefficient for the ambient light, represented as a vector of doubles.
      */
-    public AmbientLight(Color Ia, Double3 Ka) {
-        super(Ia.scale(Ka));
+    public AmbientLight(Color iA, Double3 ka) {
+        super(iA.scale(ka));
     }
 
     /**
      * Constructs an ambient light with a given intensity and coefficient.
      *
-     * @param Ia  The intensity of the ambient light, represented as a color.
-     * @param Kad The coefficient for the ambient light, represented as a double.
+     * @param iA  The intensity of the ambient light, represented as a color.
+     * @param kad The coefficient for the ambient light, represented as a double.
      */
-    public AmbientLight(Color Ia, double Kad) {
-        super(Ia.scale(Kad));
+    public AmbientLight(Color iA, double kad) {
+        super(iA.scale(kad));
     }
 
 }
