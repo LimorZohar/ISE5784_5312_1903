@@ -97,6 +97,38 @@ public class PointLight extends Light implements LightSource {
     }
 
     /**
+     * Set the constant attenuation factor
+     *
+     * @param kc the constant attenuation factor
+     * @return kc
+     */
+    public PointLight setKc(double kc) {
+        this.kC = kc;
+        return this;
+    }
+
+    /**
+     * Set the linear attenuation factor
+     *
+     * @param kl the linear attenuation factor
+     * @return kl
+     */
+    public PointLight setKl(double kl) {
+        this.kL = kl;
+        return this;
+    }
+
+    /**
+     * Set the quadratic attenuation factor
+     *
+     * @param kq the quadratic attenuation factor
+     * @return kq
+     */
+    public PointLight setKq(double kq) {
+        this.kQ = kq;
+        return this;
+    }
+    /**
      * Returns the distance between the point light source and a specific point.
      *
      * @param p The point to which the distance is measured.

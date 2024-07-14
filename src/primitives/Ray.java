@@ -8,6 +8,8 @@ import geometries.Intersectable.GeoPoint;
  * Represents a ray in three-dimensional space defined by a head point and a direction vector.
  */
 public class Ray {
+
+    private static final double DELTA = 0.1;
     /**
      * The head point of the ray.
      */
@@ -26,6 +28,18 @@ public class Ray {
      */
     public Ray(Point head, Vector direction) {
         this.head = head;
+        this.direction = direction.normalize();
+    }
+    //הוספתי חדש
+    /**
+     * Constructs a new Ray with a small shift in the direction to avoid self-shadowing.
+     *
+     * @param head      The head point of the ray.
+     * @param direction The direction vector of the ray.
+     * @param normal    The normal vector at the head point to determine the shift direction.
+     */
+    public Ray(Point head, Vector direction, Vector normal) {
+        this.head = head.add(normal.scale(normal.dotProduct(direction) > 0 ? DELTA : -DELTA));
         this.direction = direction.normalize();
     }
 
