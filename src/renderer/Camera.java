@@ -277,16 +277,16 @@ public class Camera implements Cloneable {
             if (isZero(camera.distance)) {
                 throw new MissingResourceException("Missing rendering data", "Camera", "viewport distance");
             }
-            /*            if(camera.imageWriter == null){
+            if(camera.imageWriter == null){
                 throw new MissingResourceException("Missing rendering data",
                         "Camera",
                         "imageWriter");
             }
-            if(camera.rayTracer == null){
+            if(camera.rayTracer == null) {
                 throw new MissingResourceException("Missing rendering data",
                         "Camera",
-                        "rayTracer");*/
-            // ההוספה של הבדיקות מפילה את הטסטים
+                        "rayTracer");
+            }
 
             try {
                 return (Camera) camera.clone();
