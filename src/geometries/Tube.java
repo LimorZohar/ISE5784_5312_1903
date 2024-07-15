@@ -31,26 +31,6 @@ public class Tube extends RadialGeometry {
         this.axis = axis;
     }
 
-    /**
-     * Calculates the normal vector to the tube at a given point.
-     * <p>
-     * The normal vector at a given point on the surface of a tube is calculated
-     * by projecting the point onto the axis of the tube, then finding the vector
-     * from the axis to the point and normalizing it.
-     * <p>
-     * The method follows these steps:
-     * <ol>
-     *   <li>Calculate the vector from the start of the axis (p0) to the given point.</li>
-     *   <li>Project this vector onto the direction vector of the axis to find the projection length (proj).</li>
-     *   <li>If the projection length is zero, the projection point on the axis is the start of the axis (p0).</li>
-     *   <li>Otherwise, calculate the projection point on the axis by scaling the direction vector of the axis by the projection length and adding it to the start of the axis (p0).</li>
-     *   <li>Calculate the vector from the projection point on the axis to the given point.</li>
-     *   <li>Normalize this vector to obtain the normal vector.</li>
-     * </ol>
-     *
-     * @param point The point on the tube to calculate the normal at.
-     * @return The normal vector to the tube at the given point.
-     */
     @Override
     public Vector getNormal(Point point) {
         // Step 1: Calculate the vector from the start of the axis (p0) to the given point
