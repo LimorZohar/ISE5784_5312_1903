@@ -19,6 +19,8 @@ public interface LightSource {
     /**
      * Returns the direction vector from the light source to a specific point.
      *
+     * Note: The light source should not be exactly at the point.
+     *
      * @param p The point to which the direction vector points.
      * @return The direction vector as a Vector object.
      */
