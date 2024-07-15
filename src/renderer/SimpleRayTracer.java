@@ -115,8 +115,7 @@ public class SimpleRayTracer extends RayTracerBase {
         }
 
         for (GeoPoint gp : intersections) {
-            double distance = geoPoint.point.distance(gp.point);
-            if (alignZero(distance - lightDistance) <= 0) {
+            if (alignZero(gp.point.distance(geoPoint.point) - lightDistance) <= 0) {
                 if (gp.geometry.getMaterial().kT.equals(Double3.ZERO)) {
                     return false;
                 }
