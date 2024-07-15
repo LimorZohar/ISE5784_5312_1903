@@ -15,8 +15,19 @@ import static primitives.Util.alignZero;
  */
 public class SimpleRayTracer extends RayTracerBase {
 
+    /**
+     * Small value used to shift the head point of the ray to avoid self-shadowing.
+     */
     private static final double DELTA = 0.1;
+
+    /**
+     * The maximum recursion level for calculating color.
+     */
     private static final int MAX_CALC_COLOR_LEVEL = 10;
+
+    /**
+     * The minimum value for the attenuation factor to continue recursion.
+     */
     private static final double MIN_CALC_COLOR_K = 0.001;
 
     /**

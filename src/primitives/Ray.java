@@ -8,7 +8,9 @@ import geometries.Intersectable.GeoPoint;
  * Represents a ray in three-dimensional space defined by a head point and a direction vector.
  */
 public class Ray {
-
+    /**
+     * Small value used to shift the head point of the ray to avoid self-shadowing.
+     */
     private static final double DELTA = 0.1;
     /**
      * The head point of the ray.
