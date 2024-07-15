@@ -6,6 +6,8 @@ import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
 
+import java.util.List;
+
 import static primitives.Util.alignZero;
 
 /**
@@ -157,21 +159,34 @@ public class SimpleRayTracer extends RayTracerBase {
         Double3 kkr = kr.product(k);
         if (!kkr.lowerThan(MIN_CALC_COLOR_K)) {
             Ray reflectedRay = constructReflectedRay(gp.point, v, n);
-            color = color.add(calcColor(reflectedRay.findClosestGeoPoint(
-                            scene.geometries.findGeoIntersections(reflectedRay)),
-                    reflectedRay, level - 1, kkr).scale(kr));
+            GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+            if (reflectedPoint != null) {
+                color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
+            }
         }
 
         Double3 kt = material.kT;
         Double3 kkt = kt.product(k);
         if (!kkt.lowerThan(MIN_CALC_COLOR_K)) {
             Ray refractedRay = constructRefractedRay(gp.point, v, n);
-            color = color.add(calcColor(
-                    refractedRay.findClosestGeoPoint(scene.geometries.findGeoIntersections(refractedRay)),
-                    refractedRay, level - 1, kkt).scale(kt));
+            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+            if (refractedPoint != null) {
+                color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
+            }
         }
 
         return color;
+    }
+
+    /**
+     * Finds the closest intersection point of a ray with the scene geometries.
+     *
+     * @param ray The ray to intersect with the geometries.
+     * @return The closest intersection point as a GeoPoint, or null if there are no intersections.
+     */
+    private GeoPoint findClosestIntersection(Ray ray) {
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
+        return ray.findClosestGeoPoint(intersections);
     }
 
 
