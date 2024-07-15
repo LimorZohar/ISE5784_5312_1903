@@ -31,6 +31,7 @@ public class Ray {
         this.direction = direction.normalize();
     }
     //הוספתי חדש
+
     /**
      * Constructs a new Ray with a small shift in the direction to avoid self-shadowing.
      *

@@ -65,6 +65,7 @@ public class SpotLight extends PointLight {
         if (alignZero(cos) <= 0) return Color.BLACK;
         return super.getIntensity(p).scale(narrowBeam == 1 ? cos : Math.pow(cos, narrowBeam));
     }
+
     @Override
     public double getDistance(Point point) {
         return position.distance(point);

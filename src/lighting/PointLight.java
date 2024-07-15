@@ -128,6 +128,7 @@ public class PointLight extends Light implements LightSource {
         this.kQ = kq;
         return this;
     }
+
     /**
      * Returns the distance between the point light source and a specific point.
      *

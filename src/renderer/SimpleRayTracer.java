@@ -16,6 +16,7 @@ public class SimpleRayTracer extends RayTracerBase {
     private static final double DELTA = 0.1;
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
+
     /**
      * constructor
      *
@@ -70,9 +71,6 @@ public class SimpleRayTracer extends RayTracerBase {
         }
         return color;
     }
-
-
-
 
 
     /**
@@ -160,7 +158,7 @@ public class SimpleRayTracer extends RayTracerBase {
         if (!kkr.lowerThan(MIN_CALC_COLOR_K)) {
             Ray reflectedRay = constructReflectedRay(gp.point, v, n);
             color = color.add(calcColor(reflectedRay.findClosestGeoPoint(
-                    scene.geometries.findGeoIntersections(reflectedRay)),
+                            scene.geometries.findGeoIntersections(reflectedRay)),
                     reflectedRay, level - 1, kkr).scale(kr));
         }
 
@@ -175,7 +173,6 @@ public class SimpleRayTracer extends RayTracerBase {
 
         return color;
     }
-
 
 
 }
