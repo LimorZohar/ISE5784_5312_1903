@@ -159,24 +159,29 @@ public class SimpleRayTracer extends RayTracerBase {
     }
 
     /**
-     * Calculate the transparency factor of a point considering the geometries blocking the light source
+     * Calculates the transparency factor for a point with respect to a light source.
      *
-     * @param geoPoint the point to check
-     * @param ls       the light source
-     * @param l        the light direction
-     * @param n        the normal at the point
-     * @return the transparency factor as Double3
+     * @param gp The point for which transparency is calculated.
+     * @param light    The light source.
+     * @param l        The vector from the light source to the point.
+     * @param n        The normal vector at the point.
+     * @return The transparency factor as a Double3 representing (r, g, b) values.
      */
-    private Double3 transparency(GeoPoint geoPoint, LightSource ls, Vector l, Vector n) {
+    private Double3 transparency(GeoPoint gp, LightSource light, Vector l, Vector n) {
         Vector lightDirection = l.scale(-1); // from point to light source
-        Ray lightRay = new Ray(geoPoint.point, lightDirection, n);
-        var intersections = scene.geometries.findGeoIntersections(lightRay);
-        if (intersections == null || intersections.isEmpty()) return Double3.ONE;
+        Ray lightRay = new Ray(gp.point,lightDirection, n); //build ray with delta
+        double lightDistance = light.getDistance(gp.point);
 
+        var intersections = this.scene.geometries.findGeoIntersections(lightRay);
+        if (intersections == null) {
+            return Double3.ONE; //no intersections
+        }
         Double3 ktr = Double3.ONE;
-        for (GeoPoint gp : intersections) {
-            ktr = ktr.product(gp.geometry.getMaterial().kT);
-            if (ktr.lowerThan(MIN_CALC_COLOR_K)) return Double3.ZERO;
+        for (GeoPoint geoPoint : intersections) {
+            if (alignZero(geoPoint.point.distance(gp.point) - lightDistance) <= 0) {
+                ktr = ktr.product(geoPoint.geometry.getMaterial().kT); //the more transparency the less shadow
+                if (ktr.lowerThan(MIN_CALC_COLOR_K)) return Double3.ZERO;
+            }
         }
         return ktr;
     }
