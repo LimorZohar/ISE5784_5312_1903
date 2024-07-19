@@ -174,7 +174,7 @@ public class SunsetScene {
                 // Trees on the rock
                 createTree(x - size / 2, y + size, z, size / 2),
                 createTree(x + size / 2, y + size, z, size / 2),
-                createTree(x, y + size * 1.5, z, size / 2)
+                createTree(x, y + size, z, size)
         );
     }
 
