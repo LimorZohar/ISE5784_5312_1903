@@ -44,13 +44,13 @@ public class MyPic {
     private Geometries createTree(double x, double y, double z, double height) {
         return new Geometries(
                 // Tree levels
-                new Triangle(new Point(x - 10, y - (height * 0.3), z), new Point(x + 12, y - (height * 0.3), z), new Point(x, y, z))
+                new Triangle(new Point(x - 10, y - (height * 0.3), z), new Point(x + 10, y - (height * 0.3), z), new Point(x, y, z))
                         .setEmission(GREEN)
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
-                new Triangle(new Point(x - 20, y - (height * 0.6), z - 10), new Point(x + 20, y - (height * 0.6), z - 10), new Point(x + 3, y - 5, z - 10))
+                new Triangle(new Point(x - 20, y - (height * 0.6), z - 10), new Point(x + 20, y - (height * 0.6), z - 10), new Point(x , y - 5, z - 10))
                         .setEmission(GREEN)
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
-                new Triangle(new Point(x - 25, y - (height * 0.85), z - 20), new Point(x + 25, y - (height * 0.85), z - 20), new Point(x + 5, y - 10, z - 20))
+                new Triangle(new Point(x - 25, y - (height * 0.85), z - 20), new Point(x + 25, y - (height * 0.85), z - 20), new Point(x , y - 10, z - 20))
                         .setEmission(GREEN)
                         .setMaterial(new Material().setKd(0.6).setKs(0.1).setShininess(100)),
                 new Cylinder(4, new Ray(new Point(x, y - height - 5, z - 30), new Vector(0, 1, 0)), (height * 0.3))
@@ -62,16 +62,17 @@ public class MyPic {
     @Test
     public void createScene() {
         // Set background color
-        scene.setBackground(new Color(17, 65, 97));
+        scene.setBackground(new Color(255, 254, 163));
 
         // Add trees to the scene
-        scene.geometries.add(createTree(-150, 0, -250, 50));
-        scene.geometries.add(createTree(-100, 5, -250, 50));
-        scene.geometries.add(createTree(-50, 7, -250, 50));
-        scene.geometries.add(createTree(0, 30, -250, 50));
-        scene.geometries.add(createTree(50, 40, -250, 50));
-        scene.geometries.add(createTree(100, 0, -250, 50));
-        scene.geometries.add(createTree(150, 10, -250, 50));
+        scene.geometries.add(createTree(-90, -43, -250, 44));
+        scene.geometries.add(createTree(94, -43, -250, 44));
+        scene.geometries.add(createTree(-82, 65, -250, 44));
+        scene.geometries.add(createTree(82, 65, -250, 44));
+        scene.geometries.add(createTree(-97, 10, -250, 44));
+        scene.geometries.add(createTree(97, 10, -250, 44));
+        scene.geometries.add(createTree(0, 80, -250, 44));
+        scene.geometries.add(createTree(0, 0, -250, 44));
 
         // Add lights to the scene
         scene.lights.add(new SpotLight(new Color(1000, 600, 0), new Point(-100, -100, 500), new Vector(-1, -1, -2))

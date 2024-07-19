@@ -12,7 +12,9 @@ import primitives.*;
 import scene.Scene;
 import lighting.DirectionalLight;
 
-/** Tests for creating a sunset scene using triangles and a sphere for the sun */
+/**
+ * Tests for creating a sunset scene using triangles and a sphere for the sun
+ */
 public class SunsetScene {
 
     private static final Color SUN_COLOR = new Color(255, 69, 0); // Orange-red color for the sun
@@ -38,10 +40,10 @@ public class SunsetScene {
     /**
      * Creates a sunset using triangles and a sphere for the sun
      *
-     * @param x      The x-coordinate of the center of the sunset
-     * @param y      The y-coordinate of the center of the sunset
-     * @param z      The z-coordinate of the center of the sunset
-     * @param size   The size of the sunset elements
+     * @param x    The x-coordinate of the center of the sunset
+     * @param y    The y-coordinate of the center of the sunset
+     * @param z    The z-coordinate of the center of the sunset
+     * @param size The size of the sunset elements
      * @return A Geometries object representing the sunset
      */
     private Geometries createSunset(double x, double y, double z, double size) {
@@ -53,32 +55,32 @@ public class SunsetScene {
 
                 // Horizon
                 new Triangle(new Point(x - size * 2, y - size / 4, z), new Point(x + size * 2, y - size / 4, z), new Point(x, y - size / 2, z))
-                        .setEmission(HORIZON_COLOR)
+                        .setEmission(new Color(255, 185, 96))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
                 new Triangle(new Point(x - size * 2, y - size / 2, z), new Point(x + size * 2, y - size / 2, z), new Point(x, y - size / 4, z))
-                        .setEmission(HORIZON_COLOR)
+                        .setEmission(new Color(255, 185, 96))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
                 new Triangle(new Point(x - size * 2, y - size / 6, z), new Point(x + size * 2, y - size / 6, z), new Point(x, y - size / 2, z))
-                        .setEmission(HORIZON_COLOR)
+                        .setEmission(new Color(255, 185, 96))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
 
                 // Sky
                 new Triangle(new Point(x - size * 3, y + size, z), new Point(x + size * 3, y + size, z), new Point(x, y, z))
-                        .setEmission(new Color(300,100,50))
+                        .setEmission(new Color(300, 100, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200)),
                 new Triangle(new Point(x - size * 3, y + size / 2, z), new Point(x + size * 3, y + size / 2, z), new Point(x, y - size / 4, z))
-                        .setEmission(new Color(400,80,50))
+                        .setEmission(new Color(400, 80, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
 
                 // Water with reflection of the sunset
                 new Triangle(new Point(x - size * 3, y - size, z), new Point(x + size * 3, y - size, z), new Point(x, y - size / 2, z))
-                        .setEmission(new Color(249,174,24))
+                        .setEmission(new Color(249, 174, 24))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
                 new Triangle(new Point(x - size * 3, y - size * 1.5, z), new Point(x + size * 3, y - size * 1.5, z), new Point(x, y - size, z))
-                        .setEmission(new Color(200,160,20))
+                        .setEmission(new Color(200, 160, 20))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
                 new Triangle(new Point(x - size * 3, y - size * 3, z), new Point(x + size * 3, y - size * 3, z), new Point(x, y - size, z))
-                        .setEmission(new Color(150,150,15))
+                        .setEmission(new Color(150, 150, 15))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
                 //לא רואים
                 // Mountains
@@ -100,9 +102,9 @@ public class SunsetScene {
     /**
      * Creates clouds using spheres
      *
-     * @param x The x-coordinate of the center of the cloud
-     * @param y The y-coordinate of the center of the cloud
-     * @param z The z-coordinate of the center of the cloud
+     * @param x    The x-coordinate of the center of the cloud
+     * @param y    The y-coordinate of the center of the cloud
+     * @param z    The z-coordinate of the center of the cloud
      * @param size The size of the cloud elements
      * @return A Geometries object representing the cloud
      */
@@ -156,10 +158,10 @@ public class SunsetScene {
     /**
      * Creates a rock with three trees on top of it
      *
-     * @param x      The x-coordinate of the rock
-     * @param y      The y-coordinate of the rock
-     * @param z      The z-coordinate of the rock
-     * @param size   The size of the rock
+     * @param x    The x-coordinate of the rock
+     * @param y    The y-coordinate of the rock
+     * @param z    The z-coordinate of the rock
+     * @param size The size of the rock
      * @return A Geometries object representing the rock with trees
      */
     private Geometries createRockWithTrees(double x, double y, double z, double size) {
@@ -185,9 +187,9 @@ public class SunsetScene {
         scene.geometries.add(createSunset(0, 0, -100, 50));
 
         // Add clouds to the scene
-        scene.geometries.add(createCloud(-30, 50, -200, 30));
-        scene.geometries.add(createCloud(50, 70, -100, 35));
-        scene.geometries.add(createCloud(0, 40, -100, 25));
+        scene.geometries.add(createCloud(-70, 80, -200, 30));
+        scene.geometries.add(createCloud(5, 75, -100, 35));
+        scene.geometries.add(createCloud(70, 73, -100, 25));
 
 
         // Add rock with trees to the scene
