@@ -82,10 +82,10 @@ public class SunsetScene {
 
     @Test
     public void createCombinedScene() {
-        scene.setBackground(new Color(17, 65, 97));
+        scene.setBackground(new Color(20, 70, 100));
 
         // Add the sunset to the scene (back layer)
-        scene.geometries.add(createSunset(0, 0, -150, 70));
+        scene.geometries.add(createSunset(0, 0, -150, 75));
 
         // Add more triangles to the sky
         double size = 70;
@@ -105,7 +105,6 @@ public class SunsetScene {
         scene.geometries.add(createTree(-150, -26, -900, 50));
         scene.geometries.add(createTree(-100, -19, -900, 50));
         scene.geometries.add(createTree(-50, -11, -900, 50));
-        scene.geometries.add(createTree(50, -19, -900, 50));
         scene.geometries.add(createTree(50, -15, -900, 50));
         scene.geometries.add(createTree(100, -19, -900, 50));
         scene.geometries.add(createTree(150, -29, -900, 50));
@@ -124,25 +123,25 @@ public class SunsetScene {
         scene.geometries.add(new Triangle(new Point(x - size * 3.5, y - size, z),
                         new Point(x + size * 3.5, y - size, z),
                         new Point(x, y - size / 2, z))
-                        .setEmission(new Color(249, 174, 24))
+                        .setEmission(new Color(500, 100, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
 
                 new Triangle(new Point(x - size * 3.5, y - size * 1.25, z),
                         new Point(x + size * 3.5, y - size * 1.25, z),
                         new Point(x, y - size * 0.75, z))
-                        .setEmission(new Color(200, 160, 20))
+                        .setEmission(new Color(300, 80, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
 
                 new Triangle(new Point(x - size * 3.5, y - size * 1.5, z),
                         new Point(x + size * 3.5, y - size * 1.5, z),
                         new Point(x, y - size, z))
-                        .setEmission(new Color(150, 150, 15))
+                        .setEmission(new Color(200, 80, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
 
                 new Triangle(new Point(x - size * 3.5, y - size * 1.75, z),
                         new Point(x + size * 3.5, y - size * 1.75, z),
                         new Point(x, y - size * 1.25, z))
-                        .setEmission(new Color(100, 100, 10))
+                        .setEmission(new Color(100, 80, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5))
 
         );
