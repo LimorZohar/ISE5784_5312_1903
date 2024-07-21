@@ -12,7 +12,7 @@ import lighting.SpotLight;
 import lighting.AmbientLight;
 
 /**
- * Class for creating a sunset scene with trees and clouds.
+ * Class for creating a sunset scene with trees and clouds..
  */
 public class SunsetScene {
 
