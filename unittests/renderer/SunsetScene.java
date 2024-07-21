@@ -11,18 +11,52 @@ import lighting.DirectionalLight;
 import lighting.SpotLight;
 import lighting.AmbientLight;
 
+/**
+ * Class for creating a sunset scene with trees and clouds.
+ */
 public class SunsetScene {
 
+    /**
+     * Color of the sun in the scene.
+     */
     private static final Color SUN_COLOR = new Color(255, 69, 0);
+
+    /**
+     * Color of the clouds in the scene.
+     */
     private static final Color CLOUD_COLOR = new Color(400, 100, 50);
+
+    /**
+     * Color of the tree leaves in the scene.
+     */
     private static final Color TREE_GREEN = new Color(50, 60, 10);
+
+    /**
+     * Color of the tree trunks in the scene.
+     */
     private static final Color TREE_BROWN = new Color(92, 47, 5);
 
+    /**
+     * The scene containing the sunset, trees, and clouds.
+     */
     private final Scene scene = new Scene("Combined Sunset and Trees Scene");
+
+    /**
+     * Builder for the camera to capture the scene.
+     */
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setRayTracer(new SimpleRayTracer(scene));
 
+    /**
+     * Creates the sunset part of the scene.
+     *
+     * @param x The x-coordinate of the center of the sunset.
+     * @param y The y-coordinate of the center of the sunset.
+     * @param z The z-coordinate of the center of the sunset.
+     * @param size The size of the sunset.
+     * @return Geometries representing the sunset.
+     */
     private Geometries createSunset(double x, double y, double z, double size) {
         return new Geometries(
                 // Sun (as a sphere)
@@ -43,6 +77,15 @@ public class SunsetScene {
         );
     }
 
+    /**
+     * Creates a cloud in the scene.
+     *
+     * @param x The x-coordinate of the center of the cloud.
+     * @param y The y-coordinate of the center of the cloud.
+     * @param z The z-coordinate of the center of the cloud.
+     * @param size The size of the cloud.
+     * @return Geometries representing the cloud.
+     */
     private Geometries createCloud(double x, double y, double z, double size) {
         return new Geometries(
                 new Sphere(new Point(x, y, z), size / 2)
@@ -63,6 +106,15 @@ public class SunsetScene {
         );
     }
 
+    /**
+     * Creates a tree in the scene.
+     *
+     * @param x The x-coordinate of the base of the tree.
+     * @param y The y-coordinate of the base of the tree.
+     * @param z The z-coordinate of the base of the tree.
+     * @param height The height of the tree.
+     * @return Geometries representing the tree.
+     */
     private Geometries createTree(double x, double y, double z, double height) {
         return new Geometries(
                 new Triangle(new Point(x - 10, y - (height * 0.3), z), new Point(x + 12, y - (height * 0.3), z), new Point(x, y, z))
@@ -80,6 +132,9 @@ public class SunsetScene {
         );
     }
 
+    /**
+     * Creates the combined sunset and trees scene and renders it.
+     */
     @Test
     public void createSunsetPic() {
         scene.setBackground(new Color(50, 119, 153));
