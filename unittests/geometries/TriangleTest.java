@@ -41,7 +41,7 @@ class TriangleTest {
         assertEquals(new Vector(0, 0, 1), result,
                 "getNormal() did not return the expected normal vector.");
     }
-
+//
     /**
      * Test method for {@link geometries.Triangle#findGeoIntersectionsHelper(Ray)}
      */

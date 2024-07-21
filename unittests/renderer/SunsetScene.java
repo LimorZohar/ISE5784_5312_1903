@@ -15,8 +15,8 @@ public class SunsetScene {
 
     private static final Color SUN_COLOR = new Color(255, 69, 0);
     private static final Color CLOUD_COLOR = new Color(400, 100, 50);
-    private static final Color TREE_GREEN = new Color(50, 50, 10);
-    private static final Color TREE_BROWN = new Color(139, 69, 19);
+    private static final Color TREE_GREEN = new Color(50, 60, 10);
+    private static final Color TREE_BROWN = new Color(92, 47, 5);
 
     private final Scene scene = new Scene("Combined Sunset and Trees Scene");
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
@@ -31,14 +31,14 @@ public class SunsetScene {
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
 
                 // Sky
-                new Triangle(new Point(x - size * 3, y + size, z), new Point(x + size * 3, y + size, z), new Point(x, y, z))
-                        .setEmission(new Color(300, 100, 50))
+                new Triangle(new Point(x - size * 4, y + size+150, z-10), new Point(x + size * 4, y + size+150, z-10), new Point(x, y, z-10))
+                        .setEmission(new Color(300, 100, 50)) // yellow front
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200)),
-                new Triangle(new Point(x - size * 3, y + size / 2, z), new Point(x + size * 3, y + size / 2, z), new Point(x, y - size / 4, z))
-                        .setEmission(new Color(400, 80, 50))
+                new Triangle(new Point(x - size * 3, y + size , z-20), new Point(x + size * 3, y + size , z-20), new Point(x, y , z-20))
+                        .setEmission(new Color(400, 80, 50)) //
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
-                new Triangle(new Point(x - size * 3, y + size / 3, z), new Point(x + size * 3, y + size / 3, z), new Point(x, y - size / 4, z))
-                        .setEmission(new Color(500, 80, 50))
+                new Triangle(new Point(x - size * 3, y + size -20, z-30), new Point(x + size * 3, y + size-20 , z-30), new Point(x, y-15 , z-30))
+                        .setEmission(new Color(600, 60, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100))
         );
     }
@@ -76,43 +76,35 @@ public class SunsetScene {
                         .setMaterial(new Material().setKd(0.6).setKs(0.1).setShininess(100)),
                 new Cylinder(4, new Ray(new Point(x, y - height - 5, z - 30), new Vector(0, 1, 0)), (height * 0.3))
                         .setEmission(TREE_BROWN)
-                        .setMaterial(new Material().setKd(0.8).setKs(0.2).setShininess(10))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10))
         );
     }
 
     @Test
-    public void createCombinedScene() {
-        scene.setBackground(new Color(20, 70, 100));
+    public void createSunsetPic() {
+        scene.setBackground(new Color(50, 119, 153));
 
         // Add the sunset to the scene (back layer)
-        scene.geometries.add(createSunset(0, 0, -150, 75));
+        scene.geometries.add(createSunset(0, 0, -1500, 175));
 
         // Add more triangles to the sky
-        double size = 70;
+        double size = 170;
         double x = 0;
         double y = 0;
-        double z = -100;
-        scene.geometries.add(
-                new Triangle(new Point(x - size * 3, y + size * 1.5, z), new Point(x + size * 3, y + size * 1.5, z), new Point(x, y + size * 0.5, z))
-                        .setEmission(new Color(300, 140, 50))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200)),
-                new Triangle(new Point(x - size * 3, y + size * 2, z), new Point(x + size * 3, y + size * 2, z), new Point(x, y + size, z))
-                        .setEmission(new Color(350, 140, 100))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200))
-        );
-
+        double z = -1500;
+        double tree_size = 60;
         // Add trees to the scene (middle-back layer)
-        scene.geometries.add(createTree(-150, -26, -900, 50));
-        scene.geometries.add(createTree(-100, -19, -900, 50));
-        scene.geometries.add(createTree(-50, -11, -900, 50));
-        scene.geometries.add(createTree(50, -15, -900, 50));
-        scene.geometries.add(createTree(100, -19, -900, 50));
-        scene.geometries.add(createTree(150, -29, -900, 50));
+        scene.geometries.add(createTree(-150, -28, -900, tree_size));
+        scene.geometries.add(createTree(-100, -21, -900, tree_size));
+        scene.geometries.add(createTree(-50, -13, -900, tree_size));
+        scene.geometries.add(createTree(50, -17, -900, tree_size));
+        scene.geometries.add(createTree(100, -21, -900, tree_size));
+        scene.geometries.add(createTree(150, -31, -900, tree_size));
 
         // Add clouds to the scene (middle layer)
-        scene.geometries.add(createCloud(-30, 50, -200, 50));
+        scene.geometries.add(createCloud(-30, 50, -250, 40));
         scene.geometries.add(createCloud(50, 70, -100, 35));
-        scene.geometries.add(createCloud(0, 40, -100, 25));
+        scene.geometries.add(createCloud(0, 40, -50, 20));
 
         // Add more clouds to the scene (front layer)
         scene.geometries.add(createCloud(-80, 30, -50, 20));
@@ -120,40 +112,28 @@ public class SunsetScene {
         scene.geometries.add(createCloud(20, 20, -50, 15));
 
         // Add water reflection of the sunset
-        scene.geometries.add(new Triangle(new Point(x - size * 3.5, y - size, z),
+        scene.geometries.add(
+                new Triangle(new Point(x - size * 3.5, y - size, z),
                         new Point(x + size * 3.5, y - size, z),
                         new Point(x, y - size / 2, z))
                         .setEmission(new Color(500, 100, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
 
-                new Triangle(new Point(x - size * 3.5, y - size * 1.25, z),
-                        new Point(x + size * 3.5, y - size * 1.25, z),
-                        new Point(x, y - size * 0.75, z))
+                new Triangle(new Point(x-100 - size * 3.5, y -100 - size * 1.25, z),
+                        new Point(x+100 + size * 3.5, y -100 - size * 1.25, z),
+                        new Point(x, y - size * 0.5, z))
                         .setEmission(new Color(300, 80, 50))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
-
-                new Triangle(new Point(x - size * 3.5, y - size * 1.5, z),
-                        new Point(x + size * 3.5, y - size * 1.5, z),
-                        new Point(x, y - size, z))
-                        .setEmission(new Color(200, 80, 50))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
-
-                new Triangle(new Point(x - size * 3.5, y - size * 1.75, z),
-                        new Point(x + size * 3.5, y - size * 1.75, z),
-                        new Point(x, y - size * 1.25, z))
-                        .setEmission(new Color(100, 80, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5))
 
         );
 
         // Add lights to the scene
         scene.lights.add(new DirectionalLight(new Color(255, 140, 0), new Vector(-1, -1, -1)));
-        //scene.lights.add(new AmbientLight(new Color(255, 255, 255), new Double3(0.1))); // Added Ambient Light
-
+        scene.lights.add(new DirectionalLight(new Color(java.awt.Color.white), new Vector(1, 1, 1)));
         // Set up the camera and render the image
         cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
                 .setVpSize(200, 200)
-                .setImageWriter(new ImageWriter("CombinedSunsetAndTreesScene", 500, 500))
+                .setImageWriter(new ImageWriter("SunsetPicture", 500, 500))
                 .build()
                 .renderImage()
                 .writeToImage();
