@@ -42,6 +42,7 @@ class TriangleTest {
                 "getNormal() did not return the expected normal vector.");
     }
 //
+
     /**
      * Test method for {@link geometries.Triangle#findGeoIntersectionsHelper(Ray)}
      */

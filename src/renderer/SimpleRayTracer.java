@@ -161,15 +161,15 @@ public class SimpleRayTracer extends RayTracerBase {
     /**
      * Calculates the transparency factor for a point with respect to a light source.
      *
-     * @param gp The point for which transparency is calculated.
-     * @param light    The light source.
-     * @param l        The vector from the light source to the point.
-     * @param n        The normal vector at the point.
+     * @param gp    The point for which transparency is calculated.
+     * @param light The light source.
+     * @param l     The vector from the light source to the point.
+     * @param n     The normal vector at the point.
      * @return The transparency factor as a Double3 representing (r, g, b) values.
      */
     private Double3 transparency(GeoPoint gp, LightSource light, Vector l, Vector n) {
         Vector lightDirection = l.scale(-1); // from point to light source
-        Ray lightRay = new Ray(gp.point,lightDirection, n); //build ray with delta
+        Ray lightRay = new Ray(gp.point, lightDirection, n); //build ray with delta
         double lightDistance = light.getDistance(gp.point);
 
         var intersections = this.scene.geometries.findGeoIntersections(lightRay);

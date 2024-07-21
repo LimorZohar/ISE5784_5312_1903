@@ -29,6 +29,13 @@ public class Cylinder extends Tube {
         this.height = height;
     }
 
+    /**
+     * Finds the intersection points between a ray and the cylinder.
+     * This includes intersections with the cylindrical surface as well as the top and bottom caps.
+     *
+     * @param ray The ray to intersect with the cylinder.
+     * @return A list of GeoPoint objects representing the intersection points, or null if there are no intersections.
+     */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<GeoPoint> intersections = new LinkedList<>();
@@ -74,5 +81,4 @@ public class Cylinder extends Tube {
 
         return intersections.isEmpty() ? null : intersections;
     }
-
 }

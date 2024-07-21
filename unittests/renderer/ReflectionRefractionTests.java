@@ -14,19 +14,28 @@ import lighting.SpotLight;
 import primitives.*;
 import scene.Scene;
 
-/** Tests for reflection and transparency functionality, test for partial
+/**
+ * Tests for reflection and transparency functionality, test for partial
  * shadows
  * (with transparency)
- * @author dzilb */
+ *
+ * @author dzilb
+ */
 public class ReflectionRefractionTests {
-    /** Scene for the tests */
-    private final Scene          scene         = new Scene("Test scene");
-    /** Camera builder for the tests with triangles */
+    /**
+     * Scene for the tests
+     */
+    private final Scene scene = new Scene("Test scene");
+    /**
+     * Camera builder for the tests with triangles
+     */
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
-            .setDirection(new Vector(0, 0, -1),new Vector(0, 1, 0))
+            .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setRayTracer(new SimpleRayTracer(scene));
 
-    /** Produce a picture of a sphere lighted by a spot light */
+    /**
+     * Produce a picture of a sphere lighted by a spot light
+     */
     @Test
     public void twoSpheres() {
         scene.geometries.add(
@@ -46,7 +55,9 @@ public class ReflectionRefractionTests {
                 .writeToImage();
     }
 
-    /** Produce a picture of a sphere lighted by a spot light */
+    /**
+     * Produce a picture of a sphere lighted by a spot light
+     */
     @Test
     public void twoSpheresOnMirrors() {
         scene.geometries.add(
@@ -75,9 +86,11 @@ public class ReflectionRefractionTests {
                 .writeToImage();
     }
 
-    /** Produce a picture of a two triangles lighted by a spot light with a
+    /**
+     * Produce a picture of a two triangles lighted by a spot light with a
      * partially
-     * transparent Sphere producing partial shadow */
+     * transparent Sphere producing partial shadow
+     */
     @Test
     public void trianglesTransparentSphere() {
         scene.geometries.add(

@@ -31,13 +31,13 @@ public class SunsetScene {
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
 
                 // Sky
-                new Triangle(new Point(x - size * 4, y + size+150, z-10), new Point(x + size * 4, y + size+150, z-10), new Point(x, y, z-10))
+                new Triangle(new Point(x - size * 4, y + size + 150, z - 10), new Point(x + size * 4, y + size + 150, z - 10), new Point(x, y, z - 10))
                         .setEmission(new Color(300, 100, 50)) // yellow front
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200)),
-                new Triangle(new Point(x - size * 3, y + size , z-20), new Point(x + size * 3, y + size , z-20), new Point(x, y , z-20))
+                new Triangle(new Point(x - size * 3, y + size, z - 20), new Point(x + size * 3, y + size, z - 20), new Point(x, y, z - 20))
                         .setEmission(new Color(400, 80, 50)) //
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
-                new Triangle(new Point(x - size * 3, y + size -20, z-30), new Point(x + size * 3, y + size-20 , z-30), new Point(x, y-15 , z-30))
+                new Triangle(new Point(x - size * 3, y + size - 20, z - 30), new Point(x + size * 3, y + size - 20, z - 30), new Point(x, y - 15, z - 30))
                         .setEmission(new Color(600, 60, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100))
         );
@@ -119,8 +119,8 @@ public class SunsetScene {
                         .setEmission(new Color(500, 100, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
 
-                new Triangle(new Point(x-100 - size * 3.5, y -100 - size * 1.25, z),
-                        new Point(x+100 + size * 3.5, y -100 - size * 1.25, z),
+                new Triangle(new Point(x - 100 - size * 3.5, y - 100 - size * 1.25, z),
+                        new Point(x + 100 + size * 3.5, y - 100 - size * 1.25, z),
                         new Point(x, y - size * 0.5, z))
                         .setEmission(new Color(300, 80, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5))
