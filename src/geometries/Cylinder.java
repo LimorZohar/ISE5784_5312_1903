@@ -7,6 +7,8 @@ import primitives.Vector;
 import java.util.LinkedList;
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * Represents a cylinder in three-dimensional space, extending the Tube class.
  */
@@ -44,8 +46,8 @@ public class Cylinder extends Tube {
         List<GeoPoint> tubeIntersections = super.findGeoIntersectionsHelper(ray);
         if (tubeIntersections != null) {
             for (GeoPoint gp : tubeIntersections) {
-                double t = axis.getDirection().dotProduct(gp.point.subtract(axis.getHead()));
-                if (t > 0 && t < height) {
+                double t = alignZero(axis.getDirection().dotProduct(gp.point.subtract(axis.getHead())));
+                if (alignZero(t) > 0 && alignZero(t - height) < 0) {
                     intersections.add(gp);
                 }
             }
@@ -56,29 +58,32 @@ public class Cylinder extends Tube {
         Vector v = axis.getDirection();
         Point p1 = p0.add(v.scale(height));
 
-        Plane bottomCap = new Plane(p0, v);
-        Plane topCap = new Plane(p1, v.scale(-1));  // Note the direction change for the top cap
-
-        // Check intersection with bottom cap
-        List<GeoPoint> bottomIntersections = bottomCap.findGeoIntersections(ray);
-        if (bottomIntersections != null) {
-            for (GeoPoint geoPoint : bottomIntersections) {
-                if (geoPoint.point.distanceSquared(p0) <= radius * radius) {
-                    intersections.add(new GeoPoint(this, geoPoint.point));
-                }
-            }
-        }
-
-        // Check intersection with top cap
-        List<GeoPoint> topIntersections = topCap.findGeoIntersections(ray);
-        if (topIntersections != null) {
-            for (GeoPoint geoPoint : topIntersections) {
-                if (geoPoint.point.distanceSquared(p1) <= radius * radius) {
-                    intersections.add(new GeoPoint(this, geoPoint.point));
-                }
-            }
-        }
+        intersections.addAll(findCapIntersections(ray, p0, v, true));
+        intersections.addAll(findCapIntersections(ray, p1, v.scale(-1), false));
 
         return intersections.isEmpty() ? null : intersections;
+    }
+
+    /**
+     * Finds the intersection points between a ray and one of the cylinder's caps.
+     *
+     * @param ray         The ray to intersect with the cap.
+     * @param capCenter   The center point of the cap.
+     * @param normal      The normal vector of the cap plane.
+     * @param isBottomCap A boolean indicating whether this is the bottom cap (true) or top cap (false).
+     * @return A list of GeoPoint objects representing the intersection points with the cap.
+     */
+    private List<GeoPoint> findCapIntersections(Ray ray, Point capCenter, Vector normal, boolean isBottomCap) {
+        List<GeoPoint> capIntersections = new LinkedList<>();
+        Plane cap = new Plane(capCenter, normal);
+        List<GeoPoint> planeIntersections = cap.findGeoIntersections(ray);
+        if (planeIntersections != null) {
+            for (GeoPoint geoPoint : planeIntersections) {
+                if (alignZero(geoPoint.point.distanceSquared(capCenter) - radiusSquared) <= 0) {
+                    capIntersections.add(new GeoPoint(this, geoPoint.point));
+                }
+            }
+        }
+        return capIntersections;
     }
 }

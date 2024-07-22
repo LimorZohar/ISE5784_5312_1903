@@ -68,7 +68,8 @@ public class SimpleRayTracer extends RayTracerBase {
     @Override
     public Color traceRay(Ray ray) {
         var intersection = ray.findClosestGeoPoint(this.scene.geometries.findGeoIntersections(ray));
-        return intersection == null ? scene.background : calcColor(intersection, ray, MAX_CALC_COLOR_LEVEL, Double3.ONE);
+        return intersection == null ? scene.background : calcColor(intersection, ray,
+                MAX_CALC_COLOR_LEVEL, Double3.ONE);
     }
 
     /**
@@ -124,8 +125,10 @@ public class SimpleRayTracer extends RayTracerBase {
      * @param lightIntensity The intensity of the light at the point.
      * @return The color result of the specular component.
      */
-    private Color calcSpecular(Double3 ks, Vector l, Vector n, Vector v, double nShininess, Color lightIntensity) {
-        double minusVR = alignZero(-v.dotProduct(l.subtract(n.scale(l.dotProduct(n)).scale(2))));
+    private Color calcSpecular(Double3 ks, Vector l, Vector n, Vector v, double nShininess,
+                               Color lightIntensity) {
+        double minusVR = alignZero(-v.dotProduct(l.subtract(n.scale(l.dotProduct(n))
+                .scale(2))));
         return minusVR <= 0 ? Color.BLACK : lightIntensity.scale(ks.scale(Math.pow(minusVR, nShininess)));
     }
 

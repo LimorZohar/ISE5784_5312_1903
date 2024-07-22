@@ -39,10 +39,9 @@ public abstract class Intersectable {
         @Override
         public boolean equals(Object obj) {
             if (this == obj) return true;
-            if (obj == null || getClass() != obj.getClass()) return false;
-            GeoPoint geoPoint = (GeoPoint) obj;
-            return Objects.equals(geometry, geoPoint.geometry) &&
-                    Objects.equals(point, geoPoint.point);
+            return obj instanceof GeoPoint gp
+                    && Objects.equals(geometry, gp.geometry)
+                    && Objects.equals(point, gp.point);
         }
 
         @Override

@@ -26,21 +26,4 @@ public abstract class RadialGeometry extends Geometry {
         this.radiusSquared = radius * radius;
     }
 
-    /**
-     * Returns the radius of the radial geometry.
-     *
-     * @return The radius of the radial geometry.
-     */
-    public double getRadius() {
-        return radius;
-    }
-
-    /**
-     * Returns the squared radius of the radial geometry.
-     *
-     * @return The squared radius of the radial geometry.
-     */
-    public double getRadiusSquared() {
-        return radiusSquared;
-    }
 }
