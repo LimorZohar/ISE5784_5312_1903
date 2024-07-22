@@ -51,9 +51,9 @@ public class SunsetScene {
     /**
      * Creates the sunset part of the scene.
      *
-     * @param x The x-coordinate of the center of the sunset.
-     * @param y The y-coordinate of the center of the sunset.
-     * @param z The z-coordinate of the center of the sunset.
+     * @param x    The x-coordinate of the center of the sunset.
+     * @param y    The y-coordinate of the center of the sunset.
+     * @param z    The z-coordinate of the center of the sunset.
      * @param size The size of the sunset.
      * @return Geometries representing the sunset.
      */
@@ -69,10 +69,10 @@ public class SunsetScene {
                         .setEmission(new Color(300, 100, 50)) // yellow front
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200)),
                 new Triangle(new Point(x - size * 3, y + size, z - 20), new Point(x + size * 3, y + size, z - 20), new Point(x, y, z - 20))
-                        .setEmission(new Color(400, 80, 50)) //
+                        .setEmission(new Color(400, 80, 50)) //orange
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
                 new Triangle(new Point(x - size * 3, y + size - 20, z - 30), new Point(x + size * 3, y + size - 20, z - 30), new Point(x, y - 15, z - 30))
-                        .setEmission(new Color(600, 60, 50))
+                        .setEmission(new Color(600, 60, 50))//red
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100))
         );
     }
@@ -80,9 +80,9 @@ public class SunsetScene {
     /**
      * Creates a cloud in the scene.
      *
-     * @param x The x-coordinate of the center of the cloud.
-     * @param y The y-coordinate of the center of the cloud.
-     * @param z The z-coordinate of the center of the cloud.
+     * @param x    The x-coordinate of the center of the cloud.
+     * @param y    The y-coordinate of the center of the cloud.
+     * @param z    The z-coordinate of the center of the cloud.
      * @param size The size of the cloud.
      * @return Geometries representing the cloud.
      */
@@ -109,9 +109,9 @@ public class SunsetScene {
     /**
      * Creates a tree in the scene.
      *
-     * @param x The x-coordinate of the base of the tree.
-     * @param y The y-coordinate of the base of the tree.
-     * @param z The z-coordinate of the base of the tree.
+     * @param x      The x-coordinate of the base of the tree.
+     * @param y      The y-coordinate of the base of the tree.
+     * @param z      The z-coordinate of the base of the tree.
      * @param height The height of the tree.
      * @return Geometries representing the tree.
      */
@@ -166,7 +166,7 @@ public class SunsetScene {
         scene.geometries.add(createCloud(80, 60, -50, 25));
         scene.geometries.add(createCloud(20, 20, -50, 15));
 
-        // Add water reflection of the sunset
+        // Add reflection of the sunset
         scene.geometries.add(
                 new Triangle(new Point(x - size * 3.5, y - size, z),
                         new Point(x + size * 3.5, y - size, z),
