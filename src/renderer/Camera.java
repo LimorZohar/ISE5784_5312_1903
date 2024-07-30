@@ -119,6 +119,22 @@ public class Camera implements Cloneable {
     }
 
     /**
+     * Casts a ray for each pixel in the image plane and renders the image with anti-aliasing.
+     *
+     * @return Camera instance
+     */
+    public Camera renderImageWithAntiAliasing(int samplesPerPixel) {
+        int nx = this.imageWriter.getNx();
+        int ny = this.imageWriter.getNy();
+        for (int i = 0; i < nx; i++) {
+            for (int j = 0; j < ny; j++) {
+                castRayWithAntiAliasing(i, j, samplesPerPixel);
+            }
+        }
+        return this;
+    }
+
+    /**
      * Prints a grid on the image.
      *
      * @param interval number of height and width of the grid boxes
@@ -158,6 +174,41 @@ public class Camera implements Cloneable {
     private void castRay(int i, int j) {
         Ray ray = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
         imageWriter.writePixel(j, i, rayTracer.traceRay(ray));
+    }
+
+    /**
+     * Casts multiple rays through each pixel for anti-aliasing and colors the pixel based on the average color.
+     *
+     * @param i              horizontal index of the pixel
+     * @param j              vertical index of the pixel
+     * @param samplesPerPixel number of samples per pixel
+     */
+    private void castRayWithAntiAliasing(int i, int j, int samplesPerPixel) {
+        Color averageColor = Color.BLACK;
+        for (int s = 0; s < samplesPerPixel; s++) {
+            double rx = width / imageWriter.getNx();
+            double ry = height / imageWriter.getNy();
+            double xj = (j - (imageWriter.getNx() - 1) / 2.0 + randomInUnitInterval()) * rx;
+            double yi = -(i - (imageWriter.getNy() - 1) / 2.0 + randomInUnitInterval()) * ry;
+
+            Point pij = location.add(vTo.scale(distance));
+            if (!isZero(xj)) pij = pij.add(vRight.scale(xj));
+            if (!isZero(yi)) pij = pij.add(vUp.scale(yi));
+
+            Ray ray = new Ray(location, pij.subtract(location));
+            averageColor = averageColor.add(rayTracer.traceRay(ray));
+        }
+        averageColor = averageColor.reduce(samplesPerPixel);
+        imageWriter.writePixel(j, i, averageColor);
+    }
+
+    /**
+     * Returns a random number in the interval [0, 1).
+     *
+     * @return random double in [0, 1)
+     */
+    private double randomInUnitInterval() {
+        return Math.random();
     }
 
     /**
@@ -319,5 +370,6 @@ public class Camera implements Cloneable {
             camera.rayTracer = rayTracer;
             return this;
         }
+
     }
 }

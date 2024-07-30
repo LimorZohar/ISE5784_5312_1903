@@ -190,7 +190,7 @@ public class SunsetScene {
                 .setVpSize(200, 200)
                 .setImageWriter(new ImageWriter("SunsetPicture", 500, 500))
                 .build()
-                .renderImage()
+                .renderImageWithAntiAliasing(30)
                 .writeToImage();
     }
 }
