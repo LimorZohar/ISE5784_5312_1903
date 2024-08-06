@@ -208,7 +208,7 @@ public class SunsetScene {
                 .setImageWriter(new ImageWriter("SunsetPicture", 500, 500))
                 .build()
                 //.renderImage()
-                .renderImageWithAntiAliasing(10)
+                .renderImageWithAntiAliasing(10) //antialiasing
                 .writeToImage();
     }
 }
