@@ -4,6 +4,7 @@ import geometries.Cylinder;
 import geometries.Geometries;
 import geometries.Sphere;
 import geometries.Triangle;
+import lighting.PointLight;
 import org.junit.jupiter.api.Test;
 import primitives.*;
 import scene.Scene;
@@ -65,13 +66,16 @@ public class SunsetScene {
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
 
                 // Sky
-                new Triangle(new Point(x - size * 4, y + size + 150, z - 10), new Point(x + size * 4, y + size + 150, z - 10), new Point(x, y, z - 10))
+                new Triangle(new Point(x - size * 4, y + size + 150, z - 10),
+                        new Point(x + size * 4, y + size + 150, z - 10), new Point(x, y, z - 10))
                         .setEmission(new Color(300, 100, 50)) // yellow front
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200)),
-                new Triangle(new Point(x - size * 3, y + size, z - 20), new Point(x + size * 3, y + size, z - 20), new Point(x, y, z - 20))
+                new Triangle(new Point(x - size * 3, y + size, z - 20),
+                        new Point(x + size * 3, y + size, z - 20), new Point(x, y, z - 20))
                         .setEmission(new Color(400, 80, 50)) //orange
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
-                new Triangle(new Point(x - size * 3, y + size - 20, z - 30), new Point(x + size * 3, y + size - 20, z - 30), new Point(x, y - 15, z - 30))
+                new Triangle(new Point(x - size * 3, y + size - 20, z - 30),
+                        new Point(x + size * 3, y + size - 20, z - 30), new Point(x, y - 15, z - 30))
                         .setEmission(new Color(600, 60, 50))//red
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100))
         );
@@ -117,18 +121,22 @@ public class SunsetScene {
      */
     private Geometries createTree(double x, double y, double z, double height) {
         return new Geometries(
-                new Triangle(new Point(x - 10, y - (height * 0.3), z), new Point(x + 12, y - (height * 0.3), z), new Point(x, y, z))
+                new Triangle(new Point(x - 10, y - (height * 0.3), z),
+                        new Point(x + 12, y - (height * 0.3), z), new Point(x, y, z))
                         .setEmission(TREE_GREEN)
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
-                new Triangle(new Point(x - 20, y - (height * 0.6), z - 10), new Point(x + 20, y - (height * 0.6), z - 10), new Point(x + 3, y - 5, z - 10))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0).setKr(0)),
+                new Triangle(new Point(x - 20, y - (height * 0.6), z - 10),
+                        new Point(x + 20, y - (height * 0.6), z - 10), new Point(x + 3, y - 5, z - 10))
                         .setEmission(TREE_GREEN)
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
-                new Triangle(new Point(x - 25, y - (height * 0.85), z - 20), new Point(x + 25, y - (height * 0.85), z - 20), new Point(x + 5, y - 10, z - 20))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0).setKr(0)),
+                new Triangle(new Point(x - 25, y - (height * 0.85), z - 20),
+                        new Point(x + 25, y - (height * 0.85), z - 20), new Point(x + 5, y - 10, z - 20))
                         .setEmission(TREE_GREEN)
-                        .setMaterial(new Material().setKd(0.6).setKs(0.1).setShininess(100)),
-                new Cylinder(4, new Ray(new Point(x, y - height - 5, z - 30), new Vector(0, 1, 0)), (height * 0.3))
+                        .setMaterial(new Material().setKd(0.6).setKs(0.1).setShininess(100).setKt(0).setKr(0)),
+                new Cylinder(4, new Ray(new Point(x, y - height - 5, z - 30),
+                        new Vector(0, 1, 0)), (height * 0.3))
                         .setEmission(TREE_BROWN)
-                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0))
         );
     }
 
@@ -168,29 +176,39 @@ public class SunsetScene {
 
         // Add reflection of the sunset
         scene.geometries.add(
-                new Triangle(new Point(x - size * 3.5, y - size, z),
-                        new Point(x + size * 3.5, y - size, z),
-                        new Point(x, y - size / 2, z))
+                new Triangle(new Point(x - size * 4, y - size-10, -800),
+                        new Point(x + size * 4, y - size-10, -800),
+                        new Point(x, y-68, -900))
                         .setEmission(new Color(500, 100, 50))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5)),
+                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.9).setKr(1))
 
-                new Triangle(new Point(x - 100 - size * 3.5, y - 100 - size * 1.25, z),
-                        new Point(x + 100 + size * 3.5, y - 100 - size * 1.25, z),
-                        new Point(x, y - size * 0.5, z))
-                        .setEmission(new Color(300, 80, 50))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.5))
+//                new Triangle(new Point(x - 100 - size * 3.5, y - 100 - size , -800),
+//                        new Point(x + 100 + size * 3.5, y - 100 - size , -800),
+//                        new Point(x, y - size * 0.5, -900))
+//                        .setEmission(new Color(300, 80, 50))
+//                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200).setKt(1).setKr(1))
 
         );
 
         // Add lights to the scene
-        scene.lights.add(new DirectionalLight(new Color(255, 140, 0), new Vector(-1, -1, -1)));
-        scene.lights.add(new DirectionalLight(new Color(java.awt.Color.white), new Vector(1, 1, 1)));
+        scene.lights.add(new DirectionalLight(new Color(75, 75, 75), new Vector(1, -1, -1)));
+        //scene.lights.add(new DirectionalLight(new Color(java.awt.Color.white), new Vector(-1, 1, 1)));
+        //scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.yellow), 0.01));
+        // הוספת מקור אור נוסף ליצירת צל לעצים
+        scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(0, 10, -950),
+                new Vector(0, -15, 2))
+                .setkC(1).setkL(0.0001).setkQ(0.000005));
+        scene.lights.add(new SpotLight(new Color(500, 300, 300), new Point(300, 300, 300),
+                new Vector(-1, -1, -2))
+                .setkC(1).setkL(0.0001).setkQ(0.00001));
+        //scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.1));
         // Set up the camera and render the image
         cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
                 .setVpSize(200, 200)
                 .setImageWriter(new ImageWriter("SunsetPicture", 500, 500))
                 .build()
-                .renderImageWithAntiAliasing(30)
+                //.renderImage()
+                .renderImageWithAntiAliasing(10)
                 .writeToImage();
     }
 }
