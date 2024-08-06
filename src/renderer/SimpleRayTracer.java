@@ -58,6 +58,14 @@ public class SimpleRayTracer extends RayTracerBase {
         return color.add(calcGlobalEffects(point, ray, level, k));
     }
 
+    /**
+     * Calculates the color at an intersection point with maximum recursion level.
+     * Adds the scene's ambient light intensity to the calculated color.
+     *
+     * @param point the intersection point
+     * @param ray   the intersecting ray
+     * @return the calculated color at the intersection point including ambient light
+     */
     private Color calcColor(GeoPoint point, Ray ray) {
         return calcColor(point, ray, MAX_CALC_COLOR_LEVEL, Double3.ONE)
                 .add(this.scene.ambientLight.getIntensity());
