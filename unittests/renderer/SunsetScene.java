@@ -176,9 +176,9 @@ public class SunsetScene {
 
         // Add reflection of the sunset
         scene.geometries.add(
-                new Triangle(new Point(x - size * 4, y - size-10, -800),
-                        new Point(x + size * 4, y - size-10, -800),
-                        new Point(x, y-68, -900))
+                new Triangle(new Point(x - size * 4, y - size - 10, -800),
+                        new Point(x + size * 4, y - size - 10, -800),
+                        new Point(x, y - 68, -900))
                         .setEmission(new Color(500, 100, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.9).setKr(1))
 

@@ -179,8 +179,8 @@ public class Camera implements Cloneable {
     /**
      * Casts multiple rays through each pixel for anti-aliasing and colors the pixel based on the average color.
      *
-     * @param i              horizontal index of the pixel
-     * @param j              vertical index of the pixel
+     * @param i               horizontal index of the pixel
+     * @param j               vertical index of the pixel
      * @param samplesPerPixel number of samples per pixel
      */
     private void castRayWithAntiAliasing(int i, int j, int samplesPerPixel) {
