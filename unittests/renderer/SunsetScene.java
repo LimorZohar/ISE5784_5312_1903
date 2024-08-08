@@ -143,8 +143,7 @@ public class SunsetScene {
     /**
      * Creates the combined sunset and trees scene and renders it.
      */
-    @Test
-    public void createSunsetPic() {
+    public void createSunsetPic(boolean withAA) {
         scene.setBackground(new Color(50, 119, 153));
 
         // Add the sunset to the scene (back layer)
@@ -203,12 +202,20 @@ public class SunsetScene {
                 .setkC(1).setkL(0.0001).setkQ(0.00001));
         //scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.1));
         // Set up the camera and render the image
-        cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
+        var camera = cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
                 .setVpSize(200, 200)
-                .setImageWriter(new ImageWriter("SunsetPicture", 500, 500))
-                .build()
-                //.renderImage()
-                .renderImageWithAntiAliasing(10) //antialiasing
-                .writeToImage();
+                .setImageWriter(new ImageWriter("SunsetPicture" + (withAA ? "AA" : ""), 500, 500))
+                .build();
+        if (withAA)
+            camera.renderImageWithAntiAliasing(10); //antialiasing
+        else
+            camera.renderImage();
+        camera.writeToImage();
+    }
+
+    @Test
+    void testSunSet() {
+        createSunsetPic(false);
+        createSunsetPic(true);
     }
 }
