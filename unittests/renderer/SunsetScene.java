@@ -13,7 +13,7 @@ import lighting.SpotLight;
 import lighting.AmbientLight;
 
 /**
- * Class for creating a sunset scene with trees and clouds..
+ * Class for creating a sunset scene with trees and clouds.
  */
 public class SunsetScene {
 
@@ -72,11 +72,11 @@ public class SunsetScene {
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200)),
                 new Triangle(new Point(x - size * 3, y + size, z - 20),
                         new Point(x + size * 3, y + size, z - 20), new Point(x, y, z - 20))
-                        .setEmission(new Color(400, 80, 50)) //orange
+                        .setEmission(new Color(400, 80, 50)) // orange
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100)),
                 new Triangle(new Point(x - size * 3, y + size - 20, z - 30),
                         new Point(x + size * 3, y + size - 20, z - 30), new Point(x, y - 15, z - 30))
-                        .setEmission(new Color(600, 60, 50))//red
+                        .setEmission(new Color(600, 60, 50)) // red
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100))
         );
     }
@@ -141,9 +141,66 @@ public class SunsetScene {
     }
 
     /**
-     * Creates the combined sunset and trees scene and renders it.
+     * Creates additional hidden objects in the scene.
+     *
+     * @param x    The x-coordinate of the center of the objects.
+     * @param y    The y-coordinate of the center of the objects.
+     * @param z    The z-coordinate of the center of the objects.
+     * @param size The size of the objects.
+     * @return Geometries representing the additional objects.
      */
-    public void createSunsetPic(boolean withAA) {
+    private Geometries createHiddenObjects(double x, double y, double z, double size) {
+        return new Geometries(
+                // Hidden sphere under the ground
+                new Sphere(new Point(x, y - size, z - 200), size / 4)
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                // Hidden cylinder behind the trees
+                new Cylinder(10, new Ray(new Point(x + 200, y - 50, z ), new Vector(-1, 0, 1)), 50)
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                // Hidden triangle under the clouds
+                new Triangle(new Point(x - 100, y + 100, z - 150),
+                        new Point(x + 100, y + 100, z - 150),
+                        new Point(x, y + 50, z - 200))
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                new Sphere(new Point(x, y - size, z - 200), size / 4)
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                // Hidden cylinder behind the trees
+                new Cylinder(10, new Ray(new Point(x + 200, y - 50, z ), new Vector(-1, 0, 1)), 50)
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                // Hidden triangle under the clouds
+                new Triangle(new Point(x - 100, y + 100, z - 150),
+                        new Point(x + 100, y + 100, z - 150),
+                        new Point(x, y + 50, z - 200))
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                new Sphere(new Point(x, y - size, z - 200), size / 4)
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                // Hidden cylinder behind the trees
+                new Cylinder(10, new Ray(new Point(x + 200, y - 50, z ), new Vector(-1, 0, 1)), 50)
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0)),
+                // Hidden triangle under the clouds
+                new Triangle(new Point(x - 100, y + 100, z - 150),
+                        new Point(x + 100, y + 100, z - 150),
+                        new Point(x, y + 50, z - 200))
+                        .setEmission(new Color(92, 47, 5))
+                        .setMaterial(new Material().setKd(0.5).setKs(0.2).setShininess(10).setKt(0).setKr(0))
+        );
+    }
+
+    /**
+     * Creates the combined sunset and trees scene and renders it.
+     *
+     * @param withAA      Whether to render with Anti-Aliasing.
+     * @param withThreads Whether to render with Multi-Threading.
+     */
+    public void createSunsetPic(boolean withAA, boolean withThreads) {
         scene.setBackground(new Color(50, 119, 153));
 
         // Add the sunset to the scene (back layer)
@@ -180,42 +237,49 @@ public class SunsetScene {
                         new Point(x, y - 68, -900))
                         .setEmission(new Color(500, 100, 50))
                         .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(100).setKt(0.9).setKr(1))
-
-//                new Triangle(new Point(x - 100 - size * 3.5, y - 100 - size , -800),
-//                        new Point(x + 100 + size * 3.5, y - 100 - size , -800),
-//                        new Point(x, y - size * 0.5, -900))
-//                        .setEmission(new Color(300, 80, 50))
-//                        .setMaterial(new Material().setKd(0.5).setKs(0.1).setShininess(200).setKt(1).setKr(1))
-
         );
+
+        scene.geometries.add(createHiddenObjects(0, 0, 900, 175));
 
         // Add lights to the scene
         scene.lights.add(new DirectionalLight(new Color(75, 75, 75), new Vector(1, -1, -1)));
-        //scene.lights.add(new DirectionalLight(new Color(java.awt.Color.white), new Vector(-1, 1, 1)));
-        //scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.yellow), 0.01));
-        // הוספת מקור אור נוסף ליצירת צל לעצים
+        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.yellow), 0.01));
+
+        // Add additional light sources
         scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(0, 10, -950),
                 new Vector(0, -15, 2))
                 .setkC(1).setkL(0.0001).setkQ(0.000005));
         scene.lights.add(new SpotLight(new Color(500, 300, 300), new Point(300, 300, 300),
                 new Vector(-1, -1, -2))
                 .setkC(1).setkL(0.0001).setkQ(0.00001));
-        //scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.1));
+
         // Set up the camera and render the image
         var camera = cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
                 .setVpSize(200, 200)
-                .setImageWriter(new ImageWriter("SunsetPicture" + (withAA ? "AA" : ""), 500, 500))
+                .setImageWriter(new ImageWriter("SunsetPicture" + (withAA ? "AA" : "") + (withThreads ? "MT" : ""), 500, 500))
                 .build();
-        if (withAA)
+
+        if (withThreads) {
+            camera.setMultithreading(4); // שימוש ב-4 תהליכונים
+            camera.renderImageWithAntiAliasingAndThreads(10); //antialiasing
+        } else if (withAA) {
             camera.renderImageWithAntiAliasing(10); //antialiasing
-        else
-            camera.renderImage();
+        } else {
+            camera.renderImage(); // without anti-aliasing and without multi-threading
+        }
+
         camera.writeToImage();
     }
 
     @Test
     void testSunSet() {
-        createSunsetPic(false);
-        createSunsetPic(true);
+        // Create the sunset picture without AA and without MT
+        //createSunsetPic(false, false);//10 שניות
+
+        // Create the sunset picture with AA and without MT
+        createSunsetPic(true, false);// דקה ו30 שניות
+
+        // Create the sunset picture with AA and with MT
+        //createSunsetPic(true, true); // 38 שניות
     }
 }

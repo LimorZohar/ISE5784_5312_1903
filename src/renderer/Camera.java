@@ -3,8 +3,11 @@ package renderer;
 import primitives.*;
 
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
+import java.util.LinkedList;
 
-import static primitives.Util.*;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * Camera class represents a camera in a 3D space with various parameters and methods to construct rays through pixels and render images.
@@ -57,6 +60,26 @@ public class Camera implements Cloneable {
     private RayTracerBase rayTracer;
 
     /**
+     * Number of threads to use for rendering.
+     */
+    private int threadsCount = 0; // -2 auto, -1 range/stream, 0 no threads, 1+ number of threads
+
+    /**
+     * Number of spare threads to keep available.
+     */
+    private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
+
+    /**
+     * Interval for printing progress percentage.
+     */
+    private double printInterval = 0; // printing progress percentage interval
+
+    /**
+     * PixelManager instance for managing pixels in multi-threading.
+     */
+    private PixelManager pixelManager; // PixelManager instance
+
+    /**
      * Empty constructor for Camera.
      */
     private Camera() {
@@ -69,6 +92,23 @@ public class Camera implements Cloneable {
      */
     public static Builder getBuilder() {
         return new Builder();
+    }
+
+    /**
+     * Sets the number of threads to use for rendering.
+     *
+     * @param threads the number of threads, -2 for auto, -1 for range/stream, 0 for no threads, 1+ for specific number of threads
+     * @return the Camera instance
+     * @throws IllegalArgumentException if threads is less than -2
+     */
+    public Camera setMultithreading(int threads) {
+        if (threads < -2) throw new IllegalArgumentException("Multithreading must be -2 or higher");
+        if (threads >= -1) threadsCount = threads;
+        else { // == -2
+            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+            threadsCount = cores <= 2 ? 1 : cores;
+        }
+        return this;
     }
 
     /**
@@ -103,9 +143,9 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Casts a ray for each pixel in the image plane and renders the image.
+     * Renders the image by casting rays through each pixel.
      *
-     * @return Camera instance
+     * @return the Camera instance
      */
     public Camera renderImage() {
         int nx = this.imageWriter.getNx();
@@ -119,9 +159,10 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Casts a ray for each pixel in the image plane and renders the image with anti-aliasing.
+     * Renders the image by casting rays through each pixel with Anti-Aliasing.
      *
-     * @return Camera instance
+     * @param samplesPerPixel the number of samples per pixel for anti-aliasing
+     * @return the Camera instance
      */
     public Camera renderImageWithAntiAliasing(int samplesPerPixel) {
         int nx = this.imageWriter.getNx();
@@ -130,6 +171,49 @@ public class Camera implements Cloneable {
             for (int j = 0; j < ny; j++) {
                 castRayWithAntiAliasing(i, j, samplesPerPixel);
             }
+        }
+        return this;
+    }
+
+    /**
+     * Renders the image with anti-aliasing by casting multiple rays through each pixel.
+     * Supports multi-threading for improved performance.
+     *
+     * @param samplesPerPixel the number of samples per pixel for anti-aliasing
+     * @return the Camera instance
+     */
+    public Camera renderImageWithAntiAliasingAndThreads(int samplesPerPixel) {
+        int nx = this.imageWriter.getNx();
+        int ny = this.imageWriter.getNy();
+
+        pixelManager = new PixelManager(ny, nx, printInterval);
+
+        if (threadsCount == 0) {
+            for (int i = 0; i < ny; i++) {
+                for (int j = 0; j < nx; j++) {
+                    castRayWithAntiAliasingAndThreads(i, j, samplesPerPixel);
+                }
+            }
+        } else if (threadsCount == -1) {
+            IntStream.range(0, ny).parallel().forEach(i -> {
+                IntStream.range(0, nx).parallel().forEach(j -> {
+                    castRayWithAntiAliasingAndThreads(i, j, samplesPerPixel);
+                });
+            });
+        } else {
+            var threads = new LinkedList<Thread>();
+            for (int t = 0; t < threadsCount; t++) {
+                threads.add(new Thread(() -> {
+                    PixelManager.Pixel pixel;
+                    while ((pixel = pixelManager.nextPixel()) != null) {
+                        castRayWithAntiAliasingAndThreads(pixel.row(), pixel.col(), samplesPerPixel);
+                    }
+                }));
+            }
+            for (var thread : threads) thread.start();
+            try {
+                for (var thread : threads) thread.join();
+            } catch (InterruptedException ignore) {}
         }
         return this;
     }
@@ -157,7 +241,6 @@ public class Camera implements Cloneable {
         return this;
     }
 
-
     /**
      * Starts the process to create the image.
      */
@@ -168,8 +251,8 @@ public class Camera implements Cloneable {
     /**
      * Casts a ray through the specified pixel and colors the pixel based on the ray tracer.
      *
-     * @param i horizontal index of the pixel
-     * @param j vertical index of the pixel
+     * @param i the horizontal index of the pixel
+     * @param j the vertical index of the pixel
      */
     private void castRay(int i, int j) {
         Ray ray = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
@@ -179,9 +262,9 @@ public class Camera implements Cloneable {
     /**
      * Casts multiple rays through each pixel for anti-aliasing and colors the pixel based on the average color.
      *
-     * @param i               horizontal index of the pixel
-     * @param j               vertical index of the pixel
-     * @param samplesPerPixel number of samples per pixel
+     * @param i               the horizontal index of the pixel
+     * @param j               the vertical index of the pixel
+     * @param samplesPerPixel the number of samples per pixel
      */
     private void castRayWithAntiAliasing(int i, int j, int samplesPerPixel) {
         Color averageColor = Color.BLACK;
@@ -200,6 +283,34 @@ public class Camera implements Cloneable {
         }
         averageColor = averageColor.reduce(samplesPerPixel);
         imageWriter.writePixel(j, i, averageColor);
+    }
+
+    /**
+     * Casts multiple rays through each pixel for anti-aliasing and colors the pixel based on the average color.
+     * This function supports multi-threading.
+     *
+     * @param i               the horizontal index of the pixel
+     * @param j               the vertical index of the pixel
+     * @param samplesPerPixel the number of samples per pixel
+     */
+    private void castRayWithAntiAliasingAndThreads(int i, int j, int samplesPerPixel) {
+        Color averageColor = Color.BLACK;
+        for (int s = 0; s < samplesPerPixel; s++) {
+            double rx = width / imageWriter.getNx();
+            double ry = height / imageWriter.getNy();
+            double xj = (j - (imageWriter.getNx() - 1) / 2.0 + randomInUnitInterval()) * rx;
+            double yi = -(i - (imageWriter.getNy() - 1) / 2.0 + randomInUnitInterval()) * ry;
+
+            Point pij = location.add(vTo.scale(distance));
+            if (!isZero(xj)) pij = pij.add(vRight.scale(xj));
+            if (!isZero(yi)) pij = pij.add(vUp.scale(yi));
+
+            Ray ray = new Ray(location, pij.subtract(location));
+            averageColor = averageColor.add(rayTracer.traceRay(ray));
+        }
+        averageColor = averageColor.reduce(samplesPerPixel);
+        imageWriter.writePixel(j, i, averageColor);
+        pixelManager.pixelDone();
     }
 
     /**
@@ -342,7 +453,6 @@ public class Camera implements Cloneable {
                 throw new AssertionError();
             }
         }
-
 
         /**
          * Sets the ImageWriter for the camera.
