@@ -62,17 +62,7 @@ public class Camera implements Cloneable {
     /**
      * Number of threads to use for rendering.
      */
-    private int threadsCount = 0; // -2 auto, -1 range/stream, 0 no threads, 1+ number of threads
-
-    /**
-     * Number of spare threads to keep available.
-     */
-    private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
-
-    /**
-     * Interval for printing progress percentage.
-     */
-    private double printInterval = 0; // printing progress percentage interval
+    private int threadsCount = 0;
 
     /**
      * PixelManager instance for managing pixels in multi-threading.
@@ -95,19 +85,19 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Sets the number of threads to use for rendering.
+     * Sets the number of threads to use for rendering. The user can select a number
+     * of threads between 2 and 4. If the number of threads is not within this range,
+     * an IllegalArgumentException is thrown.
      *
-     * @param threads the number of threads, -2 for auto, -1 for range/stream, 0 for no threads, 1+ for specific number of threads
-     * @return the Camera instance
-     * @throws IllegalArgumentException if threads is less than -2
+     * @param threads the number of threads to use, must be between 2 and 4
+     * @return the current Camera instance for method chaining
+     * @throws IllegalArgumentException if the number of threads is less than 2 or greater than 4
      */
     public Camera setMultithreading(int threads) {
-        if (threads < -2) throw new IllegalArgumentException("Multithreading must be -2 or higher");
-        if (threads >= -1) threadsCount = threads;
-        else { // == -2
-            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
-            threadsCount = cores <= 2 ? 1 : cores;
+        if (threads < 2 || threads > 4) {
+            throw new IllegalArgumentException("Multithreading must be between 2 and 4.");
         }
+        threadsCount = threads;
         return this;
     }
 
@@ -177,44 +167,50 @@ public class Camera implements Cloneable {
 
     /**
      * Renders the image with anti-aliasing by casting multiple rays through each pixel.
-     * Supports multi-threading for improved performance.
+     * Supports multi-threading with a fixed number of threads (2-4) for improved performance.
      *
      * @param samplesPerPixel the number of samples per pixel for anti-aliasing
      * @return the Camera instance
+     * @throws IllegalArgumentException if the number of threads is not between 2 and 4
      */
     public Camera renderImageWithAntiAliasingAndThreads(int samplesPerPixel) {
+        // Check if the number of threads is within the allowed range of 2 to 4
+        if (threadsCount < 2 || threadsCount > 4) {
+            throw new IllegalArgumentException("Number of threads must be between 2 and 4.");
+        }
+
+        // Store the number of horizontal and vertical pixels in the image
         int nx = this.imageWriter.getNx();
         int ny = this.imageWriter.getNy();
 
-        pixelManager = new PixelManager(ny, nx, printInterval);
+        // Create a PixelManager object to handle pixel management for multithreading
+        pixelManager = new PixelManager(ny, nx);
 
-        if (threadsCount == 0) {
-            for (int i = 0; i < ny; i++) {
-                for (int j = 0; j < nx; j++) {
-                    castRayWithAntiAliasingAndThreads(i, j, samplesPerPixel);
+        // Create a list of threads
+        var threads = new LinkedList<Thread>();
+
+        // Create threads according to the specified threadsCount
+        for (int t = 0; t < threadsCount; t++) {
+            threads.add(new Thread(() -> {
+                // The function that iterates over all the pixels and processes them with threads
+                PixelManager.Pixel pixel;
+                // Each thread gets a pixel to process until no more pixels are left
+                while ((pixel = pixelManager.nextPixel()) != null) {
+                    // Process the pixel with anti-aliasing and multithreading
+                    castRayWithAntiAliasingAndThreads(pixel.row(), pixel.col(), samplesPerPixel);
                 }
-            }
-        } else if (threadsCount == -1) {
-            IntStream.range(0, ny).parallel().forEach(i -> {
-                IntStream.range(0, nx).parallel().forEach(j -> {
-                    castRayWithAntiAliasingAndThreads(i, j, samplesPerPixel);
-                });
-            });
-        } else {
-            var threads = new LinkedList<Thread>();
-            for (int t = 0; t < threadsCount; t++) {
-                threads.add(new Thread(() -> {
-                    PixelManager.Pixel pixel;
-                    while ((pixel = pixelManager.nextPixel()) != null) {
-                        castRayWithAntiAliasingAndThreads(pixel.row(), pixel.col(), samplesPerPixel);
-                    }
-                }));
-            }
-            for (var thread : threads) thread.start();
-            try {
-                for (var thread : threads) thread.join();
-            } catch (InterruptedException ignore) {}
+            }));
         }
+
+        // Start all the threads created
+        for (var thread : threads) thread.start();
+
+        try {
+            // Wait for all the threads to finish their work
+            for (var thread : threads) thread.join();
+        } catch (InterruptedException ignore) {}
+
+        // Return the Camera object to allow further documented calls in a chain
         return this;
     }
 
@@ -310,6 +306,8 @@ public class Camera implements Cloneable {
         }
         averageColor = averageColor.reduce(samplesPerPixel);
         imageWriter.writePixel(j, i, averageColor);
+
+        // Notify the PixelManager that processing of this pixel is complete
         pixelManager.pixelDone();
     }
 

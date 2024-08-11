@@ -280,6 +280,7 @@ public class SunsetScene {
         createSunsetPic(true, false);// דקה ו30 שניות
 
         // Create the sunset picture with AA and with MT
+
         //createSunsetPic(true, true); // 38 שניות
     }
 }
