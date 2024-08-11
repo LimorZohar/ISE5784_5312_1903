@@ -4,42 +4,58 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * PixelManager is a helper class. It is used for multi-threading in the
- * renderer.
- * A Camera uses one pixel manager object and several Pixel objects - one in
- * each thread.
- *
+ * PixelManager is a helper class for managing pixel allocation in multi-threaded rendering.
+ * It ensures that each thread processes a unique pixel and keeps track of the rendering progress.
+ * A Camera uses one PixelManager object and several Pixel objects - one in each thread.
  */
 class PixelManager {
     /**
-     * Immutable record for object containing allocated pixel (with its row and
-     * column numbers).
+     * Immutable record for an object containing the allocated pixel with its row and column numbers.
+     *
+     * @param col The column number of the pixel.
+     * @param row The row number of the pixel.
      */
+
     record Pixel(int col, int row) {
+
     }
 
-    /** The maximum number of rows of pixels */
+    /**
+     * The maximum number of rows of pixels in the image
+     */
     private final int maxRows;
-    /** The maximum number of columns of pixels */
+    /**
+     * The maximum number of columns of pixels in the image
+     */
     private final int maxCols;
-    /** The total number of pixels in the generated image */
+    /**
+     * The total number of pixels in the generated image
+     */
     private final long totalPixels;
 
-    /** The current row of pixels being processed */
+    /**
+     * The current row of pixels being processed
+     */
     private final AtomicInteger currentRow = new AtomicInteger(0);
-    /** The current column of pixels being processed */
+    /**
+     * The current column of pixels being processed
+     */
     private final AtomicInteger currentCol = new AtomicInteger(-1);
-    /** The number of pixels that have been processed */
+    /**
+     * The number of pixels that have been processed
+     */
     private final AtomicLong processedPixels = new AtomicLong(0);
 
-    /** The mutex object for synchronizing next pixel allocation between threads */
+    /**
+     * The mutex object for synchronizing the next pixel allocation between threads
+     */
     private final Object nextPixelLock = new Object();
 
     /**
-     * Initialize pixel manager data for multi-threading.
+     * Initializes the PixelManager with the given number of rows and columns.
      *
-     * @param maxRows the amount of pixel rows
-     * @param maxCols the amount of pixel columns
+     * @param maxRows The number of rows of pixels in the image.
+     * @param maxCols The number of columns of pixels in the image.
      */
     PixelManager(int maxRows, int maxCols) {
         this.maxRows = maxRows;
@@ -48,12 +64,11 @@ class PixelManager {
     }
 
     /**
-     * Function for thread-safe manipulating of main follow up Pixel object. This
-     * function is a critical section for all the threads, and the pixel manager
-     * data is the shared data of this critical section.
-     * The function provides the next available pixel number each call.
+     * Provides the next available pixel for rendering in a thread-safe manner.
+     * This function is a critical section for all the threads, and the PixelManager data is shared between threads.
+     * It ensures that each thread processes a unique pixel.
      *
-     * @return the next available Pixel, or null if there are no more pixels
+     * @return The next available Pixel, or null if there are no more pixels to process.
      */
     Pixel nextPixel() {
         synchronized (nextPixelLock) {
@@ -70,7 +85,8 @@ class PixelManager {
     }
 
     /**
-     * Finish pixel processing by updating the number of processed pixels.
+     * Marks a pixel as processed by updating the number of processed pixels.
+     * This method is used to track the progress of the rendering process.
      */
     void pixelDone() {
         processedPixels.incrementAndGet();

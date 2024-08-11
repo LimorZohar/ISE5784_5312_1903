@@ -270,7 +270,9 @@ public class SunsetScene {
 
         camera.writeToImage();
     }
-
+    /**
+     * Creates the pic
+     */
     @Test
     void testSunSet() {
         // Create the sunset picture without AA and without MT

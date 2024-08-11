@@ -208,7 +208,8 @@ public class Camera implements Cloneable {
         try {
             // Wait for all the threads to finish their work
             for (var thread : threads) thread.join();
-        } catch (InterruptedException ignore) {}
+        } catch (InterruptedException ignore) {
+        }
 
         // Return the Camera object to allow further documented calls in a chain
         return this;
