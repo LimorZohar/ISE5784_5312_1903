@@ -197,7 +197,7 @@ public class Camera implements Cloneable {
                 // Each thread gets a pixel to process until no more pixels are left
                 while ((pixel = pixelManager.nextPixel()) != null) {
                     // Process the pixel with anti-aliasing and multithreading
-                    castRayWithAntiAliasingAndThreads(pixel.row(), pixel.col(), samplesPerPixel);
+                    castRayWithAntiAliasing(pixel.row(), pixel.col(), samplesPerPixel);
                 }
             }));
         }
@@ -280,36 +280,6 @@ public class Camera implements Cloneable {
         }
         averageColor = averageColor.reduce(samplesPerPixel);
         imageWriter.writePixel(j, i, averageColor);
-    }
-
-    /**
-     * Casts multiple rays through each pixel for anti-aliasing and colors the pixel based on the average color.
-     * This function supports multi-threading.
-     *
-     * @param i               the horizontal index of the pixel
-     * @param j               the vertical index of the pixel
-     * @param samplesPerPixel the number of samples per pixel
-     */
-    private void castRayWithAntiAliasingAndThreads(int i, int j, int samplesPerPixel) {
-        Color averageColor = Color.BLACK;
-        for (int s = 0; s < samplesPerPixel; s++) {
-            double rx = width / imageWriter.getNx();
-            double ry = height / imageWriter.getNy();
-            double xj = (j - (imageWriter.getNx() - 1) / 2.0 + randomInUnitInterval()) * rx;
-            double yi = -(i - (imageWriter.getNy() - 1) / 2.0 + randomInUnitInterval()) * ry;
-
-            Point pij = location.add(vTo.scale(distance));
-            if (!isZero(xj)) pij = pij.add(vRight.scale(xj));
-            if (!isZero(yi)) pij = pij.add(vUp.scale(yi));
-
-            Ray ray = new Ray(location, pij.subtract(location));
-            averageColor = averageColor.add(rayTracer.traceRay(ray));
-        }
-        averageColor = averageColor.reduce(samplesPerPixel);
-        imageWriter.writePixel(j, i, averageColor);
-
-        // Notify the PixelManager that processing of this pixel is complete
-        pixelManager.pixelDone();
     }
 
     /**

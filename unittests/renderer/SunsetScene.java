@@ -276,13 +276,13 @@ public class SunsetScene {
     @Test
     void testSunSet() {
         // Create the sunset picture without AA and without MT
-        //createSunsetPic(false, false);//10 שניות
+       // createSunsetPic(false, false);//10 שניות
 
         // Create the sunset picture with AA and without MT
-        createSunsetPic(true, false);// דקה ו30 שניות
+        //createSunsetPic(true, false);// דקה ו30 שניות
 
         // Create the sunset picture with AA and with MT
 
-        //createSunsetPic(true, true); // 38 שניות
+        createSunsetPic(true, true); // 38 שניות
     }
 }
