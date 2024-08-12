@@ -28,10 +28,6 @@ class PixelManager {
      * The maximum number of columns of pixels in the image
      */
     private final int maxCols;
-    /**
-     * The total number of pixels in the generated image
-     */
-    private final long totalPixels;
 
     /**
      * The current row of pixels being processed
@@ -41,10 +37,6 @@ class PixelManager {
      * The current column of pixels being processed
      */
     private final AtomicInteger currentCol = new AtomicInteger(-1);
-    /**
-     * The number of pixels that have been processed
-     */
-    private final AtomicLong processedPixels = new AtomicLong(0);
 
     /**
      * The mutex object for synchronizing the next pixel allocation between threads
@@ -60,7 +52,6 @@ class PixelManager {
     PixelManager(int maxRows, int maxCols) {
         this.maxRows = maxRows;
         this.maxCols = maxCols;
-        this.totalPixels = (long) maxRows * maxCols;
     }
 
     /**
@@ -84,11 +75,4 @@ class PixelManager {
         return null;
     }
 
-    /**
-     * Marks a pixel as processed by updating the number of processed pixels.
-     * This method is used to track the progress of the rendering process.
-     */
-    void pixelDone() {
-        processedPixels.incrementAndGet();
-    }
 }
